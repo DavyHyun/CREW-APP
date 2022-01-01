@@ -1,34 +1,37 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from '@firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react'
+import firebase from "firebase/compat/app";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import {auth} from '../firebase';
+import { getDatabase, ref, set } from "firebase/database";
 
 const LoginScreen = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const database = getDatabase();
 
     const navigation = useNavigation();
 
-    useEffect(() => {
-        auth.onAuthStateChanged(user => {
-            if (user) {
-              navigation.replace("Home")
-            }
-          })
-    }, [])
+    // useEffect(() => {
+    //     auth.onAuthStateChanged(user => {
+    //         if (user) {
+    //           navigation.replace("Home")
+    //         }
+    //       })
+    // }, [])
 
-    const goBack = () => {
-        navigation.navigate("Log In or Sign Up");
-    }
-    const handleLogin = async () => {
+    const handleSignUp = async () => {
         try {
-            const user = await signInWithEmailAndPassword(auth, email, password);
+            const user = await createUserWithEmailAndPassword(auth, email, password);
+            navigation.navigate("InfoAdd");
             console.log(user);
         } catch (error) {
             console.log(error.message);
         }
+
+
     }
 
     return (
@@ -55,16 +58,10 @@ const LoginScreen = () => {
             <View style={styles.buttonContainer}>
                 
                 <TouchableOpacity
-                    onPress={handleLogin}
+                    onPress={handleSignUp}
                     style={styles.button}
                 >
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={goBack}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Back</Text>
+                    <Text style={styles.buttonText}>Next</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
@@ -102,19 +99,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
       },
-      buttonOutline: {
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#0782F9',
-        borderWidth: 2,
-      },
       buttonText: {
         color: 'white',
-        fontWeight: '700',
-        fontSize: 16,
-      },
-      buttonOutlineText: {
-        color: '#0782F9',
         fontWeight: '700',
         fontSize: 16,
       },
