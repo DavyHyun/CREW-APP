@@ -1,11 +1,17 @@
 import { signOut } from '@firebase/auth'
 import { useNavigation } from '@react-navigation/core'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { auth } from '../firebase'
+import { getDatabase, ref, set, get, child } from "firebase/database";
+import firebase from "firebase/compat/app";
+import { getAuth } from "firebase/auth";
 
 const HomeScreen = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const database = getDatabase();
+  const dbref = ref(database);
+  
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -13,9 +19,10 @@ const HomeScreen = () => {
     })
   }
 
+
   return (
     <View style={styles.container}>
-      <Text>Email: {auth.currentUser?.email}</Text>
+      <Text>Email: {auth.currentUser.email}</Text>
       <TouchableOpacity
         onPress={handleSignOut}
         style={styles.button}
