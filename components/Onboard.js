@@ -1,29 +1,43 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, StatusBar, Image} from 'react-native';
-
+import React, {useState, useEffect} from 'react';
+import {Animated, View, Text, StyleSheet, StatusBar, Image, TouchableOpacity} from 'react-native';
+import * as MdIcons from "react-icons/md"
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 
 const data = [
   {
-    title: 'WELCOME TO FROSTY',
+    title: 'WELCOME TO FROSTY!',
     text: 'An AI Chat Bot Fit To Guide You In A More Enjoyable Campus Life: Frosty',
+    image: require('../assets/images/frosty_!!_❄️.png'),
+    backgroundColor: '#59b2ab'
   },
   {
-    title: 'Directing You To The Best Food Near You!',
+    title: ' EAT.',
+    text: 'Directing You To The Best Food Near You!',
+    image: require('../assets/images/frosty_!!_❄️.png'),
+    backgroundColor: '#012a4a'
   },
   {
-    title: 'Finding Your Next New & Refreshing Study Spots',
+    title: ' STUDY.',
+    text: 'Find Your Next New & Refreshing Study Spots',
+    image: require('../assets/images/frosty_!!_❄️.png'),
+    backgroundColor: '#012a4a'
   },
   {
-    title: 'Introducing You To Events Where You Can Meet Like Minded Individuals'
+    title: ' CONNECT.',
+    text: 'Meet Like Minded Individuals',
+    image: require('../assets/images/frosty_!!_❄️.png'),
+    backgroundColor: '#012a4a'
   },
 ];
 
 const Onboard = (props) => {
+
+
+
   const renderItem = ({item}) => {
     return (
-      <View style={styles.slide}>
+      <View style={styles.slide} >
         <Image source={item.image} style={styles.image} />
         <View>
           <Text style={styles.title}>{item.title}</Text>
@@ -37,27 +51,41 @@ const Onboard = (props) => {
 
   const renderNextButton = () => {
     return (
-      <View style={styles.rightTextWrapper}>
-        <Text style={styles.rightText}>Next</Text>
+      <View style={styles.buttonContainer}>
+      <View style={styles.bottomButton}>
+        <Text style={styles.bottomButtonText}>Next</Text>
+      </View>
       </View>
     );
   };
 
   const renderDoneButton = () => {
     return (
-      <View style={styles.doneButtonWrapper}>
-        <Text style={styles.doneButtonText}>Get Started</Text>
+      <View style={styles.buttonContainer}>
+      <View style={styles.bottomButtonL}>
+        <Text style={styles.bottomButtonText}>Get Started</Text>
+      </View>
       </View>
     );
   };
 
-  const renderPrevButton = () => {
+  const renderSkipButton = () => {
     return (
-      <View style={styles.leftTextWrapper}>
-        <Text style={styles.leftText}>Prev</Text>
+      <View style={styles.buttonContainer}> 
+      <View style={styles.bottomButtonBot}>
+        <Text style={styles.bottomButtonText}>Skip</Text>
+      </View>
       </View>
     );
   };
+
+  // const onSlideChange = () => {
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 1000,
+  //     useNativeDriver: true,
+  //   }).start();
+  // }
 
   const handleDone = () => {
     props.handleDone();
@@ -74,8 +102,10 @@ const Onboard = (props) => {
         activeDotStyle={styles.activeDotStyle}
         renderDoneButton={renderDoneButton}
         renderNextButton={renderNextButton}
-        renderPrevButton={renderPrevButton}
-        showPrevButton
+        renderSkipButton={renderSkipButton}
+        // onSlideChange={onSlideChange}
+        // showSkipButton
+        bottomButton
         onDone={handleDone}
       />
     </View>
@@ -87,6 +117,65 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: 96,
+  },
+  image: {
+    width: 300,
+    height: 370,
+  },
+  title: {
+    fontSize: 24,
+    // color: colors.black,
+    textAlign: 'center',
+    // fontFamily: 'OpenSans-Bold',
+    marginHorizontal: 60,
+    fontWeight: "bold",
+    marginTop: 20,
+  },
+  text: {
+    fontSize: 14,
+    // color: colors.gray,
+    textAlign: 'center',
+    // fontFamily: 'OpenSans-SemiBold',
+    marginHorizontal: 60,
+    marginTop: 20,
+    marginBottom: 50,
+  },
+  bottomButton: {
+    width: '80%',
+    padding: 15,
+    borderRadius: 40,
+    alignItems: 'center',
+    backgroundColor: '#36649E',
+    marginBottom: 110,
+    marginTop: 0,
+  },
+  bottomButtonBot: {
+    width: '80%',
+    padding: 15,
+    borderRadius: 40,
+    alignItems: 'center',
+    backgroundColor: '#36649E',
+    marginBottom: 110,
+  },
+  bottomButtonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  bottomButtonL: {
+    width: '80%',
+    padding: 15,
+    borderRadius: 40,
+    alignItems: 'center',
+    backgroundColor: '#36649E',
+    marginBottom: 110,
+  },
+  buttonContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    
   },
 });
 
