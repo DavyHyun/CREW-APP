@@ -9,6 +9,11 @@ import LoginOrSignUp from './Screens/LoginOrSignUp';
 import SignUp from './Screens/SignUp';
 import InfoAdd from './Screens/InfoAdd'
 import Onboard from './components/Onboard'
+import Chat from './Screens/Chat';
+import FriendsHome from './Screens/FriendsHome';
+import Favorites from './Screens/Favorites';
+import Reviews from './Screens/Reviews';
+import Profile from './Screens/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +36,11 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen options={{headerShown: false}} name="InfoAdd" component={InfoAdd} />
         <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
+        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="FriendsHome" component={FriendsHome} />
+        <Stack.Screen name="Favorites" component={Favorites} />
+        <Stack.Screen name="Reviews" component={Reviews} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>}
     </>
