@@ -78,38 +78,50 @@ function InfoAdd() {
   }
 
   return (
+    
     <View style={styles.container}>
       <View style={{ height: 40 }} />
       <View style={{ width: '100%', alignItems: 'center' }}>
-        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Help Us Get To Know You Better!</Text>
+        <Text style={{ fontSize: 20, paddingBottom: 25, textAlign: 'center', fontWeight: 'bold' }}>Help Us Get To Know You Better!</Text>
       </View>
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>Select Location</Text>
+      {/* <View style={styles.inputContainer}> */}
+      <Text style={{ fontSize: 20, paddingBottom: 10, fontWeight: 'bold', textAlign: 'left',marginTop: '10%' }}>Location</Text>
       <SelectBox
         label="Select one"
         options={LOCATIONS}
         value={location}
+        arrowIconColor='#36649E'
         onChange={onLChange()}
         hideInputFilter={false}
       />
       <View style={{ height: 40 }} />
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>Select Food Preferences</Text>
+      <Text style={{ fontSize: 20, paddingBottom: 10, fontWeight: 'bold' }}>Food Preferences</Text>
       <SelectBox
         label="Choose all that apply"
         options={PREF}
         selectedValues={pref}
+        arrowIconColor='#36649E'
+        searchIconColor="#36649E"
+        toggleIconColor="#36649E"
+        multiOptionContainerStyle={{backgroundColor: '#36649E'}}
         onMultiSelect={onMultiChange()}
         onTapClose={onMultiChange()}
         isMulti
       />
       <View style={{ height: 40 }} />
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>Select Price Range</Text>
+      <Text style={{ fontSize: 20, paddingBottom: 10, fontWeight: 'bold' }}>Price Range</Text>
       <SelectBox
         label="Select one"
         options={PRICE}
         value={price}
+        arrowIconColor='#36649E'
+        searchIconColor="#36649E"
+        toggleIconColor="#36649E"
+        multiOptionContainerStyle={{backgroundColor: '#36649E'}}
         onChange={onPChange()}
         hideInputFilter={false}
       />
+      {/* </View> */}
       <View style={styles.buttonContainer}>
       <TouchableOpacity
           onPress={addInfo}
@@ -137,7 +149,7 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center',
+      // alignItems: 'center',
       margin: 30,
     },
     buttonContainer: {
@@ -145,13 +157,19 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 40,
+      marginLeft: '20%'
     },
     button: {
-      backgroundColor: '#0782F9',
       width: '100%',
-      padding: 15,
-      borderRadius: 10,
-      alignItems: 'center',
+        padding: '5%',
+        borderRadius: 40,
+        alignItems: 'center',
+        backgroundColor: '#36649E',
+        marginBottom: '2%',
+        borderStyle: 'solid',
+        borderColor: '#36649E',
+        borderWidth: 1,
+        marginTop: '15%'
     },
     buttonOutline: {
       backgroundColor: 'white',
@@ -164,6 +182,11 @@ const styles = StyleSheet.create({
       fontWeight: '700',
       fontSize: 16,
     },
+    inputContainer: {
+      justifyContent: 'flex-start',
+      marginTop: '15%',
+      marginBottom: '6%'
+    }
 })
 
 export default InfoAdd

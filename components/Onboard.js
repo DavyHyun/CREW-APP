@@ -14,19 +14,19 @@ const data = [
   {
     title: ' EAT.',
     text: 'Directing You To The Best Food Near You!',
-    image: require('../assets/images/frosty_!!_❄️.png'),
+    image: require('../assets/images/frosty_going_to_restaurant_.png'),
     backgroundColor: '#012a4a'
   },
   {
     title: ' STUDY.',
     text: 'Find Your Next New & Refreshing Study Spots',
-    image: require('../assets/images/frosty_!!_❄️.png'),
+    image: require('../assets/images/frosty_studying_.png'),
     backgroundColor: '#012a4a'
   },
   {
     title: ' CONNECT.',
     text: 'Meet Like Minded Individuals',
-    image: require('../assets/images/frosty_!!_❄️.png'),
+    image: require('../assets/images/frosty_and_his_friend.png'),
     backgroundColor: '#012a4a'
   },
 ];
@@ -38,7 +38,9 @@ const Onboard = (props) => {
   const renderItem = ({item}) => {
     return (
       <View style={styles.slide} >
+        <View style={styles.ImageContainer}>
         <Image source={item.image} style={styles.image} />
+        </View>
         <View>
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.text}>{item.text}</Text>
@@ -120,8 +122,10 @@ const styles = StyleSheet.create({
     paddingBottom: 96,
   },
   image: {
-    width: 300,
-    height: 370,
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 24,
@@ -177,6 +181,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
+  ImageContainer: {
+    // flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '50%',
+    width: '70%',
+    
+    // backgroundColor: 'black'
+    
+  }
 });
 
 export default Onboard;

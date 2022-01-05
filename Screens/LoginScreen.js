@@ -1,13 +1,15 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from '@firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, getAuth } from '@firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import {auth} from '../firebase';
+
 
 const LoginScreen = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
 
     const navigation = useNavigation();
 
@@ -31,41 +33,68 @@ const LoginScreen = () => {
         }
     }
 
+
+
     return (
         <KeyboardAvoidingView
             style={styles.container}
             behavior="padding"
         >
             <View style={styles.inputContainer}>
+                <Text style={styles.su}>Log In!</Text>
+              
                 <TextInput 
                     placeholder="Email"
                     value={email}
                     onChangeText={text => {setEmail(text)}}
                     style={styles.input}
+                    
                 />
+                
                 <TextInput 
                     placeholder="Password"
                     value={password}
                     onChangeText={text => {setPassword(text)}}
                     style={styles.input}
                     secureTextEntry
+                    
                 />
+            
             </View>
-
+            <View style={styles.lineContainer}>
+          <View style={{flex: 1, height: 1, backgroundColor: '#2A6F97'}} />
+              <View>
+                <Text style={{width: 50, textAlign: 'center'}}>Or</Text>
+              </View>
+           <View style={{flex: 1, height: 1, backgroundColor: '#2A6F97'}} />
+          </View>
             <View style={styles.buttonContainer}>
-                
+                <TouchableOpacity
+                    // onPress={handleGoogle}
+                    style={styles.buttonOther}
+                >
+                    <Image source={require("../assets/images/GoogleLogo.png")} style={styles.logo}/>
+                    <Text style={styles.buttonText}>    Continue with Google</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    // onPress={handleFacebook}
+                    style={styles.buttonOther}
+                >
+                    <Image source={require("../assets/images/FacebookLogo.webp")} style={styles.logo}/>
+                    <Text style={styles.buttonText}>    Continue with Facebook</Text>
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={handleLogin}
                     style={styles.button}
                 >
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonTextL}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={goBack}
                     style={[styles.button, styles.buttonOutline]}
                 >
                     <Text style={styles.buttonOutlineText}>Back</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </KeyboardAvoidingView>
     )
@@ -78,29 +107,60 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'white'
       },
       inputContainer: {
-        width: '80%'
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center'
       },
       input: {
         backgroundColor: 'white',
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         paddingVertical: 10,
-        borderRadius: 10,
+        
         marginTop: 5,
+        marginBottom: 10,
+        width: '95%',
+        borderStyle: 'solid',
+        borderBottomColor: '#2A6F97',
+        borderBottomWidth: 1,
+        borderColor: 'black',
+        opacity: 50
       },
       buttonContainer: {
-        width: '60%',
+        width: '83%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 40,
+        
+        // marginTop: 40,
+      },
+      buttonOther: {
+        display: 'flex',
+        width: '100%',
+        padding: '4%',
+        borderRadius: 40,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        marginBottom: '2%',
+        borderStyle: 'solid',
+        borderColor: '#36649E',
+        borderWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        // margin: 2
       },
       button: {
-        backgroundColor: '#0782F9',
         width: '100%',
-        padding: 15,
-        borderRadius: 10,
+        padding: '5%',
+        borderRadius: 40,
         alignItems: 'center',
+        backgroundColor: '#36649E',
+        marginBottom: '2%',
+        borderStyle: 'solid',
+        borderColor: '#36649E',
+        borderWidth: 1,
+        marginTop: '15%'
       },
       buttonOutline: {
         backgroundColor: 'white',
@@ -109,6 +169,11 @@ const styles = StyleSheet.create({
         borderWidth: 2,
       },
       buttonText: {
+        color: '#36649E',
+        fontWeight: '700',
+        fontSize: 16,
+      },
+      buttonTextL: {
         color: 'white',
         fontWeight: '700',
         fontSize: 16,
@@ -118,4 +183,23 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
       },
+      su: {
+        marginBottom: 30,
+        fontSize: 24,
+        fontWeight: 'bold'
+      },
+      lineContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        // flex: 1,
+        width: '85%',
+        marginTop: '5%',
+        marginBottom: '5%',
+        opacity: 0.5,
+
+      },
+      logo: {
+        height: 20,
+        width: 20
+      }
 })
