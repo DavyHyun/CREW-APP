@@ -26,8 +26,8 @@ export default function App() {
     {!showOnboard && 
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Log In or Sign Up" component={LoginOrSignUp}/>
-        <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
+        <Stack.Screen options={{headerShown: false}}name="Log In or Sign Up" component={LoginOrSignUp}/>
+        <Stack.Screen options={{headerShown: true}} name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen options={{headerShown: false}} name="InfoAdd" component={InfoAdd} />
         <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
