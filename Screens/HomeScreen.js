@@ -15,7 +15,8 @@ const HomeScreen = () => {
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
-      navigation.replace("Profile");
+      navigation.navigate("Log In or Sign Up");
+      console.log('success');
     })
   }
   const navigateToProfile = () => {
@@ -49,7 +50,7 @@ const HomeScreen = () => {
       <View style={styles.topBar}>
       <Image
               style={styles.frostyLogo}
-              source={require("/Users/collinkim/Documents/Frosty_Local/FrostyApp-1/assets/frostyLogos/frostylogo.png")}
+              source={require("../assets/frostyLogos/frostylogo.png")}
             />
       <TouchableOpacity
         onPress={navigateToProfile}
@@ -65,15 +66,21 @@ const HomeScreen = () => {
           <View>
             <Image
               style={styles.logo}
-              source={require("/Users/collinkim/Documents/Frosty_Local/FrostyApp-1/assets/frostyLogos/frosty_open_mouth.png")}
+              source={require("../assets/frostyLogos/frosty_open_mouth.png")}
             />
 
           </View>
         </View>
         <View style={styles.topRightContainer}>
-          <Image style={styles.chatBox} source={require("/Users/collinkim/Documents/Frosty_Local/FrostyApp-1/assets/chatbox.png")} />
+          <Image style={styles.chatBox} source={require("../assets/chatbox.png")} />
           {/* <Text style={styles.textBox}>Welcome back {auth.currentUser.email}! Ready for Winter Quarter?! </Text> */}
           <Text style={styles.textBox}>Welcome back Collin! I'm excited to make it through Winter Quarter with you! </Text>
+          <TouchableOpacity
+          onPress={handleSignOut}
+          style={styles.buttonS}
+        >
+          <Text style={{color: 'black'}}>Sign Out</Text>
+        </TouchableOpacity>
         </View>
 
 
@@ -86,7 +93,7 @@ const HomeScreen = () => {
           onPress={navigateToChat}
           style={styles.chatButton}
         >
-          <Image style={styles.chatButtonIcon} source={require("/Users/collinkim/Documents/Frosty_Local/FrostyApp-1/assets/buttonLogos/chat.png")} />
+          <Image style={styles.chatButtonIcon} source={require("../assets/buttonLogos/chat.png")} />
           <Text style={styles.chatButtonText}>Chat with Frosty!</Text>
 
         </TouchableOpacity>
@@ -94,21 +101,21 @@ const HomeScreen = () => {
           onPress={navigateToFriendsHome}
           style={styles.friendsButton}
         >
-          <Image style={styles.peopleButtonIcon} source={require("/Users/collinkim/Documents/Frosty_Local/FrostyApp-1/assets/buttonLogos/people.png")} />
+          <Image style={styles.peopleButtonIcon} source={require("../assets/buttonLogos/people.png")} />
           <Text style={styles.friendsButtonText}>Connect with Your Friends</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={navigateToFavorites}
           style={styles.favoritesButton}
         >
-          <Image style={styles.buttonIcon} source={require("/Users/collinkim/Documents/Frosty_Local/FrostyApp-1/assets/buttonLogos/star.png")} />
+          <Image style={styles.buttonIcon} source={require("../assets/buttonLogos/star.png")} />
           <Text style={styles.favoritesButtonText}>Your Favorites</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={navigateToReviews}
           style={styles.reviewsButton}
         >
-          <Image style={styles.reviewsButtonIcon} source={require("/Users/collinkim/Documents/Frosty_Local/FrostyApp-1/assets/buttonLogos/library_books.png")} />
+          <Image style={styles.reviewsButtonIcon} source={require("../assets/buttonLogos/library_books.png")} />
           <Text style={styles.reviewsButtonText}>Reviews from Fellow Students</Text>
         </TouchableOpacity>
       </View>
@@ -134,7 +141,8 @@ const styles = StyleSheet.create({
   },
   topBar: {
     flexDirection: 'row',
-    
+    marginTop: 20,
+    // backgroundColor: 'black'
   },
   textLogo: {
     padding: 10
@@ -145,12 +153,15 @@ const styles = StyleSheet.create({
     // flex: 1,
     // justifyContent: 'flex-end',
     // alignItems: 'center',
-    flex: 1,
+    // flex: 1,
     // borderWidth: 1,
     // borderColor: '#FF5733',
     padding: 20,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    height: '40%',
     // height: Dimensions.get('window').height / 2
+    // backgroundColor: 'black'
+    marginBottom: '10%'
 
   },
   chatBox: {
@@ -246,7 +257,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: Dimensions.get('window').height / 2,
     width: Dimensions.get('window').width / 2,
-    top: 10
+    top: 5
   },
   textBox: {
     // marginTop: 20,
@@ -361,5 +372,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     top: 14
   },
+  // signOut: {
+  //   width: '100%',
+  //       padding: '5%',
+  //       borderRadius: 40,
+  //       alignItems: 'center',
+  //       backgroundColor: '#36649E',
+  //       marginBottom: '2%',
+  //       borderStyle: 'solid',
+  //       borderColor: '#36649E',
+  //       borderWidth: 1,
+  //       marginTop: '15%'
+  // }
+  buttonS: {
+        padding: '5%',
+        borderRadius: 40,
+        alignItems: 'center',
+        backgroundColor: '#36649E',
+        borderStyle: 'solid',
+        borderColor: '#36649E',
+        borderWidth: 1,
+  }
 
 })
