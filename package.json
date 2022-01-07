@@ -10,9 +10,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-google-signin/google-signin": "^7.0.4",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "expo": "~44.0.0",
+    "expo-font": "~10.0.4",
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.1",
     "react": "17.0.1",
@@ -27,8 +29,7 @@
     "react-native-selectmultiple-button": "^0.1.105",
     "react-native-svg": "12.1.1",
     "react-native-web": "0.17.1",
-    "react-router-dom": "^6.2.1",
-    "expo-font": "~10.0.4"
+    "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
