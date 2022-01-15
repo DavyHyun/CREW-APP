@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import SelectBox from 'react-native-multi-selectbox'
 import { xorBy } from 'lodash'
 import { useNavigation } from '@react-navigation/core'
@@ -68,11 +68,10 @@ function InfoAdd() {
   
   const addInfo = () => {
       var userId = getAuth().currentUser.uid;
-       set(ref(db, 'users/' + userId), {
+       set(ref(db, 'users/' + userId + '/foodInfo'), {
             location: location,
             preference: pref,
             priceRange: price,
-            isDefault: false,
       })
       navigation.navigate("Home");
   }
@@ -127,7 +126,7 @@ function InfoAdd() {
           onPress={addInfo}
            style={styles.button}
       >
-       <Text style={styles.buttonText}>Add</Text>
+       <Text style={styles.buttonText}>Finish</Text>
       </TouchableOpacity>
       </View>
     </View>

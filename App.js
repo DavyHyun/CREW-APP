@@ -8,6 +8,7 @@ import HomeScreen from './Screens/HomeScreen';
 import LoginOrSignUp from './Screens/LoginOrSignUp';
 import SignUp from './Screens/SignUp';
 import InfoAdd from './Screens/InfoAdd'
+import PersonalInfo from './Screens/PersonalInfo'
 import Onboard from './components/Onboard'
 import Chat from './Screens/Chat';
 import FriendsHome from './Screens/FriendsHome';
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: true}} name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen options={{headerShown: false}} name="InfoAdd" component={InfoAdd} />
+        <Stack.Screen options={{headerShown: false}} name="PersonalInfo" component={PersonalInfo} />
         <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="FriendsHome" component={FriendsHome} />
