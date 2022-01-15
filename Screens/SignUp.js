@@ -12,9 +12,8 @@ const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const database = getDatabase();
-    const provider = new GoogleAuthProvider();
+
     const navigation = useNavigation();
-    GoogleSignin.configure();
 
     // useEffect(() => {
     //     auth.onAuthStateChanged(user => {
@@ -31,8 +30,7 @@ const LoginScreen = () => {
     const handleSignUp = async () => {
       try {
           const user = await createUserWithEmailAndPassword(auth, email, password);
-          navigation.navigate("InfoAdd");
-          console.log(user);
+          navigation.navigate("PersonalInfo");
       } catch (error) {
           console.log(error.message);
       }

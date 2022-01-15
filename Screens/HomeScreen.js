@@ -3,15 +3,27 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, StatusBar } from 'react-native'
 import { auth } from '../firebase'
-import { getDatabase, ref, set, get, child } from "firebase/database";
+import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const database = getDatabase();
-  const dbref = ref(database);
+  const [name, setName] = useState("");
 
+  useEffect(() => {
+    try {
+    const db = getDatabase();
+    var userId = getAuth().currentUser.uid;
+    const nameRef = ref(db, 'users/' + userId + '/personalInfo');
+    onValue(nameRef, (snapshot) => {
+      const data = snapshot.val();
+      setName(data.name)
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}, [])
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -74,7 +86,7 @@ const HomeScreen = () => {
         <View style={styles.topRightContainer}>
           <Image style={styles.chatBox} source={require("../assets/chatbox.png")} />
           {/* <Text style={styles.textBox}>Welcome back {auth.currentUser.email}! Ready for Winter Quarter?! </Text> */}
-          <Text style={styles.textBox}>Welcome back Collin! I'm excited to make it through Winter Quarter with you! </Text>
+          <Text style={styles.textBox}>Welcome back {name}! I'm excited to make it through Winter Quarter with you! </Text>
           <TouchableOpacity
           onPress={handleSignOut}
           style={styles.buttonS}
