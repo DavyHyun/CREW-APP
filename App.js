@@ -14,6 +14,7 @@ import FriendsHome from './Screens/FriendsHome';
 import Favorites from './Screens/Favorites';
 import Reviews from './Screens/Reviews';
 import Profile from './Screens/Profile';
+import Help from './Screens/Help';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +41,8 @@ export default function App() {
         <Stack.Screen name="FriendsHome" component={FriendsHome} />
         <Stack.Screen name="Favorites" component={Favorites} />
         <Stack.Screen name="Reviews" component={Reviews} />
-        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen options={{headerShown: false}} name="Profile" component={Profile} />
+        <Stack.Screen name="Help" component={Help} />
       </Stack.Navigator>
     </NavigationContainer>}
     </>
