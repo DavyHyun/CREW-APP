@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react'
 import firebase from "firebase/compat/app";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import {auth} from '../firebase';
+import { getAuth } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 
 
@@ -30,6 +31,10 @@ const LoginScreen = () => {
     const handleSignUp = async () => {
       try {
           const user = await createUserWithEmailAndPassword(auth, email, password);
+          var userId = getAuth().currentUser.uid;
+          set(ref(database, 'users/' + userId + '/personalInfo'), {
+            name: "placeholder"
+      })
           navigation.navigate("PersonalInfo");
       } catch (error) {
           console.log(error.message);
