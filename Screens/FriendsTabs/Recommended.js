@@ -15,6 +15,7 @@ const Recommended = () => {
         {name: '', year: '', major: '', id: '9'},
         {name: '', year: '', major: '', id: '10'},
     ])
+
     return (
         <SafeAreaView style={styles.container}>
             <FlatList 

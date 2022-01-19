@@ -13,12 +13,12 @@ const HomeScreen = () => {
 
   useEffect(() => {
     try {
-    const db = getDatabase();
-    var userId = getAuth().currentUser.uid;
-    const nameRef = ref(db, 'users/' + userId + '/personalInfo');
-    onValue(nameRef, (snapshot) => {
-      const data = snapshot.val();
-      setName(data.name)
+      const db = getDatabase();
+      var userId = getAuth().currentUser.uid;
+      const nameRef = ref(db, 'users/' + userId + '/personalInfo');
+      onValue(nameRef, (snapshot) => {
+        const data = snapshot.val();
+        setName(data.name)
     });
   } catch (error) {
     console.log(error);
