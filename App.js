@@ -47,7 +47,6 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="Profile" component={Profile} />
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen options={{headerShown: false}} name="AddFav" component={AddFav} />
-        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>}
     </>

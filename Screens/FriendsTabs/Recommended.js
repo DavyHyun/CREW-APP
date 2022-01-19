@@ -26,7 +26,7 @@ const Recommended = () => {
                     <View elevation={5} style={styles.eachView}>
                         <View style={styles.profileImg}>
                             {item.name != '' ?
-                            <Image style={styles.Img} source={require("/Users/davidhyun/FrostyApp/assets/images/profilePic.png")}/>: null
+                            <Image style={styles.Img} source={require("../../assets/images/profilePic.png")}/>: null
                             }   
                             {item.name != '' ?
                             <TouchableOpacity
@@ -39,13 +39,13 @@ const Recommended = () => {
                         <Text style = {styles.name}>{item.name}</Text>
                         <View style={styles.infoContainer}>
                             {item.name != '' ?
-                            <Image style={styles.ImgInfo} source={require("/Users/davidhyun/FrostyApp/assets/images/yearPic.png")}/>: null
+                            <Image style={styles.ImgInfo} source={require("../../assets/images/yearPic.png")}/>: null
                             }   
                             <Text style={styles.infoText}>{item.year}</Text>
                         </View>
                         <View style={styles.infoContainer}>
                             {item.name != '' ?
-                            <Image style={styles.ImgInfo} source={require("/Users/davidhyun/FrostyApp/assets/images/majorPic.png")}/>: null
+                            <Image style={styles.ImgInfo} source={require("../../assets/images/majorPic.png")}/>: null
                             }   
                             <Text style={styles.infoText}>{item.major}</Text>
                         </View>

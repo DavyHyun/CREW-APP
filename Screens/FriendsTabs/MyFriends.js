@@ -34,7 +34,7 @@ const MyFriends = () => {
                 renderItem={({item})=> (
                     <View elevation={5} style={styles.eachView}>
                         <View style={styles.profileImg}>
-                            <Image style={styles.Img} source={require("/Users/davidhyun/FrostyApp/assets/images/profilePic.png")}/>
+                            <Image style={styles.Img} source={require("../../assets/images/profilePic.png")}/>
                             <Text style = {styles.name}>{item.name}</Text> 
                         </View>
                     </View>

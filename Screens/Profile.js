@@ -24,9 +24,9 @@ const Profile = () => {
             const nameRef = ref(db, 'users/' + userId + '/personalInfo');
             onValue(nameRef, (snapshot) => {
                 const data = snapshot.val();
-                // setName(data.name)
-                // setMajor(data.major)
-                // setYear(data.year)
+                setName(data.name)
+                setMajor(data.major.item)
+                setYear(data.year.item)
             });
         } catch (error) {
             console.log(error);
@@ -59,15 +59,7 @@ const Profile = () => {
             <View style={styles.userInfoContainer}>
                 <Text style={styles.userInfoLabel}>Name</Text>
                 <View style={styles.dataContainer}>
-                    <Text style={styles.userInfoData}>Collin Kim</Text>
-                </View>
-
-            </View>
-
-            <View style={styles.userInfoContainer}>
-                <Text style={styles.userInfoLabel}>Username</Text>
-                <View style={styles.dataContainer}>
-                    <Text style={styles.userInfoData}>ckim11</Text>
+                    <Text style={styles.userInfoData}>{name}</Text>
                 </View>
 
             </View>
@@ -75,7 +67,7 @@ const Profile = () => {
             <View style={styles.userInfoContainer}>
                 <Text style={styles.userInfoLabel}>Major</Text>
                 <View style={styles.dataContainer}>
-                    <Text style={styles.userInfoData}>Computer Science</Text>
+                    <Text style={styles.userInfoData}>{major}</Text>
                 </View>
 
             </View>
@@ -83,15 +75,7 @@ const Profile = () => {
             <View style={styles.userInfoContainer}>
                 <Text style={styles.userInfoLabel}>Year</Text>
                 <View style={styles.dataContainer}>
-                    <Text style={styles.userInfoData}>1st Year</Text>
-                </View>
-
-            </View>
-
-            <View style={styles.userInfoContainer}>
-                <Text style={styles.userInfoLabel}>Bio</Text>
-                <View style={styles.dataContainer}>
-                    <Text style={styles.userInfoData}></Text>
+                    <Text style={styles.userInfoData}>{year}</Text>
                 </View>
 
             </View>
