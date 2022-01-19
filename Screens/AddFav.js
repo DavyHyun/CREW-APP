@@ -86,7 +86,6 @@ const AddFav = () => {
                 {input != '' ?
                 <FlatList
                     data={filterData}
-                    
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeperatorView}
                     renderItem={ItemView}
@@ -184,13 +183,29 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     listContainer: {
+        marginTop: '2.5%',
         justifyContent: 'center',
         alignItems: 'center',
     },
     flatlist: {
         width: 200,
         height: 100,
-        // backgroundColor: 'white'
+        padding: 10,
+        borderColor: 'white',
+        borderRadius: 10,
+        borderWidth: 2,
+        
+        // alignItems:'center',
+        // justifyContent: 'center',
+        // flex: 1,
+        shadowColor: 'rgba(0,0,0, 0.6)',
+        shadowOffset: { height: 3.5, },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        backgroundColor:'white',
+        width: 275,
+        backgroundColor: 'white'
+
     }
 
 })
