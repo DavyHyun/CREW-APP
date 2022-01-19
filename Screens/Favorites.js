@@ -6,31 +6,33 @@ import { useNavigation, useFocusEffect, useIsFocused } from '@react-navigation/c
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
-const Favorites = () => {
+const Favorites = ({uid: userIdd}) => {
     const navigation = useNavigation();
     const [fav, setFav] = useState([]);
+    // const [adding, setAdding] = useState("");
     const isFocused = useIsFocused();
-
-    let adding = ",";
+    const db = getDatabase();
+    var userId = getAuth().currentUser.uid;
+    const favRef = ref(db, 'users/' + userId + '/favorite');
     let favs = [];
-    let found = ["placeholder"];
+    let found = [{id: "1"}];
+    var adding =",";
     // const [adding, setAdding] = useState("");
 
     const onScreenLoad = () => {
         try {
-        const db = getDatabase();
-        var userId = getAuth().currentUser.uid;
-        const favRef = ref(db, 'users/' + userId + '/favorite');
         onValue(favRef, (snapshot) => {
           const data = snapshot.val();
           adding = data.favorite;
-      });
+        });
         let myA = adding.split(",")
         for (let i = 1; i < myA.length; i++) {
             found = getResByCode(myA[i]);
             // console.log(found);
-            found[0]["id"] = i;
-            favs.push(found[0]);
+            if (found != null) {
+                found[0]["id"] = i;
+                favs.push(found[0]);
+            }
         }
         setFav(favs)
     } catch (error) {
@@ -40,7 +42,7 @@ const Favorites = () => {
     
     useEffect(() => {
         if (isFocused) {
-        onScreenLoad(); 
+            onScreenLoad(); 
         }
     }, [isFocused])
 

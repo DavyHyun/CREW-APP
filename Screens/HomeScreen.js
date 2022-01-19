@@ -106,7 +106,17 @@ const HomeScreen = () => {
   }
 
   const navigateToFavorites = () => {
-    navigation.navigate("Favorites");
+    var userId = getAuth().currentUser.uid;
+    const db = getDatabase();
+            const favRef = ref(db, 'users/' + userId + '/favorite');
+            onValue(favRef, (snapshot) => {
+              const data = snapshot.val();
+              if (data.favorite != null) {
+                  navigation.navigate("Favorites");
+              } else {
+                navigation.navigate("AddFav");
+              }
+            })
   }
 
   const navigateToReviews = () => {

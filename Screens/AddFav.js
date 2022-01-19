@@ -14,7 +14,7 @@ const AddFav = () => {
     const [filterData, setFilterData] = useState(rData);
     const [masterData, setMasterData] = useState(rData);
     const db = getDatabase();
-   
+    const navigation = useNavigation();
     const [input, setInput] = useState("");
     const [adding, setAdding] = useState("");
     const [currData, setData] = useState([]);
@@ -25,7 +25,7 @@ const AddFav = () => {
             var userId = getAuth().currentUser.uid;
             const favRef = ref(db, 'users/' + userId + '/favorite');
             onValue(favRef, (snapshot) => {
-              const data = snapshot.val();
+              const data = snapshot.val();       
               setAdding(data.favorite);
           });
       } catch (error) {
@@ -33,7 +33,6 @@ const AddFav = () => {
       }
     }, [])
 
-    const navigation = useNavigation();
     function getResByCode(code) {
         return rData.filter(
             function(rData) {return rData.RESTAURANT == code}
