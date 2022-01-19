@@ -1,26 +1,61 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/core'
+import rData from '../json/thankYouGrace.json'
+import { useNavigation, useFocusEffect, useIsFocused } from '@react-navigation/core'
+import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 const Favorites = () => {
     const navigation = useNavigation();
-    const [fav, setFav] = useState([
-        {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '1'},
-        {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '2'},
-        {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '3'},
-        // {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '4'},
-        // {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '5'},
-        // {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '6'},
-        // {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '7'},
-        // {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '8'},
-        // {name: 'Korean Tofu House', Type: 'Asian, Korean', id: '9'},
-    ])
+    const [fav, setFav] = useState([]);
+    const isFocused = useIsFocused();
+
+    let adding = ",";
+    let favs = [];
+    let found = ["placeholder"];
+    // const [adding, setAdding] = useState("");
+
+    const onScreenLoad = () => {
+        try {
+        const db = getDatabase();
+        var userId = getAuth().currentUser.uid;
+        const favRef = ref(db, 'users/' + userId + '/favorite');
+        onValue(favRef, (snapshot) => {
+          const data = snapshot.val();
+          adding = data.favorite;
+      });
+        let myA = adding.split(",")
+        for (let i = 1; i < myA.length; i++) {
+            found = getResByCode(myA[i]);
+            // console.log(found);
+            found[0]["id"] = i;
+            favs.push(found[0]);
+        }
+        setFav(favs)
+    } catch (error) {
+        console.log(error)
+    }
+    }
+    
+    useEffect(() => {
+        if (isFocused) {
+        onScreenLoad(); 
+        }
+    }, [isFocused])
+
+    function getResByCode(code) {
+        return rData.filter(
+            function(rData) {return rData.RESTAURANT == code}
+        )
+    }
+
     const navigateToHome = () => {
         navigation.navigate("Home");
     }
     const navigateToAdd = () => {
         navigation.navigate("AddFav");
+
     }
 
     return (
@@ -55,8 +90,8 @@ const Favorites = () => {
                         </View>
                         <View style= {styles.infoContainer}>
                         <View>
-                            <Text style={styles.Ti}>{item.name}</Text>
-                            <Text style={styles.Bo}>{item.Type}</Text>
+                            <Text style={styles.Ti}>{item.RESTAURANT}</Text>
+                            <Text style={styles.Bo}>{item.TYPE}</Text>
                         </View>
                         <View>
                             <AntDesign name="right" size={24} color="#2A6F97" style={styles.right} />

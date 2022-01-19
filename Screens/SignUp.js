@@ -35,6 +35,9 @@ const LoginScreen = () => {
           set(ref(database, 'users/' + userId + '/personalInfo'), {
             name: "placeholder"
       })
+      set(ref(database, 'users/' + userId + '/favorite'), {
+            favorite: ""
+  })
           navigation.navigate("PersonalInfo");
       } catch (error) {
           console.log(error.message);

@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList, SafeAreaView, KeyboardAvoidingView } from 'react-native'
+import React, {useState, useEffect} from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList, SafeAreaView, KeyboardAvoidingView, Alert } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core'
 import rData from '../json/thankYouGrace.json'
@@ -14,17 +14,63 @@ const AddFav = () => {
     const [filterData, setFilterData] = useState(rData);
     const [masterData, setMasterData] = useState(rData);
     const db = getDatabase();
+   
     const [input, setInput] = useState("");
+    const [adding, setAdding] = useState("");
     const [currData, setData] = useState([]);
+    const [favs, setFavs] = useState([]);
+
+    useEffect(() => {
+        try {
+            var userId = getAuth().currentUser.uid;
+            const favRef = ref(db, 'users/' + userId + '/favorite');
+            onValue(favRef, (snapshot) => {
+              const data = snapshot.val();
+              setAdding(data.favorite);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }, [])
 
     const navigation = useNavigation();
+    function getResByCode(code) {
+        return rData.filter(
+            function(rData) {return rData.RESTAURANT == code}
+        )
+    }
     const navigateToFav = () => {
         navigation.navigate("Favorites");
+    //     var userId = getAuth().currentUser.uid;
+    //     const favRef = ref(db, 'users/' + userId + '/favorite');
+    //     onValue(favRef, (snapshot) => {
+    //       const data = snapshot.val();
+    //       setAdding(data.favorite);
+    //   });
+    //     let myA = adding.split(",")
+    //     for (let i = 1; i < myA.length; i++) {
+    //         var found = getResByCode(myA[i]);
+    //         favs.push(found);
+    //     }
+    //     console.log(favs);
     }
-
+    function getCurr() {
+        var userId = getAuth().currentUser.uid;
+        const favRef = ref(db, 'users/' + userId + '/favorite');
+        onValue(favRef, (snapshot) => {
+          const data = snapshot.val();
+          setAdding(data.favorite);
+      });
+    }
     const addInfo = () => {
-
+      getCurr();
+      var userId = getAuth().currentUser.uid;
+      set(ref(db, 'users/' + userId + '/favorite'), {
+            favorite: adding + ',' + input
+      })
+      alert("added!")
     }
+    
 
     const searchFilter =(text)=> {
         if (text) {
@@ -41,11 +87,19 @@ const AddFav = () => {
         }
     }
 
+    const onItemClick = (item) => {
+        setInput(item.RESTAURANT)
+    }
+
     const ItemView = ({item}) => {
         return (
+            <TouchableOpacity
+            onPress={() => onItemClick(item)}
+            >
             <Text style = {styles.itemStyle}>
                 {item.RESTAURANT}
             </Text>
+            </TouchableOpacity>
         )
     }
     const ItemSeperatorView =()=> {
@@ -86,6 +140,7 @@ const AddFav = () => {
                 {input != '' ?
                 <FlatList
                     data={filterData}
+                    
                     keyExtractor={(item, index) => index.toString()}
                     ItemSeparatorComponent={ItemSeperatorView}
                     renderItem={ItemView}
