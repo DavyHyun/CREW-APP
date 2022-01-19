@@ -6,6 +6,7 @@ import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, Vi
 import {auth} from '../firebase';
 import { getDatabase, ref, set } from "firebase/database";
 
+
 const LoginScreen = () => {
 
     const [email, setEmail] = useState("");
@@ -22,17 +23,18 @@ const LoginScreen = () => {
     //       })
     // }, [])
 
+    // const handleGoogle = async () => {
+
+    // }
+
     const handleSignUp = async () => {
-        try {
-            const user = await createUserWithEmailAndPassword(auth, email, password);
-            navigation.navigate("InfoAdd");
-            console.log(user);
-        } catch (error) {
-            console.log(error.message);
-        }
-
-
-    }
+      try {
+          const user = await createUserWithEmailAndPassword(auth, email, password);
+          navigation.navigate("PersonalInfo");
+      } catch (error) {
+          console.log(error.message);
+      }
+  }
 
     return (
         <KeyboardAvoidingView

@@ -16,17 +16,17 @@ const HomeScreen = () => {
 
   useEffect(() => {
     try {
-      const db = getDatabase();
-      var userId = getAuth().currentUser.uid;
-      const nameRef = ref(db, 'users/' + userId + '/personalInfo');
-      onValue(nameRef, (snapshot) => {
-        const data = snapshot.val();
-        // setName(data.name)
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [])
+    const db = getDatabase();
+    var userId = getAuth().currentUser.uid;
+    const nameRef = ref(db, 'users/' + userId + '/personalInfo');
+    onValue(nameRef, (snapshot) => {
+      const data = snapshot.val();
+      setName(data.name)
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}, [])
 
 
   const handleSignOut = () => {
@@ -157,8 +157,15 @@ const HomeScreen = () => {
         {/*Message bubble*/}
         <View style={styles.topRightContainer}>
           <Image style={styles.chatBox} source={require("../assets/chatbox.png")} />
-          {/* <Text style={styles.textBox}>Welcome back {name}! I'm excited to make it through Winter Quarter with you! </Text> */}
-          <Text style={styles.textBox}>Welcome back Collin Kim! I'm excited to make it through Winter Quarter with you! </Text>
+
+          <Text style={styles.textBox}> Welcome back {name}! I'm excited to make it through Winter Quarter with you! </Text>
+          <TouchableOpacity
+          onPress={handleSignOut}
+          style={styles.buttonS}
+        >
+          <Text style={{color: 'black'}}>Sign Out</Text>
+        </TouchableOpacity>
+
         </View>
       </View>
 
