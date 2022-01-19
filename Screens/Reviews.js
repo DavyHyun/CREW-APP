@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 const Reviews = () => {
     return (
         <View>
-            <Text>Reviews</Text>
+            <Text>Reviews Page</Text>
         </View>
     )
 }
