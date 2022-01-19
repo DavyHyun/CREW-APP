@@ -63,7 +63,7 @@ const HomeScreen = () => {
               style={styles.dropDownSignOutImage}
               source={require("../assets/dropDownLogos/Vector.png")}
             />
-              <Text style={styles.dropDownSignOutText}>
+            <Text style={styles.dropDownSignOutText}>
                 Sign Out
               </Text>
             </TouchableOpacity>
@@ -159,12 +159,7 @@ const HomeScreen = () => {
           <Image style={styles.chatBox} source={require("../assets/chatbox.png")} />
 
           <Text style={styles.textBox}> Welcome back {name}! I'm excited to make it through Winter Quarter with you! </Text>
-          <TouchableOpacity
-          onPress={handleSignOut}
-          style={styles.buttonS}
-        >
-          <Text style={{color: 'black'}}>Sign Out</Text>
-        </TouchableOpacity>
+          
 
         </View>
       </View>
