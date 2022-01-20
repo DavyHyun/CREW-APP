@@ -43,7 +43,7 @@ export default function App() {
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="FriendsHome" component={FriendsHome} />
         <Stack.Screen options={{headerShown: false}} name="Favorites" component={Favorites} />
-        <Stack.Screen name="Reviews" component={Reviews} />
+        <Stack.Screen options={{headerShown: false}} name="Reviews" component={Reviews} />
         <Stack.Screen options={{headerShown: false}} name="Profile" component={Profile} />
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen options={{headerShown: false}} name="AddFav" component={AddFav} />
