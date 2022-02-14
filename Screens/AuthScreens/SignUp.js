@@ -1,39 +1,48 @@
-import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, getAuth } from '@firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from '@firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react'
+import firebase from "firebase/compat/app";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
-import {auth} from '../firebase';
+import {auth} from '../../firebase';
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 
 
 const LoginScreen = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const database = getDatabase();
 
     const navigation = useNavigation();
 
-    useEffect(() => {
-        auth.onAuthStateChanged(user => {
-            if (user) {
-              navigation.replace("Home")
-            }
-          })
-    }, [])
+    // useEffect(() => {
+    //     auth.onAuthStateChanged(user => {
+    //         if (user) {
+    //           navigation.replace("Home")
+    //         }
+    //       })
+    // }, [])
 
-    const goBack = () => {
-        navigation.navigate("Log In or Sign Up");
-    }
-    const handleLogin = async () => {
-        try {
-            const user = await signInWithEmailAndPassword(auth, email, password);
-            console.log(user);
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
+    // const handleGoogle = async () => {
 
+    // }
 
+    const handleSignUp = async () => {
+      try {
+          const user = await createUserWithEmailAndPassword(auth, email, password);
+          var userId = getAuth().currentUser.uid;
+          set(ref(database, 'users/' + userId + '/personalInfo'), {
+            name: "placeholder"
+      })
+      set(ref(database, 'users/' + userId + '/favorite'), {
+            favorite: ""
+  })
+          navigation.navigate("PersonalInfo");
+      } catch (error) {
+          console.log(error.message);
+      }
+  }
 
     return (
         <KeyboardAvoidingView
@@ -41,25 +50,27 @@ const LoginScreen = () => {
             behavior="padding"
         >
             <View style={styles.inputContainer}>
-                <Text style={styles.su}>Log In!</Text>
-              
+            <Text style={styles.su}>Sign Up!</Text>
                 <TextInput 
                     placeholder="Email"
                     value={email}
                     onChangeText={text => {setEmail(text)}}
                     style={styles.input}
-                    
                 />
-                
                 <TextInput 
                     placeholder="Password"
                     value={password}
                     onChangeText={text => {setPassword(text)}}
                     style={styles.input}
                     secureTextEntry
-                    
                 />
-            
+                <TextInput 
+                    placeholder="Confirm Password"
+                    value={password}
+                    // onChangeText={text => {setPassword(text)}}
+                    style={styles.input}
+                    secureTextEntry
+                />
             </View>
             <View style={styles.lineContainer}>
           <View style={{flex: 1, height: 1, backgroundColor: '#2A6F97'}} />
@@ -73,28 +84,22 @@ const LoginScreen = () => {
                     // onPress={handleGoogle}
                     style={styles.buttonOther}
                 >
-                    <Image source={require("../assets/images/GoogleLogo.png")} style={styles.logo}/>
+                    <Image source={require("../../assets/images/GoogleLogo.png")} style={styles.logo}/>
                     <Text style={styles.buttonText}>    Continue with Google</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     // onPress={handleFacebook}
                     style={styles.buttonOther}
                 >
-                    <Image source={require("../assets/images/FacebookLogo.webp")} style={styles.logo}/>
+                    <Image source={require("../../assets/images/FacebookLogo.webp")} style={styles.logo}/>
                     <Text style={styles.buttonText}>    Continue with Facebook</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={handleLogin}
+                    onPress={handleSignUp}
                     style={styles.button}
                 >
-                    <Text style={styles.buttonTextL}>Login</Text>
+                    <Text style={styles.buttonTextL}>Next</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                    onPress={goBack}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Back</Text>
-                </TouchableOpacity> */}
             </View>
         </KeyboardAvoidingView>
     )

@@ -5,7 +5,6 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'rea
 import { auth } from '../firebase'
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import firebase from "firebase/compat/app";
-
 import { getAuth } from "firebase/auth";
 
 
@@ -106,7 +105,17 @@ const HomeScreen = () => {
   }
 
   const navigateToFavorites = () => {
-    navigation.navigate("Favorites");
+    var userId = getAuth().currentUser.uid;
+    const db = getDatabase();
+            const favRef = ref(db, 'users/' + userId + '/favorite');
+            onValue(favRef, (snapshot) => {
+              const data = snapshot.val();
+              if (data.favorite != null) {
+                  navigation.navigate("Favorites");
+              } else {
+                navigation.navigate("AddFav");
+              }
+            })
   }
 
   const navigateToReviews = () => {

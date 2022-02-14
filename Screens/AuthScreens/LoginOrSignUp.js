@@ -18,7 +18,7 @@ const LoginOrSignUp = () => {
     }
     return (
         <View style ={styles.container}>
-        <Image source={require('../assets/images/frosty_!!_❄️.png')} style={styles.image}/>
+        <Image source={require('../../assets/images/frosty_!!_❄️.png')} style={styles.image}/>
         <Text style={styles.title}>FROSTY</Text>
         <View style={styles.loginContainer}>
         <Text style={styles.subText}>

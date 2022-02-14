@@ -73,7 +73,7 @@ function InfoAdd() {
             preference: pref,
             priceRange: price,
       })
-      navigation.navigate("Home");
+      navigation.navigate("HomeStackNav");
   }
 
   return (
