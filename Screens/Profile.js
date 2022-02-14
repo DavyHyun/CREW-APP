@@ -34,7 +34,7 @@ const Profile = () => {
     }, [])
 
     const navigateToHome = () => {
-        navigation.replace("Home");
+        navigation.navigate("Home");
     }
     const navigateToChat = () => {
         navigation.replace("Chat");
