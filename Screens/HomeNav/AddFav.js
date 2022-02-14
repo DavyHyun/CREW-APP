@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, FlatList, SafeAreaView, KeyboardAvoidingView, Alert } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core'
-import rData from '../json/thankYouGrace.json'
-import { auth } from '../firebase'
+import rData from '../../json/thankYouGrace.json'
+import { auth } from '../../firebase'
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth";

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Image, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from "react-native";
-import { auth } from '../firebase'
+import { auth } from '../../firebase'
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from '@react-navigation/core'
-import UploadImage from '../components/UploadImage';
+import UploadImage from '../../components/UploadImage';
 
 
 
@@ -48,7 +48,7 @@ const Profile = () => {
                     onPress={navigateToHome}
                     style={styles.homeButton}>
                     <Image
-                        source={require("../assets/buttonLogos/left_arrow.png")}
+                        source={require("../../assets/buttonLogos/left_arrow.png")}
                     />
                 </TouchableOpacity>
                 <View style={styles.profilePicContainer}>

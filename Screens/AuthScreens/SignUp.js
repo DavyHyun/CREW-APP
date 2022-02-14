@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react'
 import firebase from "firebase/compat/app";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
-import {auth} from '../firebase';
+import {auth} from '../../firebase';
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 
@@ -84,14 +84,14 @@ const LoginScreen = () => {
                     // onPress={handleGoogle}
                     style={styles.buttonOther}
                 >
-                    <Image source={require("../assets/images/GoogleLogo.png")} style={styles.logo}/>
+                    <Image source={require("../../assets/images/GoogleLogo.png")} style={styles.logo}/>
                     <Text style={styles.buttonText}>    Continue with Google</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     // onPress={handleFacebook}
                     style={styles.buttonOther}
                 >
-                    <Image source={require("../assets/images/FacebookLogo.webp")} style={styles.logo}/>
+                    <Image source={require("../../assets/images/FacebookLogo.webp")} style={styles.logo}/>
                     <Text style={styles.buttonText}>    Continue with Facebook</Text>
                 </TouchableOpacity>
                 <TouchableOpacity

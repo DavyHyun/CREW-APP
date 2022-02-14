@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import rData from '../json/thankYouGrace.json'
+import rData from '../../json/thankYouGrace.json'
 import { useNavigation, useFocusEffect, useIsFocused } from '@react-navigation/core'
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { SimpleLineIcons } from '@expo/vector-icons'; 
 
 const Favorites = ({uid: userIdd}) => {
     const navigation = useNavigation();
@@ -55,6 +56,9 @@ const Favorites = ({uid: userIdd}) => {
     const navigateToHome = () => {
         navigation.navigate("Home");
     }
+    const openDrawer =()=> {
+        navigation.openDrawer();
+    }
     const navigateToAdd = () => {
         navigation.navigate("AddFav");
 
@@ -64,10 +68,10 @@ const Favorites = ({uid: userIdd}) => {
         <View>
             <View style={styles.topArea}>
             <TouchableOpacity
-                onPress={navigateToHome}
+                onPress={openDrawer}
                 style={styles.backButton}
             >
-                <AntDesign name="left" size={24} color="#2A6F97" />
+                <SimpleLineIcons name="menu" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={navigateToAdd}

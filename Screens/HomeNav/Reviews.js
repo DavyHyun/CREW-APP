@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import rData from '../json/thankYouGrace.json'
+import rData from '../../json/thankYouGrace.json'
 import { useNavigation, useFocusEffect, useIsFocused } from '@react-navigation/core'
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
@@ -11,6 +11,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 import { Feather } from '@expo/vector-icons'; 
 import Accordion from 'react-native-collapsible/Accordion';
 import { back } from 'react-native/Libraries/Animated/Easing';
+import { SimpleLineIcons } from '@expo/vector-icons'; 
 
 const Reviews = () => {
     const options = ["Food", "Study Spots", "Courses"];
@@ -96,10 +97,10 @@ const Reviews = () => {
             <View style={{}}>
             <View style={styles.topArea}>
             <TouchableOpacity
-                onPress={navigateToHome}
+                onPress={()=> navigation.openDrawer()}
                 style={styles.backButton}
             >
-                <AntDesign name="left" size={24} color="#2A6F97" />
+                <SimpleLineIcons name="menu" size={24} color="black" />
             </TouchableOpacity>
             </View>
             <View style={styles.container}>

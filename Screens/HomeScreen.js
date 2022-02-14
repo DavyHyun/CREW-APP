@@ -5,7 +5,6 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'rea
 import { auth } from '../firebase'
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import firebase from "firebase/compat/app";
-
 import { getAuth } from "firebase/auth";
 
 

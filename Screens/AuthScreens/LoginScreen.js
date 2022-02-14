@@ -2,7 +2,7 @@ import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, si
 import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
-import {auth} from '../firebase';
+import {auth} from '../../firebase';
 
 
 const LoginScreen = () => {
@@ -16,7 +16,7 @@ const LoginScreen = () => {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-              navigation.replace("Home")
+              navigation.replace("HomeStackNav")
             }
           })
     }, [])
@@ -73,14 +73,14 @@ const LoginScreen = () => {
                     // onPress={handleGoogle}
                     style={styles.buttonOther}
                 >
-                    <Image source={require("../assets/images/GoogleLogo.png")} style={styles.logo}/>
+                    <Image source={require("../../assets/images/GoogleLogo.png")} style={styles.logo}/>
                     <Text style={styles.buttonText}>    Continue with Google</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     // onPress={handleFacebook}
                     style={styles.buttonOther}
                 >
-                    <Image source={require("../assets/images/FacebookLogo.webp")} style={styles.logo}/>
+                    <Image source={require("../../assets/images/FacebookLogo.webp")} style={styles.logo}/>
                     <Text style={styles.buttonText}>    Continue with Facebook</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
