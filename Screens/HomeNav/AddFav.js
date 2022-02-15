@@ -22,12 +22,15 @@ const AddFav = () => {
 
     useEffect(() => {
         try {
+            let isMounted = true;
+            if (isMounted) {
             var userId = getAuth().currentUser.uid;
             const favRef = ref(db, 'users/' + userId + '/favorite');
             onValue(favRef, (snapshot) => {
               const data = snapshot.val();       
               setAdding(data.favorite);
           });
+        }
       } catch (error) {
         console.log(error);
       }
@@ -59,7 +62,7 @@ const AddFav = () => {
         onValue(favRef, (snapshot) => {
           const data = snapshot.val();
           setAdding(data.favorite);
-      });
+       });
     }
     const addInfo = () => {
       getCurr();
