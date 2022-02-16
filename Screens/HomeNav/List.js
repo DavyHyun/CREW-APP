@@ -9,10 +9,12 @@ import { getAuth } from "firebase/auth";
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 
 
-const HomeScreen = () => {
+const List = ({ route }) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
+  const score = route.params.score;
+  
 
   useEffect(() => {
     try {
@@ -38,12 +40,13 @@ const HomeScreen = () => {
                 <SimpleLineIcons name="menu" size={24} color="black" />
             </TouchableOpacity>
             <Text>Your List</Text>
+            <Text>{score}</Text>
         </View>
       </View>
   )
 }
 
-export default HomeScreen
+export default List
 
 const styles = StyleSheet.create({
 

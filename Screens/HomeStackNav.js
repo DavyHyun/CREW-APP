@@ -7,7 +7,7 @@ import Reviews from './HomeNav/Reviews'
 import Home from './HomeNav/NewHome'
 import Search from './HomeNav/Search'
 import List from './HomeNav/List'
-import Game from './HomeNav/Game'
+import Game from './HomeNav/Game/Game'
 import Settings from './HomeNav/Settings'
 import { DrawerContent } from './DrawerContent';
 
@@ -21,7 +21,7 @@ const HomeStackNav = () => {
         screenOptions={{headerShown: false, drawerStyle: {backgroundColor: '#ffbc42',
         width: 325}}}
         drawerContent={props => <DrawerContent {...props}/>}
-      
+        
       >
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Search" component={Search} />
