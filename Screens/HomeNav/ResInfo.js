@@ -1,5 +1,5 @@
 import { signOut } from '@firebase/auth'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation, useRoute } from '@react-navigation/core'
 import React, { useEffect, useState, FC } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native'
 import { auth } from '../../firebase'
@@ -9,13 +9,18 @@ import { getAuth } from "firebase/auth";
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 
 
-const Settings = () => {
+const ResInfo = () => {
   const navigation = useNavigation();
+//   const[resname, setresName] = useState(item);
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
+  const route = useRoute();
+  const resname = route.params.item;
+
 
   useEffect(() => {
     try {
+        let testvar;
       const db = getDatabase();
       var userId = getAuth().currentUser.uid;
       const nameRef = ref(db, 'users/' + userId + '/personalInfo');
@@ -37,13 +42,13 @@ const Settings = () => {
             >
                 <SimpleLineIcons name="menu" size={24} color="black" />
             </TouchableOpacity>
-        <Text>Settings</Text>
+            <Text>{resname}</Text>
         </View>
       </View>
   )
 }
 
-export default Settings
+export default ResInfo
 
 const styles = StyleSheet.create({
 
@@ -65,4 +70,3 @@ Top: {
 },
 
 })
-

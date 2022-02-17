@@ -9,13 +9,14 @@ import { getAuth } from "firebase/auth";
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 
 
-const HomeScreen = () => {
+const Game = () => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
 
   useEffect(() => {
     try {
+        let testvar;
       const db = getDatabase();
       var userId = getAuth().currentUser.uid;
       const nameRef = ref(db, 'users/' + userId + '/personalInfo');
@@ -43,7 +44,7 @@ const HomeScreen = () => {
   )
 }
 
-export default HomeScreen
+export default Game
 
 const styles = StyleSheet.create({
 

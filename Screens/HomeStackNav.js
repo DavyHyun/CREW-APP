@@ -9,6 +9,7 @@ import Search from './HomeNav/Search'
 import List from './HomeNav/List'
 import Game from './HomeNav/Game'
 import Settings from './HomeNav/Settings'
+import ResInfo from './HomeNav/ResInfo'
 import { DrawerContent } from './DrawerContent';
 
 
@@ -24,6 +25,7 @@ const HomeStackNav = () => {
       
       >
         <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen  name="ResInfo" component={ResInfo} />
         <Drawer.Screen name="Search" component={Search} />
         <Drawer.Screen name="List" component={List} />
         <Drawer.Screen name="Game" component={Game} />
