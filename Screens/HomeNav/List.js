@@ -13,7 +13,7 @@ const List = ({ route }) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
-  const [score, setScore] = useState(0);
+  
 
 
 
@@ -29,15 +29,15 @@ const List = ({ route }) => {
     } catch (error) {
       console.log(error);
     }
-    try {
-      const obj = route.params.score;
-      console.log(obj);
-      console.log("useeffect has been run");
-    } catch (error) {
-      console.log(error);
-      console.log("useeffect has been run");
-    }
   }, [])
+
+  const displayScore = () => {
+    try {
+      alert("you scored: " + route.params.score);
+    } catch (error) {
+      alert("you need to play the game to get a score");
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -49,8 +49,11 @@ const List = ({ route }) => {
           <SimpleLineIcons name="menu" size={24} color="black" />
         </TouchableOpacity>
         <Text>Your List</Text>
-        <Text>{score}</Text>
       </View>
+      <TouchableOpacity
+        onPress={displayScore}>
+          <Text>tap to see your score</Text>
+      </TouchableOpacity>
     </View>
   )
 }
