@@ -52,7 +52,24 @@ const searchFilter =(text)=> {
 }
 
 const onItemClick = (item) => {
-  navigation.navigate("ResInfo", {item : item.RESTAURANT});
+  navigation.navigate("ResInfo", {
+    name : item.RESTAURANT,
+    fsr : item.FSR,
+    address: item.ADDRESS,
+    location: item.LOCATION,
+    type: item.TYPE,
+    price: item.PRICE,
+    popular: item.POPULAR,
+    recommendation: item.RECOMMENDATION,
+    monday: item.M,
+    tuesday: item.T,
+    wednesday: item.W,
+    thursday: item.TH,
+    friday: item.F,
+    saturday: item.S,
+    sunday: item.SU,
+    tea: item.TEA,
+  });
 }
 
 const ItemView = ({item}) => {
