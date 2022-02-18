@@ -1,19 +1,22 @@
 import { signOut } from '@firebase/auth'
 import { useNavigation, useRoute } from '@react-navigation/core'
 import React, { useEffect, useState, FC } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, TextInput } from 'react-native'
 import { auth } from '../../firebase'
-import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
+import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth";
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 
 
 const ResInfo = () => {
+
+
   const navigation = useNavigation();
+
 //   const[resname, setresName] = useState(item);
   const [visible, setVisible] = useState(false);
-  const [name, setName] = useState("");
+  const [review, setReview] = useState("");
   const route = useRoute();
   const resname = route.params.name;
   const fsr = route.params.fsr;
@@ -32,22 +35,48 @@ const ResInfo = () => {
   const saturday = route.params.saturday;
   const sunday = route.params.sunday;
   const tea = route.params.tea;
+  const [personName, setPersonName] = useState("");
 
-
+  const db = getDatabase();
+  const restReviewRef = ref(db, 'restaurants/' + resname);
   useEffect(() => {
     try {
-        let testvar;
-      const db = getDatabase();
       var userId = getAuth().currentUser.uid;
       const nameRef = ref(db, 'users/' + userId + '/personalInfo');
       onValue(nameRef, (snapshot) => {
         const data = snapshot.val();
-        setName(data.name)
+        setPersonName(data.name);
     });
+
   } catch (error) {
     console.log(error);
   }
 }, [])
+  
+  
+
+  const addInfo= () => {
+    const newPostRef = push(restReviewRef);
+    set(newPostRef, {
+      Review: review,
+      Name: personName,
+    })
+  }
+
+  const displayReviews = () => {
+    const resRef = ref(db, 'restaurants/' + resname);
+    onValue(resRef, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const childKey = childSnapshot.key;
+        const childData = childSnapshot.val();
+        console.log(childKey)
+        console.log(childData.Review)
+        console.log(childData.Name)
+      });
+    }, {
+      onlyOnce: true
+    });
+  }
 
   return (
       <View style={styles.container}>
@@ -78,11 +107,28 @@ const ResInfo = () => {
             <Text>Sunday: {sunday}</Text>
             <Text></Text>
             <Text>One Line Tea: {tea}</Text>
-            <Image
-                
-                source={{uri:'https://fastly.4sqi.net/img/general/width960/1130758_PgO-wJqcbNpfptgNnnklaJ2TlwKyHom2_v5nGWVKgag.jpg'}}
-            />
         </View>
+        <View style={{marginTop: '10%'}}>
+        <TextInput
+            placeholder="Add review"
+            style={styles.input}
+            fontSize= {15}
+            value={review}
+            onChangeText={text => {setReview(text)}}
+         />
+        </View>
+        <TouchableOpacity
+                    onPress={addInfo}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonTextL}>add review</Text>
+         </TouchableOpacity>
+         <TouchableOpacity
+                    onPress={displayReviews}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonTextL}>display review</Text>
+         </TouchableOpacity>
       </View>
   )
 }
@@ -106,6 +152,41 @@ Top: {
     alignItems: 'center',
     flexDirection: 'row',
     // backgroundColor:'blue',
+},
+input: {
+  // marginHorizontal: 10,
+  marginLeft: '3%',
+  padding: 5,
+  borderColor: 'white',
+  borderRadius: 5,
+  borderWidth: 2,
+  width: '80%'
+  // alignItems:'center',
+  // justifyContent: 'center',
+  // flex: 1,fgfg
+},
+button: {
+  width: '100%',
+  padding: '2%',
+  borderRadius: 40,
+  alignItems: 'center',
+  backgroundColor: '#36649E',
+  marginBottom: '2%',
+  borderStyle: 'solid',
+  borderColor: '#36649E',
+  borderWidth: 1,
+  marginTop: '15%'
+},
+buttonOutline: {
+  backgroundColor: 'white',
+  marginTop: 5,
+  borderColor: '#0782F9',
+  borderWidth: 2,
+},
+buttonText: {
+  color: '#36649E',
+  fontWeight: '700',
+  fontSize: 16,
 },
 
 })

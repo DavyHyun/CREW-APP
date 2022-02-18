@@ -42,6 +42,7 @@ export function DrawerContent(props) {
     console.log(error);
   }
 }, [])
+
 const handleSignOut = () => {
     signOut(auth).then(() => {
       props.navigation.navigate("Log In or Sign Up");
