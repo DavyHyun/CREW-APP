@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Image, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from "react-native";
+import { Image, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, Dimensions } from "react-native";
 import { auth } from '../../firebase'
 import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from '@react-navigation/core'
 import UploadImage from '../../components/UploadImage';
+import { LineChart } from 'react-native-chart-kit';
 
 
 
@@ -65,7 +66,7 @@ const Profile = () => {
             </View>
 
             <View style={styles.userInfoContainer}>
-                <Text style={styles.userInfoLabel}>Major</Text>
+                <Text style={styles.userInfoLabel}>Username</Text>
                 <View style={styles.dataContainer}>
                     <Text style={styles.userInfoData}>{major}</Text>
                 </View>
@@ -73,11 +74,75 @@ const Profile = () => {
             </View>
 
             <View style={styles.userInfoContainer}>
-                <Text style={styles.userInfoLabel}>Year</Text>
-                <View style={styles.dataContainer}>
+                <Image 
+                    source={require("../../assets/buttonLogos/crescent.png")} 
+                    style={styles.crescentLabel}
+                />
+                <View style={styles.crescentContainer}>
                     <Text style={styles.userInfoData}>{year}</Text>
                 </View>
 
+            </View>
+            
+            <View style={styles.chart}>
+            
+                <LineChart
+                    data={{
+                        labels: ["January", "February", "March", "April", "May", "June"],
+                        datasets: [
+                            {
+                                data: [
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                ]
+                            }
+                        ]
+                    }}
+                    width={Dimensions.get("window").width + 100} // from react-native
+                    height={220}
+                    yAxisInterval={1} // optional, defaults to 1
+                    chartConfig={{
+                        backgroundColor: "#FFBE48",
+                        backgroundGradientFrom: "#FFBE48",
+                        backgroundGradientTo: "#FFBE48",
+                        fillShadowGradientFrom: '#FFBE48',
+                        fillShadowGradientTo: '#FFBE48',
+                        decimalPlaces: 0, // optional, defaults to 2dp
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        style: {
+                            borderRadius: 0
+                        },
+                        propsForDots: {
+                            r: "6",
+                            strokeWidth: "1",
+                            stroke: "#FFFFFF"
+                        }
+                    }}
+                    hideLegend={true}
+                    withInnerLines={false}
+                    withOuterLines={false}
+                    bezier
+                    style={{
+                        marginVertical: 8,
+                        borderRadius: 1,
+                        borderTopWidth: 100,
+                        borderTopColor: '#FFBE48',
+                        borderBottomWidth: 100,
+                        borderBottomColor: '#FFBE48',
+                        marginTop: 70,
+                        paddingRight: -20
+                        
+                    }}
+                    
+                />
+                <View style={styles.oval}>
+                    <Text style={styles.chartLabel}>  {name} Stats </Text>
+                </View>
             </View>
 
 
@@ -95,6 +160,7 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         height: 300,
+        zIndex: 100,
     },
     homeButton: {
         top: 50,
@@ -108,12 +174,28 @@ const styles = StyleSheet.create({
     userInfoContainer: {
         flexDirection: 'row',
         marginVertical: 7,
+        zIndex: 100,
+    },
+    crescentContainer: {
+        flex: 2.3,
+        borderBottomWidth: 1,
+        marginHorizontal: 25,
+        right: 10,
+        
+        paddingBottom: 10,
+        borderBottomColor: '#000000',
     },
     userInfoLabel: {
         left: 25,
         fontSize: 15,
         flex: 1,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
+    },
+    crescentLabel: {
+        right: '60%',
+        
+        flex: 1,
+        resizeMode: 'contain'
     },
     dataContainer: {
         flex: 2.3,
@@ -121,7 +203,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 25,
         right: 10,
         paddingBottom: 10,
-        borderBottomColor: '#2A6F97',
+        borderBottomColor: '#000000',
     },
     userInfoData: {
         fontSize: 15,
@@ -130,6 +212,33 @@ const styles = StyleSheet.create({
         // zIndex: 1
         // borderWidth: 1,
         // borderColor: '#E5E5E5',
-    }
+    },
+    chart: {
+      
+    },
+    oval: {
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").width,
+        borderRadius: Dimensions.get("window").width / 2,
+        backgroundColor: "#E5E5E5",
+        position: 'absolute',
+        bottom: 380,
+        zIndex: 1,
+        transform: [{ scaleX: 1.5 }],
+    },
+    chartLabel: {
+        color: '#FFFFFF ',
+        marginBottom: 0,
+        left: 100,
+        top: 400,
+        fontSize: 15,
+        transform: [{scaleX: 0.75}]
+
+    },
+
 
 })
+
+
+
+
