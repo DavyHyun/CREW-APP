@@ -22,7 +22,7 @@ const HomeStackNav = () => {
         screenOptions={{headerShown: false, drawerStyle: {backgroundColor: '#ffbc42',
         width: 325}}}
         drawerContent={props => <DrawerContent {...props}/>}
-      
+        
       >
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen  name="ResInfo" component={ResInfo} />
