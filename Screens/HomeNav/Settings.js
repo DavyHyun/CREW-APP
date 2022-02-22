@@ -9,7 +9,7 @@ import { getAuth } from "firebase/auth";
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 
 
-const HomeScreen = () => {
+const Settings = () => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
@@ -43,7 +43,7 @@ const HomeScreen = () => {
   )
 }
 
-export default HomeScreen
+export default Settings
 
 const styles = StyleSheet.create({
 
