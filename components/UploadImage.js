@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import { getDatabase, ref, set, get, child, onValue } from "firebase/database";
+import firebase from "firebase/compat/app";
+import { getAuth } from "firebase/auth";
+
 
 export default function UploadImage() {
     const [image, setImage] = useState(null);
     const [visible, setVisible] = useState(false);
+    // const firebase = require('firebase');
 
     useEffect(() => {
         checkForCameraRollPermission()
@@ -21,7 +26,17 @@ export default function UploadImage() {
         console.log(JSON.stringify(_image));
         if (!_image.cancelled) {
             setImage(_image.uri);
+            try {
+                const db = getDatabase();
+                var userId = getAuth().currentUser.uid;
+                var nameRef = firebase.storage().ref(userId + '/profilepic/' + image);
+                nameRef.put(image);
+            } catch (error) {
+                console.log(error);
+            }
         }
+
+
     };
 
     const  checkForCameraRollPermission=async()=>{
