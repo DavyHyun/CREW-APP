@@ -7,7 +7,7 @@ import Reviews from './HomeNav/Reviews'
 import Home from './HomeNav/NewHome'
 import Search from './HomeNav/Search'
 import List from './HomeNav/List'
-import Game from './HomeNav/Game'
+import Game from './HomeNav/Game/Game'
 import Settings from './HomeNav/Settings'
 import ResInfo from './HomeNav/ResInfo'
 import { DrawerContent } from './DrawerContent';
