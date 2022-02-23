@@ -3,6 +3,7 @@ import {getApps, initializeApp} from "firebase/app";
 import firebase from "firebase/compat/app";
 import {getAuth} from "firebase/auth";
 import { getDatabase } from "firebase/database";
+// import { getStorage } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -18,10 +19,11 @@ const firebaseConfig = {
   appId: "1:624680952854:web:dcf8c2e4c3edbf29c3c137",
   measurementId: "G-EHJ5XPN5JR",
   databaseURL: "https://frostyapp-auth-default-rtdb.firebaseio.com",
+  // storageBucket: "frostyapp-auth.appspot.com"
 };
 
 // Initialize Firebase
-
+// const storage = getStorage(firebaseApp);
 
 let app;
 if (getApps().length < 1) {
