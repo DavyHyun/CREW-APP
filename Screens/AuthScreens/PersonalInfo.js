@@ -50,8 +50,8 @@ const YEAR = [
 
 
 function PersonalInfo() {
-  const [major, setMajor] = useState({});
   const [year, setYear] = useState({});
+  const [email, setEmail] = useState({});
   const [userName, setName] = useState("")
   const navigation = useNavigation();
   const db = getDatabase();
@@ -61,10 +61,10 @@ function PersonalInfo() {
       var userId = getAuth().currentUser.uid;
        set(ref(db, 'users/' + userId + '/personalInfo'), {
             name: userName,
-            major: major,
+            email: email,
             year: year,
       })
-      navigation.navigate("InfoAdd");
+      navigation.navigate("HomeScreen");
   }
 
   return (
@@ -84,15 +84,15 @@ function PersonalInfo() {
           />
       </View>
       {/* <View style={styles.inputContainer}> */}
-      <Text style={{ fontSize: 20, paddingBottom: 10, fontWeight: 'bold', textAlign: 'left',marginTop: '10%' }}>Major</Text>
-      <SelectBox
-        options={MAJORS}
-        value={major}
-        label="Search your major"
-        arrowIconColor='#36649E'
-        onChange={onMChange()}
-        hideInputFilter={false}
-      />
+      <Text style={{ fontSize: 20, paddingBottom: 10, fontWeight: 'bold', textAlign: 'left',marginTop: '10%' }}>University Email</Text>
+      <View style={styles.nameContainer}>
+          <TextInput 
+            style={styles.name}
+            placeholder="Enter your university email address"
+            onChangeText={text => {setEmail(text)}}
+            value={email}
+          />
+      </View>
       <View style={{ height: 40 }} />
       <Text style={{ fontSize: 20, paddingBottom: 10, fontWeight: 'bold' }}>Year</Text>
       <SelectBox

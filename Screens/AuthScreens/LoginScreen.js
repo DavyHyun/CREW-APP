@@ -16,7 +16,7 @@ const LoginScreen = () => {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-              navigation.replace("HomeStackNav")
+              navigation.replace("HomeScreen")
             }
           })
     }, [])

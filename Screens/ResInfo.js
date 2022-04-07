@@ -2,7 +2,7 @@ import { signOut } from '@firebase/auth'
 import { useNavigation, useRoute, useIsFocused } from '@react-navigation/core'
 import React, { useEffect, useState, FC, useCallback, useMemo, useRef } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Image, Dimensions, TextInput, ImageBackground, FlatList } from 'react-native'
-import { auth } from '../../firebase'
+import { auth } from '../firebase'
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
 import firebase from "firebase/compat/app";
 import { getAuth } from "firebase/auth";
@@ -39,7 +39,26 @@ import {
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito';
 
-
+// const onItemClick = (item) => {
+//   navigation.navigate("ResInfo", {
+//     name : item.RESTAURANT,
+//     fsr : item.FSR,
+//     address: item.ADDRESS,
+//     location: item.LOCATION,
+//     type: item.TYPE,
+//     price: item.PRICE,
+//     popular: item.POPULAR,
+//     recommendation: item.RECOMMENDATION,
+//     monday: item.M,
+//     tuesday: item.T,
+//     wednesday: item.W,
+//     thursday: item.TH,
+//     friday: item.F,
+//     saturday: item.S,
+//     sunday: item.SU,
+//     tea: item.TEA,
+//   });
+// }
 const ResInfo = () => {
   const storage = getStorage();
   let [fontsLoaded] = useFonts({
@@ -88,7 +107,6 @@ const ResInfo = () => {
   const tea = route.params.tea;
   const [personName, setPersonName] = useState("");
   const [day, setDay] = useState("");
-  const STAR_IMAGE = require('../../assets/images/star.png')
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const isFocused = useIsFocused();
   const [revs, setRevs] = useState([]);
