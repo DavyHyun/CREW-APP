@@ -62,11 +62,11 @@ const LoginScreen = () => {
             
             </View>
             <View style={styles.lineContainer}>
-          <View style={{flex: 1, height: 1, backgroundColor: '#2A6F97'}} />
+          <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
               <View>
                 <Text style={{width: 50, textAlign: 'center'}}>Or</Text>
               </View>
-           <View style={{flex: 1, height: 1, backgroundColor: '#2A6F97'}} />
+           <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
           </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         width: '95%',
         borderStyle: 'solid',
-        borderBottomColor: '#2A6F97',
+        borderBottomColor: '#FFBE48',
         borderBottomWidth: 1,
         borderColor: 'black',
         opacity: 50
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginBottom: '2%',
         borderStyle: 'solid',
-        borderColor: '#36649E',
+        borderColor: '#FFBE48',
         borderWidth: 1,
         flexDirection: 'row',
         justifyContent: 'center',
@@ -155,21 +155,21 @@ const styles = StyleSheet.create({
         padding: '5%',
         borderRadius: 40,
         alignItems: 'center',
-        backgroundColor: '#36649E',
+        backgroundColor: '#FFBE48',
         marginBottom: '2%',
         borderStyle: 'solid',
-        borderColor: '#36649E',
+        borderColor: '#FFBE48',
         borderWidth: 1,
         marginTop: '15%'
       },
       buttonOutline: {
         backgroundColor: 'white',
         marginTop: 5,
-        borderColor: '#0782F9',
+        borderColor: '#FFBE48',
         borderWidth: 2,
       },
       buttonText: {
-        color: '#36649E',
+        color: '#FFBE48',
         fontWeight: '700',
         fontSize: 16,
       },
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
       su: {
         marginBottom: 30,
         fontSize: 24,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
       },
       lineContainer: {
         flexDirection: 'row', 

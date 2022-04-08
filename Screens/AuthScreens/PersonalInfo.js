@@ -7,29 +7,29 @@ import { getDatabase, ref, set, get, child } from "firebase/database";
 import { getAuth } from "firebase/auth";
 // Options data must contain 'item' & 'id' keys
 
-const MAJORS = [
-  {
-    item: 'Undecided',
-  },
-  {
-    item: 'Computer Science',
-  },
-  {
-    item: 'Engineering',
-  },
-  {
-    item: 'Business',
-  },
-  {
-    item: 'Communications',
-  },
-  {
-    item: 'Art',
-  },
-  {
-    item: 'History',
-  },
-]
+// const MAJORS = [
+//   {
+//     item: 'Undecided',
+//   },
+//   {
+//     item: 'Computer Science',
+//   },
+//   {
+//     item: 'Engineering',
+//   },
+//   {
+//     item: 'Business',
+//   },
+//   {
+//     item: 'Communications',
+//   },
+//   {
+//     item: 'Art',
+//   },
+//   {
+//     item: 'History',
+//   },
+// ]
 const YEAR = [
   {
     item: '1st Year',
@@ -59,7 +59,7 @@ function PersonalInfo() {
   
   const addInfo = () => {
       var userId = getAuth().currentUser.uid;
-       set(ref(db, 'users/' + userId + '/personalInfo'), {
+       set(ref(db, 'users/' + userId), {
             name: userName,
             email: email,
             year: year,
@@ -99,10 +99,10 @@ function PersonalInfo() {
         options={YEAR}
         value={year}
         label="Select your year"
-        arrowIconColor='#36649E'
-        searchIconColor="#36649E"
-        toggleIconColor="#36649E"
-        multiOptionContainerStyle={{backgroundColor: '#36649E'}}
+        arrowIconColor='#FFBE48'
+        searchIconColor="#FFBE48"
+        toggleIconColor="#FFBE48"
+        multiOptionContainerStyle={{backgroundColor: '#FFBE48'}}
         onChange={onYChange()}
         hideInputFilter={false}
       />
@@ -146,17 +146,17 @@ const styles = StyleSheet.create({
         padding: '5%',
         borderRadius: 40,
         alignItems: 'center',
-        backgroundColor: '#36649E',
+        backgroundColor: '#FFBE48',
         marginBottom: '2%',
         borderStyle: 'solid',
-        borderColor: '#36649E',
+        borderColor: '#FFBE48',
         borderWidth: 1,
         marginTop: '15%'
     },
     buttonOutline: {
       backgroundColor: 'white',
       marginTop: 5,
-      borderColor: '#0782F9',
+      borderColor: '#FFBE48',
       borderWidth: 2,
     },
     buttonText: {
