@@ -63,7 +63,7 @@ const Q3 = () => {
         const progress = {
             Q1: route.params.Q1,
             Q2: route.params.Q2,
-            Q3: 'true',
+            Q3: true,
             QSet: route.params.QSet,
         }
         setIsTimerStart(false);
@@ -74,7 +74,7 @@ const Q3 = () => {
         const progress = {
             Q1: route.params.Q1,
             Q2: route.params.Q2,
-            Q3: 'false',
+            Q3: false,
             QSet: route.params.QSet,
         }
         setIsTimerStart(false);
@@ -120,7 +120,7 @@ const Q3 = () => {
               const progress = {
                 Q1: route.params.Q1,
                 Q2: route.params.Q2,
-                Q3: 'faslse',
+                Q3: false,
                 QSet: route.params.QSet,
             }
               navigation.navigate("Display", progress)

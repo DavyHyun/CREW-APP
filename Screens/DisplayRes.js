@@ -14,9 +14,9 @@ const DisplayRes = () => {
   return (
     <View style={{marginTop: '10%'}}>
       <Text>DisplayRes</Text>
-      <Text>{result.Q1}</Text>
-      <Text>{result.Q2}</Text>
-      <Text>{result.Q3}</Text>
+      <Text>{result.Q1.toString()}</Text>
+      <Text>{result.Q2.toString()}</Text>
+      <Text>{result.Q3.toString()}</Text>
       <TouchableOpacity
         onPress= {back}
       >
