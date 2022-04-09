@@ -34,7 +34,7 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen options={{headerShown: false}} name="PersonalInfo" component={PersonalInfo} />
         <Stack.Screen options={{headerShown: false}} name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen options={{headerShown: true}}name="Ready" component={Ready}/>
+        <Stack.Screen options={{headerShown: false}}name="Ready" component={Ready}/>
         <Stack.Screen options={{headerShown: false}}name="Q1" component={Q1}/>
         <Stack.Screen options={{headerShown: false}}name="Q2" component={Q2}/>
         <Stack.Screen options={{headerShown: false}}name="Q3" component={Q3}/>

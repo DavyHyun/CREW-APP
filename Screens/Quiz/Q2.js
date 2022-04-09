@@ -62,7 +62,7 @@ const Q2 = () => {
     const navigateToQ3T = () => {
         const progress = {
             Q1: route.params.Q1,
-            Q2: 'true',
+            Q2: true,
             Q3: route.params.Q3,
             QSet: route.params.QSet,
         }
@@ -73,7 +73,7 @@ const Q2 = () => {
     const navigateToQ3F = () => {
         const progress = {
             Q1: route.params.Q1,
-            Q2: 'false',
+            Q2: false,
             Q3: route.params.Q3,
             QSet: route.params.QSet,
         }
@@ -119,7 +119,7 @@ const Q2 = () => {
             handleFinish={() => {
               const progress = {
                 Q1: route.params.Q1,
-                Q2: 'false',
+                Q2: false,
                 Q3: route.params.Q3,
                 QSet: route.params.QSet,
             }

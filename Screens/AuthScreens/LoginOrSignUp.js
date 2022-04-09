@@ -18,8 +18,8 @@ const LoginOrSignUp = () => {
     }
     return (
         <View style ={styles.container}>
-        <Image source={require('../../assets/images/frosty_!!_❄️.png')} style={styles.image}/>
-        <Text style={styles.title}>FROSTY</Text>
+        <Image source={require('../../assets/questionArt.png')} style={styles.image}/>
+        <Text style={{fontSize: 22, fontWeight: '300'}}>WELCOME TO  <Text style={{fontSize:25, fontWeight: 'bold'}}>CREW!</Text> </Text>
         <View style={styles.loginContainer}>
         <Text style={styles.subText}>
           By clicking Log In or Sign Up, you agree to our Terms. Learn how we process your data in our Privacy Policy and Cookies Policy
@@ -49,17 +49,17 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white'
+        backgroundColor: '#FFD73F'
       },
       image: {
         width: 300,
-        height: 370,
-        
+        height: 300,
+        marginBottom: '10%'
       },
       loginContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 70,
+        marginTop: '23%',
         width: '100%',
       },
       title: {
@@ -74,11 +74,12 @@ const styles = StyleSheet.create({
       subText: {
         textAlign: 'center',
         fontSize: 10,
-        width: '80%',
-        marginBottom: 30,
+        width: '75%',
+        marginBottom: "5%",
+        lineHeight: 15
       },
       buttonText: {
-        color: 'white',
+        color: '#FFD73F',
         fontWeight: '700',
         fontSize: 20,
         // fontFamily: OpenSans_SemiBold,
@@ -89,11 +90,11 @@ const styles = StyleSheet.create({
       },
       button: {
         width: '80%',
-        padding: 16,
+        padding: 14,
         borderRadius: 40,
         alignItems: 'center',
-        backgroundColor: '#36649E',
-        marginBottom: 15
+        backgroundColor: 'white',
+        marginBottom: '3%'
       }
 
 })

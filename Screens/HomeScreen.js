@@ -98,21 +98,23 @@ const HomeScreen = () => {
       </View>
       <View style={{flexDirection:'column', justifyContent: 'center', alignItems:'center', marginBottom: '20%'}}>
         <View style={styles.buttonView}>
+          <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <TouchableOpacity
             onPress={navigateToQUIZ}
             style={styles.button}
           >
             <Ionicons name="person" size={65} color="#FFBE48" />
           </TouchableOpacity>
+          <Text style={{fontFamily:'Nunito_700Bold', fontSize: 15, marginTop: '8%'}}>Solo mission!</Text>
+          </View>
+          <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <TouchableOpacity
             style={styles.button}
           >
-            <Ionicons name="people" size={70} color="#FFBE48" />
+            <Ionicons name="people" size={65} color="#FFBE48" />
           </TouchableOpacity>
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Text style={{fontFamily:'Nunito_700Bold', fontSize: 15, marginRight: '17.5%'}}>Solo mission!</Text>
-          <Text style={{fontFamily:'Nunito_700Bold', fontSize: 15}}>With my CREW!</Text>
+          <Text style={{fontFamily:'Nunito_700Bold', fontSize: 15, marginTop: '8%'}}>With my CREW!</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -141,15 +143,16 @@ const styles = StyleSheet.create({
 
   },
   buttonView: {
-    marginTop: '7%',
+    marginTop: '10%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '90%',
-    marginBottom: '5%'
+    marginBottom: '5%',
+    marginLeft: '2%'
   },
   button: {
     // width: '80%',
-    padding: 45,
+    padding: 50,
     borderRadius: 10,
     alignItems: 'center',
     backgroundColor: 'white',
