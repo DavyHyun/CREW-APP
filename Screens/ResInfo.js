@@ -159,7 +159,7 @@ const renderScreen = () => {
     const nameRef = ref(db, 'users/' + userId + '/personalInfo');
     onValue(nameRef, (snapshot) => {
       const data = snapshot.val();
-      setPersonName(data.name);
+      // setPersonName(data.name);
   });
 
 } catch (error) {
@@ -249,7 +249,7 @@ const renderScreen = () => {
   const sheetRef = React.useRef(null);
 
   const goBack = () => {
-    navigation.navigate("Search");
+    navigation.goBack();
   }
 
   const renderList =(item)=> {
