@@ -17,7 +17,7 @@ const Ready = () => {
   weekday[4]="thursday";
   weekday[5]="friday";
   weekday[6]="saturday";
-  weekday[7]="sunday";
+  weekday[0]="sunday";
   
   const isFocused = useIsFocused();
   const [questions, setQuestions] = useState("");
@@ -27,6 +27,7 @@ const Ready = () => {
   const [personName, setPersonName] = useState("");
 
   useEffect(() => {
+    console.log(day);
     if (isFocused) {
     try {
       const db = getDatabase();
@@ -49,15 +50,14 @@ const Ready = () => {
     Q2: null,
     Q3: null,
     QSet: questionSet,
-  })
-  }
-
+  })}
   console.log(questionSet);
   console.log(result);
   }, [questionSet], [result])
 
     const navigation = useNavigation();
     const navigateToQ1 = () => {
+
       navigation.navigate("Q1", result);
     }
     const navigateToHome = () => {
