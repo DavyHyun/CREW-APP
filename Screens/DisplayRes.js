@@ -53,13 +53,16 @@ const DisplayRes = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  var restaurantList = [];
+  let restaurantList = [];
   const [restaurantOne, setRestaurantOne] = useState("");
   const [restaurantTwo, setRestaurantTwo] = useState("");
   const [restaurantThree, setRestaurantThree] = useState("");
-  const imagesRef1 = sRef(storage, 'images/' + restaurantOne + '.jpg');
-  const imagesRef2 = sRef(storage, 'images/' + restaurantTwo + '.jpg');
-  const imagesRef3 = sRef(storage, 'images/' + restaurantThree + '.jpg');
+  var imagesRef1 = sRef(storage, 'images/' + restaurantOne + '.jpg');
+  var imagesRef2 = sRef(storage, 'images/' + restaurantTwo + '.jpg');
+  var imagesRef3 = sRef(storage, 'images/' + restaurantThree + '.jpg');
+  
+  
+
   var displayedRestaurants = [];
   const [realDisplayedRestaurants, setRealDisplayedRestaurants] = useState([]);
   const [imageUrl1, setImageUrl1] = useState(undefined);
@@ -82,16 +85,39 @@ const DisplayRes = () => {
 
   const renderScreen = () => {
 
-
-    console.log("restaurant length" + displayedRestaurants.length);
-    console.log(realDisplayedRestaurants.length);
-    for (let index = 0; index < rData.length; index++) {
-      if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].WEATHER === result.Q3) {
-        restaurantList.push(rData[index]);
+    
+      for (let index = 0; index < rData.length; index++) {
+        if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].WEATHER === result.Q3) {
+          restaurantList.push(rData[index]);
+        }
       }
-    }
+
+    
     pickRestaurants();
+
     // just needa get this code to run after the restaurant names are set...
+    setImages();
+  };
+
+  const pickRestaurants = () => {
+    displayedRestaurants = [];
+    for (let index = 0; index < 3; index++) {
+      var random = Math.floor(Math.random() * restaurantList.length);
+
+      displayedRestaurants.push(restaurantList[random]);
+
+      restaurantList.splice(random, 1);
+    }
+    setRestaurantOne(displayedRestaurants[0].RESTAURANT);
+    setRestaurantTwo(displayedRestaurants[1].RESTAURANT);
+    setRestaurantThree(displayedRestaurants[2].RESTAURANT);
+    setRealDisplayedRestaurants(displayedRestaurants);
+    imagesRef1 = sRef(storage, 'images/' + displayedRestaurants[0].RESTAURANT + '.jpg');
+    imagesRef2 = sRef(storage, 'images/' + displayedRestaurants[1].RESTAURANT + '.jpg');
+    imagesRef3 = sRef(storage, 'images/' + displayedRestaurants[2].RESTAURANT + '.jpg');
+  }
+
+  const setImages = () => {
     getDownloadURL(imagesRef1)
       .then((url) => {
         console.log(url)
@@ -113,25 +139,11 @@ const DisplayRes = () => {
       }).catch((error) => {
         console.log(error)
       });
-  };
+  }
 
 
 
-  const pickRestaurants = () => {
-    displayedRestaurants = [];
-    for (let index = 0; index < 3; index++) {
-      var random = Math.floor(Math.random() * restaurantList.length);
 
-      displayedRestaurants.push(restaurantList[random]);
-
-      restaurantList.splice(random, 1);
-    }
-    setRestaurantOne(displayedRestaurants[0].RESTAURANT);
-    setRestaurantTwo(displayedRestaurants[1].RESTAURANT);
-    setRestaurantThree(displayedRestaurants[2].RESTAURANT);
-    setRealDisplayedRestaurants(displayedRestaurants);
-    
-  };
   
   
   const refreshScreen = () => {
