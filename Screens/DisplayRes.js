@@ -245,15 +245,18 @@ const DisplayRes = () => {
 
         </TouchableOpacity>
 
+        
+
+        <TouchableOpacity
+          onPress={() => refreshScreen()}
+          style={styles.refreshButton}>
+          <Text style={styles.refreshButtonText}>SHOW ME NEW LIST</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           onPress={back}
         >
           <Text>Back</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => refreshScreen()}>
-          <Text>I don't like any of these</Text>
         </TouchableOpacity>
 
       </View>
@@ -312,6 +315,16 @@ const styles = StyleSheet.create({
   restaurantLabel: {
     fontFamily: 'Nunito_400Regular',
     fontSize: 15,
+  },
+
+  refreshButton: {
+    marginTop: '10%',
+  },
+
+  refreshButtonText: {
+    fontFamily: 'Nunito_500Medium',
+    textDecorationLine: 'underline',
+    alignSelf: 'center',
   }
 
 
