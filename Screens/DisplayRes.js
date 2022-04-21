@@ -65,6 +65,7 @@ const DisplayRes = () => {
   const [imageUrl1, setImageUrl1] = useState(undefined);
   const [imageUrl2, setImageUrl2] = useState(undefined);
   const [imageUrl3, setImageUrl3] = useState(undefined);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
 
   const result = route.params;
@@ -77,7 +78,7 @@ const DisplayRes = () => {
     if (isFocused) {
       renderScreen();
     }
-  }, [isFocused]);
+  }, [refreshTrigger]);
 
   const renderScreen = () => {
 
@@ -88,9 +89,9 @@ const DisplayRes = () => {
       if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].WEATHER === result.Q3) {
         restaurantList.push(rData[index]);
       }
-
     }
     pickRestaurants();
+    // just needa get this code to run after the restaurant names are set...
     getDownloadURL(imagesRef1)
       .then((url) => {
         console.log(url)
@@ -129,7 +130,13 @@ const DisplayRes = () => {
     setRestaurantTwo(displayedRestaurants[1].RESTAURANT);
     setRestaurantThree(displayedRestaurants[2].RESTAURANT);
     setRealDisplayedRestaurants(displayedRestaurants);
+    
   };
+  
+  
+  const refreshScreen = () => {
+    setRefreshTrigger(refreshTrigger + 1);
+  }
 
   const navigateToRestaurant = (index) => {
 
@@ -226,16 +233,16 @@ const DisplayRes = () => {
 
         </TouchableOpacity>
 
-        {/* <TouchableOpacity
+        <TouchableOpacity
           onPress={back}
         >
           <Text>Back</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
-        {/* <TouchableOpacity
-          onPress={() => renderScreen()}>
+        <TouchableOpacity
+          onPress={() => refreshScreen()}>
           <Text>I don't like any of these</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
       </View>
     )
