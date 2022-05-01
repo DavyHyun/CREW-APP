@@ -70,7 +70,7 @@ const DisplayRes = () => {
   const [imageUrl3, setImageUrl3] = useState(undefined);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const result = route.params;
-  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState();
   const back = () => {
     navigation.navigate("HomeScreen")
   }
@@ -80,8 +80,9 @@ const DisplayRes = () => {
   useEffect(() => {
 
     if (isFocused) {
-      
+      setImagesLoaded(0);
       renderScreen();
+    
     }
   }, [refreshTrigger]);
 
