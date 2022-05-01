@@ -17,6 +17,8 @@ import AppLoading from 'expo-app-loading';
 import { Foundation } from '@expo/vector-icons';
 import { Rating} from 'react-native-ratings';
 import BottomSheet from 'reanimated-bottom-sheet';
+import * as WebBrowser from 'expo-web-browser';
+import { Linking } from 'react-native';
 
 // import { BottomModalProvider, useBottomModal } from 'react-native-bottom-modal'
 import {
@@ -86,12 +88,13 @@ const ResInfo = () => {
 //   const[resname, setresName] = useState(item);
   const [visible, setVisible] = useState(false);
   const [refreshPage, setRefreshPage] = useState(0);
-  const [review, setReview] = useState("");
   const route = useRoute();
   const resname = route.params.name;
   const fsr = route.params.fsr;
   const address = route.params.address;
   const location = route.params.location;
+  const latitude = route.params.latitude;
+  const longitude = route.params.longitude;
   const type = route.params.type;
   const typeUpper = type.toUpperCase();
   const price = route.params.price;
@@ -112,13 +115,16 @@ const ResInfo = () => {
   const [revs, setRevs] = useState([]);
   const [imageUrl, setImageUrl] = useState(undefined);
   const imagesRef = sRef(storage, 'images/' + resname+'.jpg');
-  let reviews = [];
+  const [web, setWeb] = useState(null);
+  const locationUrl = 'maps:0,0?q=' + resname + '@' + latitude + ',' + longitude;
+  
 
   const db = getDatabase();
-  const restReviewRef = ref(db, 'restaurants/' + resname);
+  
   useEffect(() => {
     if (isFocused) {
       renderScreen();
+      
     }
 }, [isFocused])
 
@@ -148,12 +154,7 @@ const renderScreen = () => {
   } else if (dayOf = 7) {
     setDay(sunday);
   } 
-  try {
-    let reviews = [];
-    displayReviews(reviews);
-  } catch (error) {
-    console.log(error)
-  }
+  
   try {
     var userId = getAuth().currentUser.uid;
     const nameRef = ref(db, 'users/' + userId + '/personalInfo');
@@ -167,15 +168,12 @@ const renderScreen = () => {
 }
 }
 
-  const submitReview =()=> {
-    const newPostRef = push(restReviewRef);
-    set(newPostRef, {
-      Review: rev,
-      Name: personName,
-      Title: revTitle
-    })
-    sheetRef.current.snapTo(2)
-    // setRefreshPage(refreshPage + 1);
+  const openWebsite = async () => {
+    var str = resname.replaceAll(" ", "+");
+    var link = 'https://www.google.com/search?q=' + str;
+    console.log(link);
+    let result = await WebBrowser.openBrowserAsync(link);
+    setWeb[result];
   }
   
   const [revTitle, setrevTitle] = useState("")
@@ -197,19 +195,6 @@ const renderScreen = () => {
       marginTop: '1%',
       marginLeft: '2%'
     }}>
-      <Text style={{fontFamily:'Nunito_400Regular'}}>Review for <Text style={{fontFamily: 'Nunito_600SemiBold_Italic'}}>{resname}</Text></Text>
-      <TextInput 
-       placeholder="Title..."
-       fontSize= {17}
-       fontWeight={'bold'}
-       
-       value={revTitle}
-       onChangeText={text => {setrevTitle(text)}}
-       style={{
-         marginTop: '2%',
-         fontFamily: 'Nunito_700Bold'
-       }}
-   />
                <View style={styles.lineContainer}>
           <View style={{flex: 1, height: 1, backgroundColor: 'gray'}} />
           </View>
@@ -233,14 +218,7 @@ const renderScreen = () => {
       flexDirection: 'column',
       // justifyContent: 'flex-end'
     }}>
-      <TouchableOpacity
-        onPress={submitReview}
-      >
-<Ionicons name="send" size={24} color="black" style={{
-  marginTop: '10%',
-  marginLeft: '5%'
-}} />
-</TouchableOpacity>
+      
     </View>
   </View>
     )
@@ -278,27 +256,27 @@ const renderScreen = () => {
     )
   }
 
-  const displayReviews = (reviews) => {
-    let i = 0;
-    setRevs(reviews);
-    try {
-    const resRef = ref(db, 'restaurants/' + resname);
-    onValue(resRef, (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        const childKey = childSnapshot.key;
-        const childData = childSnapshot.val();
-        childData["id"] = i;
-        i = i+ 1;
-        reviews.push(childData);
-      });
-      setRevs(reviews)
-    }, {
-      // onlyOnce: true
-    });
-  } catch (error) {
-    console.log(error)
-  }
-  }
+  // const displayReviews = (reviews) => {
+  //   let i = 0;
+  //   setRevs(reviews);
+  //   try {
+  //   const resRef = ref(db, 'restaurants/' + resname);
+  //   onValue(resRef, (snapshot) => {
+  //     snapshot.forEach((childSnapshot) => {
+  //       const childKey = childSnapshot.key;
+  //       const childData = childSnapshot.val();
+  //       childData["id"] = i;
+  //       i = i+ 1;
+  //       reviews.push(childData);
+  //     });
+  //     setRevs(reviews)
+  //   }, {
+  //     // onlyOnce: true
+  //   });
+  // } catch (error) {
+  //   console.log(error)
+  // }
+  // }
 
   if (!fontsLoaded) {
     return <AppLoading />
@@ -381,6 +359,7 @@ const renderScreen = () => {
               backgroundColor:'#ffbc42',
               borderRadius:50,
             }}
+            onPress={() => {Linking.openURL('tel:4254440254')}}
         >
           <FontAwesome name="phone" size={20} color="black" />
        </TouchableOpacity>
@@ -398,6 +377,7 @@ const renderScreen = () => {
               backgroundColor:'#ffbc42',
               borderRadius:50,
             }}
+            onPress={() => {Linking.openURL(locationUrl)}}
         >
           <Ionicons name="map-sharp" size={20} color="black" />
        </TouchableOpacity>
@@ -415,23 +395,24 @@ const renderScreen = () => {
               backgroundColor:'#ffbc42',
               borderRadius:50,
             }}
+            onPress={openWebsite}
         >
           <MaterialCommunityIcons name="web" size={20} color="black" />
        </TouchableOpacity>
        <Text style={{fontFamily: 'Nunito_400Regular', fontSize:10, marginTop: '20%'}}>Website</Text>
        </View>
        </View>
-       <View style={styles.reviewSec}>
+       {/* <View style={styles.reviewSec}>
             <TouchableOpacity
               style={styles.review}
-            >
+            > */}
 
-              <Text style={{
+              {/* <Text style={{
                 fontFamily: 'Nunito_700Bold',
                 fontSize: 11,
               }}>Reviews</Text>
             </TouchableOpacity>
-       </View>
+       </View> */}
        <View style={styles.hours}>
           <Text style={{
             fontFamily: 'Nunito_700Bold',
@@ -448,7 +429,7 @@ const renderScreen = () => {
             <Text style={styles.hourText}>Sunday:                   {sunday}</Text>
           </View>
        </View>
-       <View style={styles.writeReview}>
+       {/* <View style={styles.writeReview}>
          <Text 
           style= {{
             fontFamily: 'Nunito_700Bold',
@@ -468,7 +449,7 @@ const renderScreen = () => {
                 <Text style={styles.userText}>{personName}</Text>
               </View>
               
-              </View>
+              </View> */}
               {/* <Rating
                 type='custom'
                 ratingImage={STAR_IMAGE}
@@ -480,7 +461,7 @@ const renderScreen = () => {
                 imageSize={30}
                 style={{ paddingVertical: 10 }}
               /> */}
-              <Text
+              {/* <Text
                 style={{
                   marginTop: '4%',
                   marginLeft:'3%',
@@ -489,8 +470,8 @@ const renderScreen = () => {
                 }}
               >Type here!</Text>
           </TouchableOpacity>
-       </View>
-       <View style={styles.reviewList}>
+       </View> */}
+       {/* <View style={styles.reviewList}>
          <Text 
           style= {{
             fontFamily: 'Nunito_700Bold',
@@ -507,7 +488,7 @@ const renderScreen = () => {
                 renderItem={renderList()}
             />
 
-       </View>
+       </View> */}
         {/* <View style={{marginTop: '10%'}}>
             <Text>Restaurant Name: {resname}</Text>
             <Text>Food Safety Rating: {fsr}</Text>
@@ -559,12 +540,12 @@ const renderScreen = () => {
                     <Text style={styles.buttonTextL}>display review</Text>
          </TouchableOpacity> */}
       </ScrollView>
-      <BottomSheet
+      {/* <BottomSheet
         ref={sheetRef}
         snapPoints={[250, 250, 0]}
         borderRadius={10}
         renderContent={renderContent}
-      />
+      /> */}
       </View>
   )
 }
@@ -577,7 +558,8 @@ const styles = StyleSheet.create({
   hours: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '10%'
+    marginBottom: '10%',
+    marginTop: '7%',
   },
   bookmark: {
     flexDirection: 'column',
