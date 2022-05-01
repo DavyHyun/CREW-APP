@@ -70,13 +70,15 @@ const DisplayRes = () => {
   const [imageUrl3, setImageUrl3] = useState(undefined);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const result = route.params;
+  const [imagesLoaded, setImagesLoaded] = useState(0);
   const back = () => {
     navigation.navigate("HomeScreen")
   }
 
 
+
   useEffect(() => {
-    setShow(false);
+
     if (isFocused) {
       
       renderScreen();
@@ -84,7 +86,7 @@ const DisplayRes = () => {
   }, [refreshTrigger]);
 
   const renderScreen = async () => {
-      setShow(false);
+
     
       for (let index = 0; index < rData.length; index++) {
         if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].WEATHER === result.Q3) {
@@ -100,7 +102,7 @@ const DisplayRes = () => {
   };
 
   const pickRestaurants = () => {
-    setShow(false);
+
     displayedRestaurants = [];
     for (let index = 0; index < 3; index++) {
       var random = Math.floor(Math.random() * restaurantList.length);
@@ -140,7 +142,7 @@ const DisplayRes = () => {
       }).catch((error) => {
         console.log(error)
       });
-      setShow(true);
+
   }
 
 
@@ -150,6 +152,7 @@ const DisplayRes = () => {
   
   const refreshScreen = () => {
     setRefreshTrigger(refreshTrigger + 1);
+    setImagesLoaded(0);
     // setShow(false);
     // setTimeout(() => setShow(true), 1000);
   }
@@ -186,13 +189,19 @@ const DisplayRes = () => {
   }
 
 
-  if (!show) {
+  if (!fontsLoaded) {
     return <LoadingAnimation />
   } else {
     return (
+
       <View style={styles.background}>
+        {imagesLoaded == 3 ? null :
+          <LoadingAnimation />
+        }
+        
         <View style={styles.topSpacer}>
-          <Text style={styles.pageLabel}>RESTAURANTS</Text>
+          {imagesLoaded == 3 ? <Text style={styles.pageLabel}>RESTAURANTS</Text> : null}
+          
         </View>
 
         <TouchableOpacity
@@ -207,6 +216,7 @@ const DisplayRes = () => {
             <Image
               source={{ uri: imageUrl1 }}
               style={styles.leftImage}
+              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
             />
           </View>
 
@@ -226,6 +236,7 @@ const DisplayRes = () => {
             <Image
               source={{ uri: imageUrl2 }}
               style={styles.rightImage}
+              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
             />
           </View>
 
@@ -244,6 +255,7 @@ const DisplayRes = () => {
             <Image
               source={{ uri: imageUrl3 }}
               style={styles.leftImage}
+              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
             />
           </View>
 
@@ -266,6 +278,7 @@ const DisplayRes = () => {
         </TouchableOpacity>
 
       </View>
+
     )
   }
 
