@@ -9,6 +9,7 @@ import { getAuth } from "firebase/auth";
 import { requireNativeViewManager } from 'expo-modules-core'
 import { Ionicons } from '@expo/vector-icons'; 
 import AppLoading from 'expo-app-loading';
+import { SimpleLineIcons } from '@expo/vector-icons';
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -84,12 +85,12 @@ const HomeScreen = () => {
   } else {
   return (
     <View style={styles.view}>
-      {/* <TouchableOpacity
+      <TouchableOpacity
         onPress={handleSignOut}
-        style={styles.button}
+        style={{top: 65, left: 30, position: 'absolute'}}
       >
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity> */}
+        <SimpleLineIcons name="logout" size={24} color="black" />
+      </TouchableOpacity>
       <View style={styles.textView}>
         <View style={{justifyContent: 'center', alignItems: 'center', marginTop:'10%'}}>
         <Text style={{fontSize:20}}>WELCOME TO <Text style={{fontSize:20, fontWeight:'bold'}}>CREW!</Text></Text>
@@ -140,7 +141,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '90%',
-
   },
   buttonView: {
     marginTop: '10%',

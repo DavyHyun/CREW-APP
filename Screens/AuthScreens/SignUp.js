@@ -69,28 +69,14 @@ const LoginScreen = () => {
                     secureTextEntry
                 />
             </View>
-            <View style={styles.lineContainer}>
+            {/* <View style={styles.lineContainer}>
           <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
               <View>
                 <Text style={{width: 50, textAlign: 'center'}}>Or</Text>
               </View>
            <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
-          </View>
+          </View> */}
             <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    // onPress={handleGoogle}
-                    style={styles.buttonOther}
-                >
-                    <Image source={require("../../assets/images/GoogleLogo.png")} style={styles.logo}/>
-                    <Text style={styles.buttonText}>    Continue with Google</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    // onPress={handleFacebook}
-                    style={styles.buttonOther}
-                >
-                    <Image source={require("../../assets/images/FacebookLogo.webp")} style={styles.logo}/>
-                    <Text style={styles.buttonText}>    Continue with Facebook</Text>
-                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={handleSignUp}
                     style={styles.button}

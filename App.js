@@ -14,10 +14,14 @@ import Q1 from './Screens/Quiz/Q1'
 import Q2 from './Screens/Quiz/Q2'
 import Q3 from './Screens/Quiz/Q3'
 import Display from './Screens/DisplayRes';
+import { LogBox } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  LogBox.ignoreAllLogs();
+  
 
   const [showOnboard, setShowOnboard] = useState(true);
 
