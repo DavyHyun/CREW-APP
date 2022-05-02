@@ -7,6 +7,7 @@ import LoginScreen from './Screens/AuthScreens/LoginScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoginOrSignUp from './Screens/AuthScreens/LoginOrSignUp';
 import SignUp from './Screens/AuthScreens/SignUp';
+import ForgotPass from './Screens/AuthScreens/ForgotPass';
 import PersonalInfo from './Screens/AuthScreens/PersonalInfo'
 import ResInfo from './Screens/ResInfo';
 import Ready from './Screens/Quiz/Ready'
@@ -37,6 +38,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: true}} name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen options={{headerShown: false}} name="PersonalInfo" component={PersonalInfo} />
+        <Stack.Screen options={{headerShown: false}} name="ForgotPass" component={ForgotPass} />
         <Stack.Screen options={{headerShown: false}} name="HomeScreen" component={HomeScreen} />
         <Stack.Screen options={{headerShown: false}}name="Ready" component={Ready}/>
         <Stack.Screen options={{headerShown: false}}name="Q1" component={Q1}/>

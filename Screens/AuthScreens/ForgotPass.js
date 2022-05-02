@@ -1,88 +1,71 @@
-import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, getAuth } from '@firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from '@firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react'
+import firebase from "firebase/compat/app";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import {auth} from '../../firebase';
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
+import { NavigationContainer } from '@react-navigation/native';
 
-
-const LoginScreen = () => {
+const ForgotPass = () => {
 
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-
+    const auth = getAuth();
     const navigation = useNavigation();
 
-    useEffect(() => {
-        auth.onAuthStateChanged(user => {
-            if (user) {
-              navigation.replace("HomeScreen")
-            }
-          })
-    }, [])
+    const sendReset =()=> {
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+            alert('email sent! Check your email')
+        }).catch((error) => {
 
-    const goBack = () => {
-        navigation.navigate("Log In or Sign Up");
-    }
-    const handleLogin = async () => {
-        try {
-            const user = await signInWithEmailAndPassword(auth, email, password);
-            console.log(user);
-        } catch (error) {
-            alert("Wrong email or password. Try again.")
-        }
+        })
     }
 
+    const backLogin = () => {
+        navigation.navigate("Log In or Sign Up")
+    }
 
-
-    return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior="padding"
-        >
-            <View style={styles.inputContainer}>
-                <Text style={styles.su}>Log In!</Text>
-              
-                <TextInput 
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={text => {setEmail(text)}}
-                    style={styles.input}
-                    
-                />
-                
-                <TextInput 
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={text => {setPassword(text)}}
-                    style={styles.input}
-                    secureTextEntry
-                    
-                />
+  return (
+    <KeyboardAvoidingView
+    style={styles.container}
+    behavior="padding"
+>
+    <View style={styles.inputContainer}>
+        <Text style={styles.su}>Reset Password</Text>
+      
+        <TextInput 
+            placeholder="Email"
+            value={email}
+            onChangeText={text => {setEmail(text)}}
+            style={styles.input}
             
-            </View>
-            {/* <View style={styles.lineContainer}>
-          <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
-              <View>
-                <Text style={{width: 50, textAlign: 'center'}}>Or</Text>
-              </View>
-           <View style={{flex: 1, height: 1, backgroundColor: '#FFBE48'}} />
-          </View> */}
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleLogin}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonTextL}>Login</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
-    )
+        />
+    </View>
+
+    <View style={styles.buttonContainer}>
+        <TouchableOpacity
+            onPress={sendReset}
+            style={styles.button}
+        >
+            <Text style={styles.buttonTextL}>Send Email</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            onPress={backLogin}
+            style={styles.button}
+        >
+            <Text style={styles.buttonTextL}>Back</Text>
+        </TouchableOpacity>
+    </View>
+</KeyboardAvoidingView>
+  )
 }
 
-export default LoginScreen
+export default ForgotPass
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -113,7 +96,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         
-        // marginTop: 40,
+        marginTop: "10%",
       },
       buttonOther: {
         display: 'flex',
@@ -132,7 +115,7 @@ const styles = StyleSheet.create({
       },
       button: {
         width: '100%',
-        padding: '5%',
+        padding: '2%',
         borderRadius: 40,
         alignItems: 'center',
         backgroundColor: '#FFBE48',
@@ -140,7 +123,7 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: '#FFBE48',
         borderWidth: 1,
-        marginTop: '15%'
+        // marginTop: '15%'
       },
       buttonOutline: {
         backgroundColor: 'white',

@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from '@firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendEmailVerification } from '@firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react'
 import firebase from "firebase/compat/app";
@@ -12,6 +12,7 @@ const LoginScreen = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const database = getDatabase();
 
     const navigation = useNavigation();
@@ -29,16 +30,23 @@ const LoginScreen = () => {
     // }
 
     const handleSignUp = async () => {
-      try {
-          const user = await createUserWithEmailAndPassword(auth, email, password);
-          var userId = getAuth().currentUser.uid;
-          set(ref(database, 'users/' + userId), {
-            name: "placeholder"
-      })
-          navigation.navigate("PersonalInfo");
-      } catch (error) {
-          console.log(error.message);
-      }
+      if (!(password === confirmPassword)) {
+        alert("Passwords do not match!");
+      } else {
+          try {
+              const user = await createUserWithEmailAndPassword(auth, email, password);
+              sendEmailVerification(getAuth().currentUser).then(() => {
+                alert("verify your email before moving on!")
+              })
+              var userId = getAuth().currentUser.uid;
+              set(ref(database, 'users/' + userId), {
+                name: "placeholder"
+          })
+              navigation.navigate("PersonalInfo");
+          } catch (error) {
+              alert("Please make sure all fields are inputted correctly")
+          }
+    }
   }
 
     return (
@@ -63,8 +71,8 @@ const LoginScreen = () => {
                 />
                 <TextInput 
                     placeholder="Confirm Password"
-                    value={password}
-                    // onChangeText={text => {setPassword(text)}}
+                    value={confirmPassword}
+                    onChangeText={text => {setConfirmPassword(text)}}
                     style={styles.input}
                     secureTextEntry
                 />

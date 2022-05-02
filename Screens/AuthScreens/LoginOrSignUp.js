@@ -16,6 +16,10 @@ const LoginOrSignUp = () => {
     const navigateToSignUp =() => {
         navigation.navigate("SignUp")
     }
+
+    const forgotPass =() => {
+      navigation.navigate("ForgotPass");
+    }
     return (
         <View style ={styles.container}>
         <Image source={require('../../assets/questionArt.png')} style={styles.image}/>
@@ -36,7 +40,11 @@ const LoginOrSignUp = () => {
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-      <Text style={styles.fp}>Forgot Password?</Text>
+      <TouchableOpacity
+        onPress={forgotPass}
+      >
+        <Text style={styles.fp}>Forgot Password?</Text>
+      </TouchableOpacity>
       </View>
         </View>
     )
