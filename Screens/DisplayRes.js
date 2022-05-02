@@ -26,6 +26,8 @@ import {
 } from '@expo-google-fonts/nunito';
 import { async } from '@firebase/util';
 import { render } from 'react-dom';
+import LoadingAnimation from '../components/LoadingAnimation';
+
 
 
 const DisplayRes = () => {
@@ -60,30 +62,32 @@ const DisplayRes = () => {
   var imagesRef1 = sRef(storage, 'images/' + restaurantOne + '.jpg');
   var imagesRef2 = sRef(storage, 'images/' + restaurantTwo + '.jpg');
   var imagesRef3 = sRef(storage, 'images/' + restaurantThree + '.jpg');
-  
-  
-
+  const [show, setShow] = useState(false);
   var displayedRestaurants = [];
   const [realDisplayedRestaurants, setRealDisplayedRestaurants] = useState([]);
   const [imageUrl1, setImageUrl1] = useState(undefined);
   const [imageUrl2, setImageUrl2] = useState(undefined);
   const [imageUrl3, setImageUrl3] = useState(undefined);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-
-
   const result = route.params;
+  const [imagesLoaded, setImagesLoaded] = useState(3);
   const back = () => {
     navigation.navigate("HomeScreen")
   }
 
 
+
   useEffect(() => {
+
     if (isFocused) {
+      console.log("use effect triggered");
+      setImagesLoaded(0);
       renderScreen();
+    
     }
   }, [refreshTrigger]);
 
-  const renderScreen = () => {
+  const renderScreen = async () => {
 
     
       for (let index = 0; index < rData.length; index++) {
@@ -94,12 +98,11 @@ const DisplayRes = () => {
 
     
     pickRestaurants();
-
-    // just needa get this code to run after the restaurant names are set...
     setImages();
   };
 
   const pickRestaurants = () => {
+
     displayedRestaurants = [];
     for (let index = 0; index < 3; index++) {
       var random = Math.floor(Math.random() * restaurantList.length);
@@ -139,6 +142,7 @@ const DisplayRes = () => {
       }).catch((error) => {
         console.log(error)
       });
+
   }
 
 
@@ -148,6 +152,10 @@ const DisplayRes = () => {
   
   const refreshScreen = () => {
     setRefreshTrigger(refreshTrigger + 1);
+    setImagesLoaded(0);
+    console.log("refresh screen triggered");
+    // setShow(false);
+    // setTimeout(() => setShow(true), 1000);
   }
 
   const navigateToRestaurant = (index) => {
@@ -158,7 +166,10 @@ const DisplayRes = () => {
         fsr: realDisplayedRestaurants[index].FSR,
         address: realDisplayedRestaurants[index].ADDRESS,
         location: realDisplayedRestaurants[index].LOCATION,
+        latitude: realDisplayedRestaurants[index].LATITUDE,
+        longitude: realDisplayedRestaurants[index].LONGITUDE,
         type: realDisplayedRestaurants[index].TYPE,
+        phone: realDisplayedRestaurants[index].PHONE,
         price: realDisplayedRestaurants[index].PRICE,
         popular: realDisplayedRestaurants[index].POPULAR,
         recommendation: realDisplayedRestaurants[index].RECOMMENDATION,
@@ -181,12 +192,18 @@ const DisplayRes = () => {
 
 
   if (!fontsLoaded) {
-    return <AppLoading />
+    return <LoadingAnimation />
   } else {
     return (
+
       <View style={styles.background}>
+        {imagesLoaded > 2 ? null :
+          <LoadingAnimation />
+        }
+        
         <View style={styles.topSpacer}>
-          <Text style={styles.pageLabel}>RESTAURANTS</Text>
+          {imagesLoaded > 2 ? <Text style={styles.pageLabel}>RESTAURANTS</Text> : null}
+          
         </View>
 
         <TouchableOpacity
@@ -201,6 +218,7 @@ const DisplayRes = () => {
             <Image
               source={{ uri: imageUrl1 }}
               style={styles.leftImage}
+              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
             />
           </View>
 
@@ -220,6 +238,7 @@ const DisplayRes = () => {
             <Image
               source={{ uri: imageUrl2 }}
               style={styles.rightImage}
+              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
             />
           </View>
 
@@ -238,6 +257,7 @@ const DisplayRes = () => {
             <Image
               source={{ uri: imageUrl3 }}
               style={styles.leftImage}
+              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
             />
           </View>
 
@@ -260,6 +280,7 @@ const DisplayRes = () => {
         </TouchableOpacity>
 
       </View>
+
     )
   }
 
@@ -283,38 +304,53 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   leftButton: {
-    left: '15%',
-    borderRadius: 1000,
+    left: '10%',
+    // borderRadius: 1000,
+    // borderWidth: 1,
+    height: '20%',
+    aspectRatio: 1,
   },
   rightButton: {
-    left: '55%',
-
-    borderRadius: 1000,
+    left: '50%',
+    // borderRadius: 1000,
+    height: '20%',
+    aspectRatio: 1,
+    // borderWidth: 1,
   },
   buttonImage: {
     justifyContent: 'center',
   },
   leftImage: {
-    width: '35%',
+    width: '80%',
+    left: '11%',
+    top: '7%',
     aspectRatio: 1,
     borderRadius: 1000,
 
   },
   rightImage: {
-    width: '35%',
+    width: '80%',
+    left: '11%',
+    top: '7%',
     aspectRatio: 1,
     borderRadius: 1000,
+
 
   },
   pictureFrame: {
     position: 'absolute',
-    left: '-5%',
-    width: '45%',
-    height: '129%',
+    // left: '-5%',
+    width: '102%',
+    height: '128%',
+    aspectRatio: 1,
+    top: '-7%',
   },
   restaurantLabel: {
     fontFamily: 'Nunito_400Regular',
     fontSize: 15,
+    top: '18%',
+    alignSelf: 'center',
+
   },
 
   refreshButton: {
