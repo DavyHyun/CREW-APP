@@ -16,7 +16,10 @@ import Q3 from './Screens/Quiz/Q3'
 import Display from './Screens/DisplayRes';
 import RoomCreation from './Screens/Multiplayer/RoomCreation';
 import WaitingRoom from './Screens/Multiplayer/WaitingRoom';
+import MultiplayerReady from './Screens/Multiplayer/MultiplayerReady';
+import MultiplayerQ1 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ1';
 import { LogBox } from 'react-native';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +51,8 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="ResInfo" component={ResInfo} />
         <Stack.Screen options={{headerShown: false}} name="RoomCreation" component={RoomCreation} />
         <Stack.Screen options={{headerShown: false}} name="WaitingRoom" component={WaitingRoom} />
+        <Stack.Screen options={{headerShown: false}} name="MultiplayerReady" component={MultiplayerReady} />
+        <Stack.Screen options={{headerShown: false}} name="MultiplayerQ1" component={MultiplayerQ1} />
       </Stack.Navigator>
     </NavigationContainer>
     </>

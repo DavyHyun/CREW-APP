@@ -29,6 +29,7 @@ import {
     Nunito_800ExtraBold_Italic,
     Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito';
+import { Touchable } from 'react-native-web';
 
 const WaitingRoom = () => {
     let [fontsLoaded] = useFonts({
@@ -60,6 +61,7 @@ const WaitingRoom = () => {
         try {
             const db = getDatabase();
             const usersRef = ref(db, 'lobby/' + roomID + '/users');
+            const gameStatusRef = ref(db, 'lobby/' + roomID + '/gameStatus');
             onValue(usersRef, (snapshot) => {
                 const list = [];
                 snapshot.forEach(player => {
@@ -72,11 +74,29 @@ const WaitingRoom = () => {
                 setPlayers(list);
                 setLoading(false);
             })
-            console.log(players);
+            onValue(gameStatusRef, (snapshot) =>{
+                if(snapshot.val()){
+                    navigateToReady();
+                }
+            })
         } catch (error) {
             console.log(error);
         }
     }, [])
+
+    const startGame = () => {
+        try {
+            const db = getDatabase();
+            set(ref(db, 'lobby/' + roomID + '/gameStatus'), true)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const navigateToReady = () => {
+        navigation.navigate("MultiplayerReady", roomID);
+    }
+
 
 
     const goBack = () => {
@@ -113,6 +133,10 @@ const WaitingRoom = () => {
                     </View>
                 )}
             />
+            <TouchableOpacity
+            onPress={startGame}>
+                <Text>Start</Text>
+            </TouchableOpacity>
             </View>
         </View>
     )
