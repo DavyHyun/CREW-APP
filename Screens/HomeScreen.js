@@ -79,6 +79,10 @@ const HomeScreen = () => {
     navigation.navigate("Ready")
   }
 
+  const navigateToRoomCreation = () => {
+    navigation.navigate("RoomCreation");
+  }
+
 
   if (!fontsLoaded) {
     return <AppLoading />
@@ -110,6 +114,7 @@ const HomeScreen = () => {
           </View>
           <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <TouchableOpacity
+            onPress={navigateToRoomCreation}
             style={styles.button}
           >
             <Ionicons name="people" size={65} color="#FFBE48" />
