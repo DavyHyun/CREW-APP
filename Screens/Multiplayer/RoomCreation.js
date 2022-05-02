@@ -5,6 +5,7 @@ import { getDatabase, ref, set, get, child, onValue, push, firebase } from "fire
 import { useEffect } from 'react/cjs/react.development';
 import { getAuth } from "firebase/auth";
 import AppLoading from 'expo-app-loading';
+import { Ionicons } from '@expo/vector-icons';
 import {
     useFonts,
     Nunito_200ExtraLight,
@@ -71,6 +72,7 @@ const RoomCreation = () => {
                 speedScore: 0,
                 moodScore: 0,
                 weatherScore: 0,
+                gameStatus: false,
             })
             set(ref(db, 'lobby/' + roomID + '/users/' + 0), {
                 personName
@@ -97,7 +99,7 @@ const RoomCreation = () => {
     const joinRoom = (roomID) => {
         const dbRef = ref(getDatabase());
         get(child(dbRef, `lobby/${roomID}`)).then((snapshot) => {
-            if (snapshot.exists()) {
+            if (snapshot.exists() && !snapshot.val().gameStatus) {
                 const db = getDatabase();
                 const json = snapshot.toJSON();
                 const users = json.users;
@@ -107,11 +109,20 @@ const RoomCreation = () => {
                 })
                 navigation.navigate("WaitingRoom", roomID);
             } else {
-                alert("Code doesn't exist!");
+                if(!snapshot.exists()){
+                    alert("Code doesn't exist!");
+                } else {
+                    alert("Game is already in session!");
+                }
+                
             }
         }).catch((error) => {
             console.error(error);
         });
+    }
+
+    const goBack = () => {
+        navigation.goBack();
     }
 
 
@@ -121,13 +132,19 @@ const RoomCreation = () => {
     } else {
         return (
             <View style={styles.background}>
+                <TouchableOpacity
+                onPress={goBack}
+                style={{top: '5%', left: '5%'}}>
+                    <Ionicons name="md-chevron-back" size={40} color="black" />
+                </TouchableOpacity>
+                <Text style={styles.label}>ENTER CODE:</Text>
                 <TextInput
                     style={styles.inputBox}
-                    placeholder="Insert or Create game code here"
-                    placeholderTextColor={'#000000'}
+                    placeholder="e.g., 12345"
+                    placeholderTextColor={'#AAA9A9'}
                     autoCorrect={false}
                     maxLength={5}
-                    textAlign="center"
+                    // textAlign="center"
                     onChangeText={text => { setRoomID(text) }}
                 />
 
@@ -135,14 +152,14 @@ const RoomCreation = () => {
                     style={styles.joinButton}
                     onPress={() => joinRoom(roomID)}
                 >
-                    <Text style={{ alignSelf: 'center', fontFamily: 'Nunito_400Regular', top: '15%', fontSize: '25%' }}>Join</Text>
+                    <Text style={styles.buttonText}>JOIN</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.createButton}
                     onPress={() => checkRoomID(roomID)}
                 >
-                    <Text style={{ alignSelf: 'center', fontFamily: 'Nunito_400Regular', top: '15%', fontSize: '25%' }}>Create</Text>
+                    <Text style={styles.buttonText}>CREATE</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -157,30 +174,53 @@ const styles = StyleSheet.create({
         height: '100%',
         flex: 1,
     },
+    label: {
+        top: '30%',
+        alignSelf: 'center',
+        fontFamily: 'Nunito_700Bold',
+        fontSize: 20,
+    },
     inputBox: {
         top: '33%',
-        borderWidth: 1,
+        // borderWidth: 1,
         marginHorizontal: '20%',
         height: '7%',
-        // borderRadius: 1000,
+        borderRadius: 10,
         backgroundColor: '#FFFFFF',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        shadowColor: 'rgba(0,0,0, 0.6)',
+        shadowOffset: { height: 3.5, },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
     },
     joinButton: {
         top: '40%',
-        borderWidth: 1,
         marginHorizontal: '30%',
         height: '5%',
-        borderRadius: 1000,
-        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        backgroundColor: '#FD9343',
+        shadowColor: 'rgba(0,0,0, 0.6)',
+        shadowOffset: { height: 3.5, },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
     },
     createButton: {
-        top: '41%',
-        borderWidth: 1,
+        top: '42%',
         marginHorizontal: '30%',
         height: '5%',
-        borderRadius: 1000,
-        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        backgroundColor: '#FD9343',
+        shadowColor: 'rgba(0,0,0, 0.6)',
+        shadowOffset: { height: 3.5, },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+    },
+    buttonText: { 
+        alignSelf: 'center', 
+        fontFamily: 'Nunito_700Bold', 
+        top: '20%', 
+        fontSize: 20, 
+        color: '#FFFFFF' 
     },
 
 })

@@ -24,7 +24,7 @@ const Ready = () => {
   const [questions, setQuestions] = useState("");
   const [day, setDay] = useState(weekday[dayOf]);
   const [questionSet, setQuestionSet] = useState();
-  const[result, setResult] = useState({});
+  const[result, setResult] = useState([]);
   const [personName, setPersonName] = useState("");
 
   useEffect(() => {
