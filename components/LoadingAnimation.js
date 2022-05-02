@@ -7,7 +7,7 @@ export default function LoadingAnimation() {
   return (
     <View>
       <LottieView
-        source={require("../json/103992-alleypin-crm-loading-animation.json")}
+        source={require("../json/loadingAnimation.json")}
         style={styles.animation}
         autoPlay
       />
@@ -16,12 +16,10 @@ export default function LoadingAnimation() {
 }
 const styles = StyleSheet.create({
   animation: {
-    width: 200,
-    height: 200,
+    width: "100%",
+    height: "100%",
     alignSelf: 'center',
-    marginBottom: '150%',
-    marginTop: '50%',
-    marginHorizontal: '70%',
+
     
   },
 });
