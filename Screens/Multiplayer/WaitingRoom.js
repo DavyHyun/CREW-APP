@@ -17,8 +17,8 @@ const WaitingRoom = () => {
             const db = getDatabase();
             const usersRef = ref(db, 'lobby/' + roomID + '/users');
             onValue(usersRef, (snapshot) => {
-                console.log(snapshot);
-                
+                const players = snapshot.toJSON();
+
             })
             
         } catch (error) {

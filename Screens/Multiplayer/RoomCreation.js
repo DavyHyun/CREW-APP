@@ -67,14 +67,12 @@ const RoomCreation = () => {
         try {
             const db = getDatabase();
             set(ref(db, 'lobby/' + roomID), {
-                users: {
-                    player: personName
-                },
+                users: {},
                 speedScore: 0,
                 moodScore: 0,
                 weatherScore: 0,
             })
-            set(ref(db, 'lobby/' + roomID + '/users/' + personName), {
+            set(ref(db, 'lobby/' + roomID + '/users/' + 0), {
                 personName
             })
             navigation.navigate("WaitingRoom", roomID);
@@ -101,7 +99,10 @@ const RoomCreation = () => {
         get(child(dbRef, `lobby/${roomID}`)).then((snapshot) => {
             if (snapshot.exists()) {
                 const db = getDatabase();
-                set(ref(db, 'lobby/' + roomID + '/users/' + personName), {
+                const json = snapshot.toJSON();
+                const users = json.users;
+                const index = Object.keys(users).length;
+                set(ref(db, 'lobby/' + roomID + '/users/' + index), {
                     personName
                 })
                 navigation.navigate("WaitingRoom", roomID);
