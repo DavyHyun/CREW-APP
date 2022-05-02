@@ -109,7 +109,9 @@ const ResInfo = () => {
   const saturday = route.params.saturday;
   const sunday = route.params.sunday;
   const tea = route.params.tea;
+  const phone = route.params.phone;
   const [personName, setPersonName] = useState("");
+  const phoneUrl = 'tel:' + phone;
   const [day, setDay] = useState("");
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const isFocused = useIsFocused();
@@ -371,7 +373,9 @@ const ResInfo = () => {
                   backgroundColor: '#ffbc42',
                   borderRadius: 50,
                 }}
-                onPress={() => { Linking.openURL('tel:4254440254') }}
+                onPress={() => { Linking.openURL(phoneUrl) 
+                console.log(phoneUrl)
+              console.log(phone)}}
               >
                 <FontAwesome name="phone" size={20} color="black" />
               </TouchableOpacity>

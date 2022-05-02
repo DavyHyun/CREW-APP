@@ -70,7 +70,7 @@ const DisplayRes = () => {
   const [imageUrl3, setImageUrl3] = useState(undefined);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const result = route.params;
-  const [imagesLoaded, setImagesLoaded] = useState();
+  const [imagesLoaded, setImagesLoaded] = useState(3);
   const back = () => {
     navigation.navigate("HomeScreen")
   }
@@ -80,6 +80,7 @@ const DisplayRes = () => {
   useEffect(() => {
 
     if (isFocused) {
+      console.log("use effect triggered");
       setImagesLoaded(0);
       renderScreen();
     
@@ -97,9 +98,7 @@ const DisplayRes = () => {
 
     
     pickRestaurants();
-
-    // just needa get this code to run after the restaurant names are set...
-    await setImages();
+    setImages();
   };
 
   const pickRestaurants = () => {
@@ -121,7 +120,7 @@ const DisplayRes = () => {
     imagesRef3 = sRef(storage, 'images/' + displayedRestaurants[2].RESTAURANT + '.jpg');
   }
 
-  const setImages = async () => {
+  const setImages = () => {
     getDownloadURL(imagesRef1)
       .then((url) => {
         console.log(url)
@@ -154,6 +153,7 @@ const DisplayRes = () => {
   const refreshScreen = () => {
     setRefreshTrigger(refreshTrigger + 1);
     setImagesLoaded(0);
+    console.log("refresh screen triggered");
     // setShow(false);
     // setTimeout(() => setShow(true), 1000);
   }
@@ -169,6 +169,7 @@ const DisplayRes = () => {
         latitude: realDisplayedRestaurants[index].LATITUDE,
         longitude: realDisplayedRestaurants[index].LONGITUDE,
         type: realDisplayedRestaurants[index].TYPE,
+        phone: realDisplayedRestaurants[index].PHONE,
         price: realDisplayedRestaurants[index].PRICE,
         popular: realDisplayedRestaurants[index].POPULAR,
         recommendation: realDisplayedRestaurants[index].RECOMMENDATION,
@@ -196,12 +197,12 @@ const DisplayRes = () => {
     return (
 
       <View style={styles.background}>
-        {imagesLoaded == 3 ? null :
+        {imagesLoaded > 2 ? null :
           <LoadingAnimation />
         }
         
         <View style={styles.topSpacer}>
-          {imagesLoaded == 3 ? <Text style={styles.pageLabel}>RESTAURANTS</Text> : null}
+          {imagesLoaded > 2 ? <Text style={styles.pageLabel}>RESTAURANTS</Text> : null}
           
         </View>
 
