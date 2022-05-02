@@ -1,10 +1,12 @@
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, FlatList, SectionList } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation, useIsFocused, useRoute } from '@react-navigation/core'
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
 import { useEffect } from 'react/cjs/react.development';
 import { getAuth } from "firebase/auth";
 import AppLoading from 'expo-app-loading';
+// import { FlatList } from 'react-native-gesture-handler';
+import { render } from 'react-dom';
 
 const WaitingRoom = () => {
     const navigation = useNavigation();
@@ -18,14 +20,18 @@ const WaitingRoom = () => {
             const usersRef = ref(db, 'lobby/' + roomID + '/users');
             onValue(usersRef, (snapshot) => {
                 const players = snapshot.toJSON();
-
+                const length = Object.keys(players).length;
+                for (let index = 0; index < length; index++) {
+                    console.log(players[index].personName);             
+                }
+                
             })
             
         } catch (error) {
             console.log(error);
         }
     })
-
+    
 
     const goBack = () => {
         navigation.goBack();
