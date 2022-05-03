@@ -84,6 +84,7 @@ const MultiplayerDisplayRes = () => {
     if (isFocused) {
       console.log("use effect triggered");
       setImagesLoaded(0);
+    
       renderScreen();
     
     }
@@ -114,6 +115,15 @@ const MultiplayerDisplayRes = () => {
       displayedRestaurants.push(restaurantList[random]);
 
       restaurantList.splice(random, 1);
+    }
+    if(displayedRestaurants[0].RESTAURANT == restaurantOne){
+        setImagesLoaded(imagesLoaded + 1);
+    }
+    if(displayedRestaurants[1].RESTAURANT == restaurantTwo){
+        setImagesLoaded(imagesLoaded + 1);
+    }
+    if(displayedRestaurants[2].RESTAURANT == restaurantThree){
+        setImagesLoaded(imagesLoaded + 1);
     }
     setRestaurantOne(displayedRestaurants[0].RESTAURANT);
     setRestaurantTwo(displayedRestaurants[1].RESTAURANT);

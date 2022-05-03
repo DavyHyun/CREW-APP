@@ -5,7 +5,7 @@ import { getStorage, getDownloadURL, ref as sRef } from "firebase/storage";
 import rData from '../json/thankYouGrace.json';
 import AppLoading from 'expo-app-loading';
 import { Svg } from 'expo';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -84,20 +84,20 @@ const DisplayRes = () => {
       console.log("use effect triggered");
       setImagesLoaded(0);
       renderScreen();
-    
+
     }
   }, [refreshTrigger]);
 
   const renderScreen = async () => {
 
-    
-      for (let index = 0; index < rData.length; index++) {
-        if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].WEATHER === result.Q3) {
-          restaurantList.push(rData[index]);
-        }
-      }
 
-    
+    for (let index = 0; index < rData.length; index++) {
+      if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].WEATHER === result.Q3) {
+        restaurantList.push(rData[index]);
+      }
+    }
+
+
     pickRestaurants();
     setImages();
   };
@@ -111,6 +111,15 @@ const DisplayRes = () => {
       displayedRestaurants.push(restaurantList[random]);
 
       restaurantList.splice(random, 1);
+    }
+    if (displayedRestaurants[0].RESTAURANT == restaurantOne) {
+      setImagesLoaded(imagesLoaded + 1);
+    }
+    if (displayedRestaurants[1].RESTAURANT == restaurantTwo) {
+      setImagesLoaded(imagesLoaded + 1);
+    }
+    if (displayedRestaurants[2].RESTAURANT == restaurantThree) {
+      setImagesLoaded(imagesLoaded + 1);
     }
     setRestaurantOne(displayedRestaurants[0].RESTAURANT);
     setRestaurantTwo(displayedRestaurants[1].RESTAURANT);
@@ -149,8 +158,8 @@ const DisplayRes = () => {
 
 
 
-  
-  
+
+
   const refreshScreen = () => {
     setRefreshTrigger(refreshTrigger + 1);
     setImagesLoaded(0);
@@ -193,15 +202,15 @@ const DisplayRes = () => {
 
 
   if (!fontsLoaded) {
-    return <LoadingAnimation />
+    return <LoadingAnimation style={styles.animation}/>
   } else {
     return (
 
-      <View style = {styles.view}>
-         {imagesLoaded > 2 ? null :
+      <View style={styles.view}>
+        {imagesLoaded > 2 ? null :
           <LoadingAnimation />
         }
-        <View style = {styles.topBar}>
+        <View style={styles.topBar}>
           <TouchableOpacity
             onPress={back}
           >
@@ -210,81 +219,81 @@ const DisplayRes = () => {
           <Text style={styles.pageLabel}>RESTAURANTS</Text>
         </View>
 
-        <View style = {styles.resDisplay}>
-          <View style = {styles.eachView1}>
-       <TouchableOpacity
-          onPress={() => navigateToRestaurant(0)}
-          style={styles.leftButton}
-        >
-          <View style={styles.buttonImage}>
-            <Image
-              source={require('../assets/restaurantFrame.png')}
-              style={styles.pictureFrame}
-            />
-            <Image
-              source={{ uri: imageUrl1 }}
-              style={styles.leftImage}
-              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
-            />
-          </View>
-
-          <Text style={styles.restaurantLabel}>{restaurantOne}</Text>
-        </TouchableOpacity>
-          </View>
-
-          <View style = {styles.eachView2}>
+        <View style={styles.resDisplay}>
+          <View style={styles.eachView1}>
             <TouchableOpacity
-          onPress={() => navigateToRestaurant(1)}
-          style={styles.rightButton}
-        >
-          <View style={styles.buttonImage}>
-            <Image
-              source={require('../assets/restaurantFrame.png')}
-              style={styles.pictureFrame}
-            />
-            <Image
-              source={{ uri: imageUrl2 }}
-              style={styles.leftImage}
-              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
-            />
+              onPress={() => navigateToRestaurant(0)}
+              style={styles.leftButton}
+            >
+              <View style={styles.buttonImage}>
+                <Image
+                  source={require('../assets/restaurantFrame.png')}
+                  style={styles.pictureFrame}
+                />
+                <Image
+                  source={{ uri: imageUrl1 }}
+                  style={styles.leftImage}
+                  onLoad={() => setImagesLoaded(imagesLoaded + 1)}
+                />
+              </View>
+
+              <Text style={styles.restaurantLabel}>{restaurantOne}</Text>
+            </TouchableOpacity>
           </View>
 
-          <Text style={styles.restaurantLabel}>{restaurantTwo}</Text>
-
-        </TouchableOpacity>
-          </View>
-
-          <View style = {styles.eachView3}>
+          <View style={styles.eachView2}>
             <TouchableOpacity
-          onPress={() => navigateToRestaurant(2)}
-          style={styles.leftButton}
-        >
-          <View style={styles.buttonImage}>
-            <Image
-              source={require('../assets/restaurantFrame.png')}
-              style={styles.pictureFrame}
-            />
-            <Image
-              source={{ uri: imageUrl3 }}
-              style={styles.leftImage}
-              onLoad={() => setImagesLoaded(imagesLoaded + 1)}
-            />
+              onPress={() => navigateToRestaurant(1)}
+              style={styles.rightButton}
+            >
+              <View style={styles.buttonImage}>
+                <Image
+                  source={require('../assets/restaurantFrame.png')}
+                  style={styles.pictureFrame}
+                />
+                <Image
+                  source={{ uri: imageUrl2 }}
+                  style={styles.leftImage}
+                  onLoad={() => setImagesLoaded(imagesLoaded + 1)}
+                />
+              </View>
+
+              <Text style={styles.restaurantLabel}>{restaurantTwo}</Text>
+
+            </TouchableOpacity>
           </View>
 
-          <Text style={styles.restaurantLabel}>{restaurantThree}</Text>
+          <View style={styles.eachView3}>
+            <TouchableOpacity
+              onPress={() => navigateToRestaurant(2)}
+              style={styles.leftButton}
+            >
+              <View style={styles.buttonImage}>
+                <Image
+                  source={require('../assets/restaurantFrame.png')}
+                  style={styles.pictureFrame}
+                />
+                <Image
+                  source={{ uri: imageUrl3 }}
+                  style={styles.leftImage}
+                  onLoad={() => setImagesLoaded(imagesLoaded + 1)}
+                />
+              </View>
 
-        </TouchableOpacity>
+              <Text style={styles.restaurantLabel}>{restaurantThree}</Text>
+
+            </TouchableOpacity>
           </View>
 
         </View>
         <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={() => refreshScreen()}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonTextL}>SHOW NEW LIST</Text>
-                </TouchableOpacity>
-            </View>
+          <TouchableOpacity
+            onPress={() => refreshScreen()}
+            style={styles.button}
+          >
+            <Text style={styles.buttonTextL}>SHOW NEW LIST</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
     )
@@ -295,6 +304,9 @@ const DisplayRes = () => {
 export default DisplayRes
 
 const styles = StyleSheet.create({
+  animation: {
+    bottom: '0%',
+  },
 
   view: {
     // backgroundColor: '#FFD73F',
@@ -307,7 +319,7 @@ const styles = StyleSheet.create({
     width: '83%',
     justifyContent: 'center',
     alignItems: 'center',
-    
+
     // marginTop: 40,
   },
 
@@ -376,7 +388,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_600SemiBold',
     fontSize: 20,
     marginTop: '1.5%'
-,    textAlign: 'center',
+    , textAlign: 'center',
     marginRight: '20%'
 
   },

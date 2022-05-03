@@ -97,6 +97,7 @@ const MultiplayerQ3 = () => {
             roomID: roomID,
         }
         setIsTimerStart(false);
+        const db = getDatabase();
         var usersFinished = 0;
         const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
         get(usersFinishedRef).then((snapshot) => {
