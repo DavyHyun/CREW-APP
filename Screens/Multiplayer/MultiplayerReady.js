@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, {useState} from 'react'
-import { useNavigation, useIsFocused } from '@react-navigation/core'
+import { useNavigation, useIsFocused, useRoute } from '@react-navigation/core'
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
 import { useEffect } from 'react/cjs/react.development';
 import { getAuth } from "firebase/auth";
 
 
-const Ready = () => {
+const MultiplayerReady = () => {
 
   let today = new Date();
   let dayOf = today.getDay();
@@ -26,6 +26,8 @@ const Ready = () => {
   const [questionSet, setQuestionSet] = useState();
   const[result, setResult] = useState([]);
   const [personName, setPersonName] = useState("");
+  const route = useRoute();
+  const roomID = route.params;
 
   useEffect(() => {
     if (isFocused) {
@@ -50,6 +52,7 @@ const Ready = () => {
     Q2: null,
     Q3: null,
     QSet: questionSet,
+    roomID: roomID,
   })
   }
 
@@ -59,7 +62,7 @@ const Ready = () => {
 
     const navigation = useNavigation();
     const navigateToQ1 = () => {
-      navigation.navigate("Q1", result);
+      navigation.navigate("MultiplayerQ1", result);
     }
     const navigateToHome = () => {
       navigation.navigate("HomeScreen");
@@ -88,7 +91,7 @@ const Ready = () => {
   )
 }
 
-export default Ready
+export default MultiplayerReady;
 
 const styles = StyleSheet.create({
   button: {

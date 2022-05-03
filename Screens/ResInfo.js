@@ -287,9 +287,12 @@ const ResInfo = () => {
   } else {
     return (
       <View>
-        {imagesLoaded ? null :
+        {imagesLoaded ? null : 
+        <View style={styles.animation}>
           <LoadingAnimation />
-        }
+        </View>}
+
+
         <ScrollView contentContainerStyle={styles.container}>
           <ImageBackground
             style={{ width: '100%', height: 300, resizeMode: 'cover' }}
@@ -373,9 +376,11 @@ const ResInfo = () => {
                   backgroundColor: '#ffbc42',
                   borderRadius: 50,
                 }}
-                onPress={() => { Linking.openURL(phoneUrl) 
-                console.log(phoneUrl)
-              console.log(phone)}}
+                onPress={() => {
+                  Linking.openURL(phoneUrl)
+                  console.log(phoneUrl)
+                  console.log(phone)
+                }}
               >
                 <FontAwesome name="phone" size={20} color="black" />
               </TouchableOpacity>
@@ -570,6 +575,12 @@ const ResInfo = () => {
 export default ResInfo
 
 const styles = StyleSheet.create({
+  animation: {
+    width: '60%',
+    height: '65%',
+    alignSelf: 'center',
+
+  },
 
   hours: {
     alignItems: 'center',
