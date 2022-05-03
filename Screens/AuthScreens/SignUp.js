@@ -35,9 +35,6 @@ const LoginScreen = () => {
       } else {
           try {
               const user = await createUserWithEmailAndPassword(auth, email, password);
-              sendEmailVerification(getAuth().currentUser).then(() => {
-                alert("verify your email before moving on!")
-              })
               var userId = getAuth().currentUser.uid;
               set(ref(database, 'users/' + userId), {
                 name: "placeholder"

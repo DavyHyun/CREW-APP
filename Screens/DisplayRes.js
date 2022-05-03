@@ -198,6 +198,9 @@ const DisplayRes = () => {
     return (
 
       <View style = {styles.view}>
+         {imagesLoaded > 2 ? null :
+          <LoadingAnimation />
+        }
         <View style = {styles.topBar}>
           <TouchableOpacity
             onPress={back}
