@@ -5,6 +5,7 @@ import { getStorage, getDownloadURL, ref as sRef } from "firebase/storage";
 import rData from '../json/thankYouGrace.json';
 import AppLoading from 'expo-app-loading';
 import { Svg } from 'expo';
+import { Ionicons } from '@expo/vector-icons'; 
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -196,17 +197,19 @@ const DisplayRes = () => {
   } else {
     return (
 
-      <View style={styles.background}>
-        {imagesLoaded > 2 ? null :
-          <LoadingAnimation />
-        }
-        
-        <View style={styles.topSpacer}>
-          {imagesLoaded > 2 ? <Text style={styles.pageLabel}>RESTAURANTS</Text> : null}
-          
+      <View style = {styles.view}>
+        <View style = {styles.topBar}>
+          <TouchableOpacity
+            onPress={back}
+          >
+            <Ionicons name="md-chevron-back" size={30} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.pageLabel}>RESTAURANTS</Text>
         </View>
 
-        <TouchableOpacity
+        <View style = {styles.resDisplay}>
+          <View style = {styles.eachView1}>
+       <TouchableOpacity
           onPress={() => navigateToRestaurant(0)}
           style={styles.leftButton}
         >
@@ -224,9 +227,10 @@ const DisplayRes = () => {
 
           <Text style={styles.restaurantLabel}>{restaurantOne}</Text>
         </TouchableOpacity>
+          </View>
 
-
-        <TouchableOpacity
+          <View style = {styles.eachView2}>
+            <TouchableOpacity
           onPress={() => navigateToRestaurant(1)}
           style={styles.rightButton}
         >
@@ -237,15 +241,18 @@ const DisplayRes = () => {
             />
             <Image
               source={{ uri: imageUrl2 }}
-              style={styles.rightImage}
+              style={styles.leftImage}
               onLoad={() => setImagesLoaded(imagesLoaded + 1)}
             />
           </View>
 
           <Text style={styles.restaurantLabel}>{restaurantTwo}</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
+        </TouchableOpacity>
+          </View>
+
+          <View style = {styles.eachView3}>
+            <TouchableOpacity
           onPress={() => navigateToRestaurant(2)}
           style={styles.leftButton}
         >
@@ -264,21 +271,17 @@ const DisplayRes = () => {
           <Text style={styles.restaurantLabel}>{restaurantThree}</Text>
 
         </TouchableOpacity>
+          </View>
 
-        
-
-        <TouchableOpacity
-          onPress={() => refreshScreen()}
-          style={styles.refreshButton}>
-          <Text style={styles.refreshButtonText}>SHOW ME NEW LIST</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={back}
-        >
-          <Text>Back</Text>
-        </TouchableOpacity>
-
+        </View>
+        <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                    onPress={() => refreshScreen()}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonTextL}>SHOW NEW LIST</Text>
+                </TouchableOpacity>
+            </View>
       </View>
 
     )
@@ -289,6 +292,74 @@ const DisplayRes = () => {
 export default DisplayRes
 
 const styles = StyleSheet.create({
+
+  view: {
+    // backgroundColor: '#FFD73F',
+    height: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonContainer: {
+    width: '83%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+    // marginTop: 40,
+  },
+
+  button: {
+    width: '100%',
+    padding: '5%',
+    borderRadius: 40,
+    alignItems: 'center',
+    backgroundColor: '#FFBE48',
+    marginBottom: '2%',
+    borderStyle: 'solid',
+    borderColor: '#FFBE48',
+    borderWidth: 1,
+    marginTop: '10%'
+  },
+  buttonTextL: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+
+  topBar: {
+    marginBottom: '10%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: '5%'
+  },
+
+  resDisplay: {
+    height: '65%',
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+
+  },
+
+  eachView1: {
+    height: '33.33333%',
+    width: '100%',
+
+  },
+
+  eachView2: {
+    height: '33.33333%',
+    width: '100%',
+
+  },
+
+  eachView3: {
+    height: '33.33333%',
+    width: '100%',
+
+  },
+
   background: {
     backgroundColor: '#E5E5E5',
     height: '100%',
@@ -301,19 +372,24 @@ const styles = StyleSheet.create({
   pageLabel: {
     fontFamily: 'Nunito_600SemiBold',
     fontSize: 20,
-    textAlign: 'center',
+    marginTop: '1.5%'
+,    textAlign: 'center',
+    marginRight: '20%'
+
   },
   leftButton: {
     left: '10%',
     // borderRadius: 1000,
     // borderWidth: 1,
-    height: '20%',
+    height: '70%',
+    marginTop: '7%',
     aspectRatio: 1,
   },
   rightButton: {
-    left: '50%',
+    left: '57%',
     // borderRadius: 1000,
-    height: '20%',
+    height: '70%',
+    marginTop: '7%',
     aspectRatio: 1,
     // borderWidth: 1,
   },
@@ -349,6 +425,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_400Regular',
     fontSize: 15,
     top: '18%',
+    marginTop: '5%',
     alignSelf: 'center',
 
   },
