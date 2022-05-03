@@ -78,6 +78,13 @@ const MultiplayerQ3 = () => {
         })
         weatherScore++;
         set(ref(db, 'lobby/' + roomID + '/weatherScore'), weatherScore);
+        var usersFinished = 0;
+        const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
+        get(usersFinishedRef).then((snapshot) => {
+            usersFinished = snapshot.val();
+        })
+        usersFinished++;
+        set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished);
         navigation.navigate("MultiplayerDisplayRes", progress);
     }
 
@@ -90,6 +97,13 @@ const MultiplayerQ3 = () => {
             roomID: roomID,
         }
         setIsTimerStart(false);
+        var usersFinished = 0;
+        const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
+        get(usersFinishedRef).then((snapshot) => {
+            usersFinished = snapshot.val();
+        })
+        usersFinished++;
+        set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished);
         navigation.navigate("MultiplayerDisplayRes", progress);
     }
     const options = {

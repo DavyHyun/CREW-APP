@@ -91,7 +91,7 @@ const MultiplayerDisplayRes = () => {
 
   const renderScreen = async () => {
     const db = getDatabase();
-    
+
 
     
       for (let index = 0; index < rData.length; index++) {
