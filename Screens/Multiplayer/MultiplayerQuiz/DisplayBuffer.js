@@ -8,6 +8,7 @@ import { Svg } from 'expo';
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
 
 const DisplayBuffer = () => {
+    const route = useRoute();
     const roomID = route.params.roomID;
     
 

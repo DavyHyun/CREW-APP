@@ -121,13 +121,12 @@ const MultiplayerQ2 = () => {
     } else {
   return (
     <View style={{flexDirection: "row", flex: 1}}>
-      <View style={{width: '12%', backgroundColor: '#F4845F', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
       <TouchableOpacity
         onPress={navigateToQ3F}
+        style={{width: '12%', backgroundColor: '#F4845F', height: '100%', justifyContent: 'center', alignItems: 'center'}}
       >
         <Feather name="x" size={30} color="white" />
       </TouchableOpacity>
-      </View>
       <View style={{width: '76%', backgroundColor: '#FFD73F',  height: '100%', flexDirection: "column", justifyContent: 'center', alignItems: 'center'}}>
          <Timer
             totalDuration={timerDuration}
@@ -159,13 +158,13 @@ const MultiplayerQ2 = () => {
           <Image source={require('../../../assets/questionArt.png')} style={styles.image}></Image>
           <Text style={{fontFamily: "Nunito_700Bold", fontSize: 15, marginTop: '10%', marginBottom: '25%'}}>Tilt your phone to answer!</Text>
       </View>
-      <View style={{width: '12%', backgroundColor: '#A7DCA9',  height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+
       <TouchableOpacity
         onPress={navigateToQ3T}
+        style={{width: '12%', backgroundColor: '#A7DCA9',  height: '100%', justifyContent: 'center', alignItems: 'center'}}
       >
         <Ionicons name="checkmark-sharp" size={32} color="white" />
       </TouchableOpacity>
-      </View>
     </View>
   )
 }
