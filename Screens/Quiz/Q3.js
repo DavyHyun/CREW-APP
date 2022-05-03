@@ -134,7 +134,7 @@ const Q3 = () => {
             <Text style={{fontFamily: "Nunito_700Bold", fontSize: 15, textAlign: 'center'}}>{q}</Text>
           </View>
           <Image source={require('../../assets/questionArt.png')} style={styles.image}></Image>
-          <Text style={{fontFamily: "Nunito_700Bold", fontSize: 15, marginTop: '10%', marginBottom: '25%'}}>Tilt your phone to answer!</Text>
+          <Text style={{fontFamily: "Nunito_700Bold", fontSize: 15, marginTop: '10%', marginBottom: '25%'}}>Choose your side!</Text>
       </View>
       <View style={{width: '12%', backgroundColor: '#A7DCA9',  height: '100%', justifyContent: 'center', alignItems: 'center'}}>
       <TouchableOpacity

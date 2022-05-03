@@ -99,7 +99,9 @@ const HomeScreen = () => {
         <View style={{justifyContent: 'center', alignItems: 'center', marginTop:'10%'}}>
         <Text style={{fontSize:20}}>WELCOME TO <Text style={{fontSize:20, fontWeight:'bold'}}>CREW!</Text></Text>
         </View>
-        <Image source={require('../assets/CrewLogo.png')} style={styles.logo}></Image>
+        <View style={styles.imageView}>
+          <Image source={require('../assets/CrewLogo.png')} style={styles.logo}></Image>
+        </View>
       </View>
       <View style={{flexDirection:'column', justifyContent: 'center', alignItems:'center', marginBottom: '20%'}}>
         <View style={styles.buttonView}>
@@ -142,10 +144,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  imageView: {
+    // backgroundColor: 'blue',
+    width: '20%',
+    height: '130%',
+
+  },
   textView: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '90%',
+    justifyContent: 'space-between',
+    width: '70%',
   },
   buttonView: {
     marginTop: '10%',
@@ -153,11 +161,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '90%',
     marginBottom: '5%',
-    marginLeft: '2%'
+    // marginLeft: '2%'
+    marginRight: '5%'
   },
   button: {
     // width: '80%',
-    padding: 50,
+    padding: '23%',
     borderRadius: 10,
     alignItems: 'center',
     backgroundColor: 'white',
@@ -174,10 +183,10 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 85,
-    height: 120,
-
-    // resizeMode: 'contain'
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain'
   }
 
 })

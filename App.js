@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,6 +7,7 @@ import LoginScreen from './Screens/AuthScreens/LoginScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoginOrSignUp from './Screens/AuthScreens/LoginOrSignUp';
 import SignUp from './Screens/AuthScreens/SignUp';
+import ForgotPass from './Screens/AuthScreens/ForgotPass';
 import PersonalInfo from './Screens/AuthScreens/PersonalInfo'
 import ResInfo from './Screens/ResInfo';
 import Ready from './Screens/Quiz/Ready'
@@ -22,6 +23,7 @@ import MultiplayerQ2 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ2';
 import MultiplayerQ3 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ3';
 import MultiplayerDisplayRes from './Screens/Multiplayer/MultiplayerDisplayRes';
 import { LogBox } from 'react-native';
+import LoadingScreen from './components/LoadingScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -40,11 +42,13 @@ export default function App() {
   return (
     <> 
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="LoadingScreen">
+        <Stack.Screen options={{headerShown: false}} name="LoadingScreen" component={LoadingScreen} />
         <Stack.Screen options={{headerShown: false}}name="Log In or Sign Up" component={LoginOrSignUp}/>
         <Stack.Screen options={{headerShown: true}} name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen options={{headerShown: false}} name="PersonalInfo" component={PersonalInfo} />
+        <Stack.Screen options={{headerShown: false}} name="ForgotPass" component={ForgotPass} />
         <Stack.Screen options={{headerShown: false}} name="HomeScreen" component={HomeScreen} />
         <Stack.Screen options={{headerShown: false}}name="Ready" component={Ready}/>
         <Stack.Screen options={{headerShown: false}}name="Q1" component={Q1}/>
