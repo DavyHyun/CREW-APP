@@ -22,6 +22,7 @@ import MultiplayerQ1 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ1';
 import MultiplayerQ2 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ2';
 import MultiplayerQ3 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ3';
 import MultiplayerDisplayRes from './Screens/Multiplayer/MultiplayerDisplayRes';
+import DisplayBuffer from './Screens/Multiplayer/MultiplayerQuiz/DisplayBuffer';
 import { LogBox } from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
 
@@ -63,6 +64,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="MultiplayerQ2" component={MultiplayerQ2} />
         <Stack.Screen options={{headerShown: false}} name="MultiplayerQ3" component={MultiplayerQ3} />
         <Stack.Screen options={{headerShown: false}} name="MultiplayerDisplayRes" component={MultiplayerDisplayRes} />
+        <Stack.Screen options={{headerShown: false}} name="DisplayBuffer" component={DisplayBuffer} />
       </Stack.Navigator>
     </NavigationContainer>
     </>

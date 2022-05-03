@@ -5,7 +5,9 @@ import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 import { Feather } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
-import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
+import { getAuth } from "firebase/auth";
+
+import { getDatabase, ref, set, get, child, onValue, push, firebase } from "firebase/database";
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -56,6 +58,7 @@ const MultiplayerQ1 = () => {
     var questions = route.params.QSet.split(",");
     const roomID = route.params.roomID;
     var q = questions[0];
+    const userId = getAuth().currentUser.uid;
     // useEffect (() => {
     //   console.log(questions);
       
@@ -71,14 +74,23 @@ const MultiplayerQ1 = () => {
         }
         setIsTimerStart(false);
         const db = getDatabase();
-        var speedScore = 0;
-        const speedScoreRef = ref(db, 'lobby/' + roomID + '/speedScore');
-        get(speedScoreRef).then((snapshot) => {
-            speedScore = snapshot.val();
-        })
-        speedScore++;
-        set(ref(db, 'lobby/' + roomID + '/speedScore'), speedScore);
+        set(ref(db, 'lobby/' + roomID + '/speedScore/' + userId), userId)
         navigation.navigate("MultiplayerQ2", progress);
+        // var speedScore = 0;
+        // const speedScoreRef = ref(db, 'lobby/' + roomID + '/speedScore');
+        // get(speedScoreRef).then((snapshot) => {
+        //     speedScore = snapshot.val();
+        //     console.log("speed");
+        //     console.log(speedScore);
+        // })
+        // speedScore++;
+        // set(ref(db, 'lobby/' + roomID + '/speedScore'), speedScore).then(() => {
+        //     navigation.navigate("MultiplayerQ2", progress);
+        // })
+
+        
+
+        // set(ref(db, 'lobby/' + roomID + '/speedScore'), firebase.database.ServerValue.increment(1));
     }
 
     const navigateToQ2F = () => {
