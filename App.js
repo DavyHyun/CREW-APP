@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,6 +16,7 @@ import Q2 from './Screens/Quiz/Q2'
 import Q3 from './Screens/Quiz/Q3'
 import Display from './Screens/DisplayRes';
 import { LogBox } from 'react-native';
+import LoadingScreen from './components/LoadingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +34,8 @@ export default function App() {
   return (
     <> 
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="LoadingScreen">
+        <Stack.Screen options={{headerShown: false}} name="LoadingScreen" component={LoadingScreen} />
         <Stack.Screen options={{headerShown: false}}name="Log In or Sign Up" component={LoginOrSignUp}/>
         <Stack.Screen options={{headerShown: true}} name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
