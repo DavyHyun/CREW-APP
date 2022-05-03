@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
+import { getAuth } from "firebase/auth";
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -56,6 +57,7 @@ const MultiplayerQ3 = () => {
     var questions = route.params.QSet.split(",");
     var q = questions[2];
     const roomID = route.params.roomID;
+    const userId = getAuth().currentUser.uid;
     // useEffect (() => {
     //   console.log(questions);
       
@@ -71,21 +73,33 @@ const MultiplayerQ3 = () => {
         }
         setIsTimerStart(false);
         const db = getDatabase();
-        var weatherScore = 0;
-        const weatherScoreRef = ref(db, 'lobby/' + roomID + '/weatherScore');
-        get(weatherScoreRef).then((snapshot) => {
-            weatherScore = snapshot.val();
-        })
-        weatherScore++;
-        set(ref(db, 'lobby/' + roomID + '/weatherScore'), weatherScore);
-        var usersFinished = 0;
-        const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
-        get(usersFinishedRef).then((snapshot) => {
-            usersFinished = snapshot.val();
-        })
-        usersFinished++;
-        set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished);
-        navigation.navigate("MultiplayerDisplayRes", progress);
+        // var weatherScore = 0;
+        // const weatherScoreRef = ref(db, 'lobby/' + roomID + '/weatherScore');
+        // get(weatherScoreRef).then((snapshot) => {
+        //     weatherScore = snapshot.val();
+        //     console.log("weather");
+        //     console.log(weatherScore);
+        // })
+        // weatherScore++;
+        // console.log("added weather");
+        // console.log(weatherScore);
+        // set(ref(db, 'lobby/' + roomID + '/weatherScore'), weatherScore);
+        set(ref(db, 'lobby/' + roomID + '/weatherScore/' + userId), userId)
+
+        // var usersFinished = 0;
+        // const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
+        // get(usersFinishedRef).then((snapshot) => {
+        //     usersFinished = snapshot.val();
+        //     console.log("users " + usersFinished);
+        // })
+        // usersFinished++;
+        // console.log("added users");
+        // console.log(usersFinished);
+        // set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished).then(() => {
+        //     navigation.navigate("MultiplayerDisplayRes", progress);
+        // })
+        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId);
+        navigation.navigate("DisplayBuffer", progress);
     }
 
     const navigateToResF = () => {
@@ -98,14 +112,21 @@ const MultiplayerQ3 = () => {
         }
         setIsTimerStart(false);
         const db = getDatabase();
-        var usersFinished = 0;
-        const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
-        get(usersFinishedRef).then((snapshot) => {
-            usersFinished = snapshot.val();
-        })
-        usersFinished++;
-        set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished);
-        navigation.navigate("MultiplayerDisplayRes", progress);
+        // var usersFinished = 0;
+        // const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
+        // get(usersFinishedRef).then((snapshot) => {
+        //     usersFinished = snapshot.val();
+        //     console.log("users" + usersFinished);
+        // })
+        // usersFinished++;
+        // console.log("added users");
+        // console.log(usersFinished);
+        // set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished).then(() => {
+        //     navigation.navigate("MultiplayerDisplayRes", progress);
+        // })
+        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId);
+        navigation.navigate("DisplayBuffer", progress);
+        
     }
     const options = {
       container: {

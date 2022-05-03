@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
+import { getAuth } from "firebase/auth";
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -56,6 +57,7 @@ const MultiplayerQ2 = () => {
     var questions = route.params.QSet.split(",");
     const roomID = route.params.roomID;
     var q = questions[1];
+    const userId = getAuth().currentUser.uid;
     // useEffect (() => {
     //   console.log(questions);
       
@@ -71,14 +73,23 @@ const MultiplayerQ2 = () => {
         }
         setIsTimerStart(false);
         const db = getDatabase();
-        var moodScore = 0;
-        const moodScoreRef = ref(db, 'lobby/' + roomID + '/moodScore');
-        get(moodScoreRef).then((snapshot) => {
-            moodScore = snapshot.val();
-        })
-        moodScore++;
-        set(ref(db, 'lobby/' + roomID + '/moodScore'), moodScore);
+        set(ref(db, 'lobby/' + roomID + '/moodScore/' + userId), userId);
         navigation.navigate("MultiplayerQ3", progress);
+        // var moodScore = 0;
+        // const moodScoreRef = ref(db, 'lobby/' + roomID + '/moodScore');
+        // get(moodScoreRef).then((snapshot) => {
+        //     moodScore = snapshot.val();
+        //     console.log("Mood");
+        //     console.log(moodScore);
+        // })
+        // moodScore++;
+        // console.log("added mood");
+        // console.log(moodScore);
+        // set(ref(db, 'lobby/' + roomID + '/moodScore'), moodScore).then(() => {
+        //     navigation.navigate("MultiplayerQ3", progress);
+        // })
+
+        
     }
 
     const navigateToQ3F = () => {
@@ -135,7 +146,7 @@ const MultiplayerQ2 = () => {
                 Q3: route.params.Q3,
                 QSet: route.params.QSet,
             }
-              navigation.navigate("MutliplayerQ3", progress)
+              navigation.navigate("MultiplayerQ3", progress)
             }}
             //can call a function On finish of the time
             // getTime={(time) => {
