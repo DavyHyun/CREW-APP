@@ -207,9 +207,13 @@ const DisplayRes = () => {
     return (
 
       <View style={styles.view}>
+        
         {imagesLoaded > 2 ? null :
+          <View style={{height: '100%', marginTop: '188%'}}>
           <LoadingAnimation />
+          </View>
         }
+        
         <View style={styles.topBar}>
           <TouchableOpacity
             onPress={back}
@@ -236,12 +240,17 @@ const DisplayRes = () => {
                   onLoad={() => setImagesLoaded(imagesLoaded + 1)}
                 />
               </View>
-
-              <Text style={styles.restaurantLabel}>{restaurantOne}</Text>
             </TouchableOpacity>
+           <View style={styles.textView}>
+              <Text style={styles.restaurantLabel1}>{restaurantOne}</Text>
+            </View>
+            
           </View>
 
           <View style={styles.eachView2}>
+          <View style={styles.textView2}>
+              <Text style={styles.restaurantLabel2}>{restaurantTwo}</Text>
+            </View>
             <TouchableOpacity
               onPress={() => navigateToRestaurant(1)}
               style={styles.rightButton}
@@ -258,9 +267,9 @@ const DisplayRes = () => {
                 />
               </View>
 
-              <Text style={styles.restaurantLabel}>{restaurantTwo}</Text>
 
             </TouchableOpacity>
+          
           </View>
 
           <View style={styles.eachView3}>
@@ -280,9 +289,11 @@ const DisplayRes = () => {
                 />
               </View>
 
-              <Text style={styles.restaurantLabel}>{restaurantThree}</Text>
 
             </TouchableOpacity>
+            <View style={styles.textView}>
+              <Text style={styles.restaurantLabel1}>{restaurantThree}</Text>
+            </View>
           </View>
 
         </View>
@@ -323,6 +334,17 @@ const styles = StyleSheet.create({
     // marginTop: 40,
   },
 
+  textView: {
+    justifyContent: 'center',
+    width: '40%',
+
+  },  
+  textView2: {
+    justifyContent: 'center',
+    marginLeft: '5%',
+    width: '40%'
+  },
+
   button: {
     width: '100%',
     padding: '5%',
@@ -360,19 +382,19 @@ const styles = StyleSheet.create({
   eachView1: {
     height: '33.33333%',
     width: '100%',
-
+    flexDirection: 'row'
   },
 
   eachView2: {
     height: '33.33333%',
     width: '100%',
-
+    flexDirection: 'row'
   },
 
   eachView3: {
     height: '33.33333%',
     width: '100%',
-
+    flexDirection: 'row'
   },
 
   background: {
@@ -393,17 +415,17 @@ const styles = StyleSheet.create({
 
   },
   leftButton: {
-    left: '10%',
+    marginLeft: '7%',
     // borderRadius: 1000,
     // borderWidth: 1,
-    height: '70%',
+    height: '80%',
     marginTop: '7%',
     aspectRatio: 1,
   },
   rightButton: {
-    left: '57%',
+    marginLeft: '8%',
     // borderRadius: 1000,
-    height: '70%',
+    height: '80%',
     marginTop: '7%',
     aspectRatio: 1,
     // borderWidth: 1,
@@ -436,12 +458,23 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     top: '-7%',
   },
-  restaurantLabel: {
-    fontFamily: 'Nunito_400Regular',
-    fontSize: 15,
-    top: '18%',
-    marginTop: '5%',
+  restaurantLabel1: {
+    fontFamily: 'Nunito_600SemiBold',
+    fontSize: 20,
+    marginTop: '3%',
     alignSelf: 'center',
+    marginLeft: '10%',
+    textAlign: 'center',
+
+  },
+
+  restaurantLabel2: {
+    fontFamily: 'Nunito_600SemiBold',
+    fontSize: 20,
+    marginTop: '3%',
+    alignSelf: 'center',
+    marginLeft: '10%',
+    textAlign: 'center'
 
   },
 

@@ -579,6 +579,7 @@ const styles = StyleSheet.create({
     width: '60%',
     height: '65%',
     alignSelf: 'center',
+    marginRight: '100%'
 
   },
 

@@ -98,13 +98,14 @@ const Q1 = () => {
     } else {
   return (
     <View style={{flexDirection: "row", flex: 1}}>
-      <View style={{width: '12%', backgroundColor: '#F4845F', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+
       <TouchableOpacity
         onPress={navigateToQ2F}
+        style={{width: '12%', backgroundColor: '#F4845F', height: '100%', justifyContent: 'center', alignItems: 'center'}}
       >
         <Feather name="x" size={30} color="white" />
       </TouchableOpacity>
-      </View>
+      
       <View style={{width: '76%', backgroundColor: '#FFD73F',  height: '100%', flexDirection: "column", justifyContent: 'center', alignItems: 'center'}}>
          <Timer
             totalDuration={timerDuration}
@@ -136,13 +137,14 @@ const Q1 = () => {
           <Image source={require('../../assets/questionArt.png')} style={styles.image}></Image>
           <Text style={{fontFamily: "Nunito_700Bold", fontSize: 15, marginTop: '10%', marginBottom: '25%'}}>Choose your side!</Text>
       </View>
-      <View style={{width: '12%', backgroundColor: '#A7DCA9',  height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+
       <TouchableOpacity
         onPress={navigateToQ2T}
+        style={{width: '12%', backgroundColor: '#A7DCA9',  height: '100%', justifyContent: 'center', alignItems: 'center'}}
       >
         <Ionicons name="checkmark-sharp" size={32} color="white" />
       </TouchableOpacity>
-      </View>
+
     </View>
   )
 }

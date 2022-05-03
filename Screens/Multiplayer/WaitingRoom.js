@@ -133,11 +133,17 @@ const WaitingRoom = () => {
                     </View>
                 )}
             />
-            <TouchableOpacity
-            onPress={startGame}>
-                <Text>Start</Text>
-            </TouchableOpacity>
             </View>
+            <View style={{width: '80%', marginLeft: '11%', marginTop: '23%', justifyContent: 'center', alignItems: 'center'} }>
+            <Text style={{marginBottom: '5%', fontFamily: 'Nunito_500Medium_Italic', fontSize: 12}}>Exit and rejoining may duplicate players! Watch out!</Text>
+            <TouchableOpacity
+                    onPress={startGame}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonTextL}>START GAME</Text>
+                </TouchableOpacity>
+            </View>
+            
         </View>
     )
 }
@@ -189,6 +195,28 @@ const styles = StyleSheet.create({
        marginVertical: '0.9%',
         flexDirection: 'row',
     },
+    button: {
+        width: '70%',
+        padding: '4%',
+        borderRadius: 20,
+        alignItems: 'center',
+        backgroundColor: '#FD9343',
+        marginBottom: '2%',
+        borderStyle: 'solid',
+        borderColor: '#FFBE48',
+        borderWidth: 1,
+        shadowColor: 'rgba(0,0,0, 0.6)',
+        shadowOffset: { height: 3.5, },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        
+      },
+      buttonTextL: {
+        color: 'white',
+        fontFamily: 'Nunito_600SemiBold',
+        fontWeight: '700',
+        fontSize: 20,
+      },
     listItemText: {
         fontFamily: 'Nunito_400Regular',
         fontSize: 20,
@@ -196,5 +224,16 @@ const styles = StyleSheet.create({
     },
     personIcon: {
         left: '80%',
+    },
+    createButton: {
+        // top: '42%',
+        // marginHorizontal: '30%',
+        // height: '5%',
+        borderRadius: 10,
+        backgroundColor: '#FD9343',
+        shadowColor: 'rgba(0,0,0, 0.6)',
+        shadowOffset: { height: 3.5, },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
     },
 })
