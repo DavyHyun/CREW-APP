@@ -26,7 +26,7 @@ import {
   Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito'; 
 
-const MultiplayerQ1 = () => {
+const MultiplayerQ3 = () => {
   let [fontsLoaded] = useFonts({
     Nunito_200ExtraLight,
     Nunito_300Light,
@@ -54,43 +54,43 @@ const MultiplayerQ1 = () => {
     const navigation = useNavigation();
     const route = useRoute();
     var questions = route.params.QSet.split(",");
+    var q = questions[2];
     const roomID = route.params.roomID;
-    var q = questions[0];
     // useEffect (() => {
     //   console.log(questions);
       
     // }, [])
 
-    const navigateToQ2T = () => {
+    const navigateToResT = () => {
         const progress = {
-            Q1: true,
+            Q1: route.params.Q1,
             Q2: route.params.Q2,
-            Q3: route.params.Q3,
+            Q3: true,
             QSet: route.params.QSet,
-            roomID: route.params.roomID,
+            roomID: roomID,
         }
         setIsTimerStart(false);
         const db = getDatabase();
-        var speedScore = 0;
-        const speedScoreRef = ref(db, 'lobby/' + roomID + '/speedScore');
-        get(speedScoreRef).then((snapshot) => {
-            speedScore = snapshot.val();
+        var weatherScore = 0;
+        const weatherScoreRef = ref(db, 'lobby/' + roomID + '/weatherScore');
+        get(weatherScoreRef).then((snapshot) => {
+            weatherScore = snapshot.val();
         })
-        speedScore++;
-        set(ref(db, 'lobby/' + roomID + '/speedScore'), speedScore);
-        navigation.navigate("MultiplayerQ2", progress);
+        weatherScore++;
+        set(ref(db, 'lobby/' + roomID + '/weatherScore'), weatherScore);
+        navigation.navigate("MultiplayerDisplayRes", progress);
     }
 
-    const navigateToQ2F = () => {
+    const navigateToResF = () => {
         const progress = {
-            Q1: false,
+            Q1: route.params.Q1,
             Q2: route.params.Q2,
-            Q3: route.params.Q3,
+            Q3: false,
             QSet: route.params.QSet,
-            roomID: route.params.roomID,
+            roomID: roomID,
         }
         setIsTimerStart(false);
-        navigation.navigate("MultiplayerQ2", progress);
+        navigation.navigate("MultiplayerDisplayRes", progress);
     }
     const options = {
       container: {
@@ -112,7 +112,7 @@ const MultiplayerQ1 = () => {
     <View style={{flexDirection: "row", flex: 1}}>
       <View style={{width: '12%', backgroundColor: '#F4845F', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
       <TouchableOpacity
-        onPress={navigateToQ2F}
+        onPress={navigateToResF}
       >
         <Feather name="x" size={30} color="white" />
       </TouchableOpacity>
@@ -130,12 +130,12 @@ const MultiplayerQ1 = () => {
             //options for the styling
             handleFinish={() => {
               const progress = {
-                Q1: false,
+                Q1: route.params.Q1,
                 Q2: route.params.Q2,
-                Q3: route.params.Q3,
+                Q3: false,
                 QSet: route.params.QSet,
             }
-              navigation.navigate("MultiplayerQ2", progress)
+              navigation.navigate("MultiplayerDisplayRes", progress)
             }}
             //can call a function On finish of the time
             // getTime={(time) => {
@@ -150,7 +150,7 @@ const MultiplayerQ1 = () => {
       </View>
       <View style={{width: '12%', backgroundColor: '#A7DCA9',  height: '100%', justifyContent: 'center', alignItems: 'center'}}>
       <TouchableOpacity
-        onPress={navigateToQ2T}
+        onPress={navigateToResT}
       >
         <Ionicons name="checkmark-sharp" size={32} color="white" />
       </TouchableOpacity>
@@ -160,7 +160,7 @@ const MultiplayerQ1 = () => {
 }
 }
 
-export default MultiplayerQ1
+export default MultiplayerQ3;
 
 const styles = StyleSheet.create({
     button: {

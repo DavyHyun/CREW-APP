@@ -5,6 +5,7 @@ import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 import { Feather } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
+import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -45,11 +46,11 @@ const MultiplayerQ2 = () => {
     Nunito_900Black_Italic,
   });
     const [isTimerStart, setIsTimerStart] = useState(true);
-  const [isStopwatchStart, setIsStopwatchStart] = useState(false);
-  const [timerDuration, setTimerDuration] = useState(6000);
-  const [resetTimer, setResetTimer] = useState(false);
-  const [resetStopwatch, setResetStopwatch] = useState(false);
-  const [question, setQuestion] = useState("")
+    const [isStopwatchStart, setIsStopwatchStart] = useState(false);
+    const [timerDuration, setTimerDuration] = useState(6000);
+    const [resetTimer, setResetTimer] = useState(false);
+    const [resetStopwatch, setResetStopwatch] = useState(false);
+    const [question, setQuestion] = useState("")
     const navigation = useNavigation();
     const route = useRoute();
     var questions = route.params.QSet.split(",");
@@ -69,7 +70,15 @@ const MultiplayerQ2 = () => {
             roomID: roomID,
         }
         setIsTimerStart(false);
-        navigation.navigate("Q3", progress);
+        const db = getDatabase();
+        var moodScore = 0;
+        const moodScoreRef = ref(db, 'lobby/' + roomID + '/moodScore');
+        get(moodScoreRef).then((snapshot) => {
+            moodScore = snapshot.val();
+        })
+        moodScore++;
+        set(ref(db, 'lobby/' + roomID + '/moodScore'), moodScore);
+        navigation.navigate("MultiplayerQ3", progress);
     }
 
     const navigateToQ3F = () => {
@@ -81,7 +90,7 @@ const MultiplayerQ2 = () => {
             roomID: roomID,
         }
         setIsTimerStart(false);
-        navigation.navigate("Q3", progress);
+        navigation.navigate("MultiplayerQ3", progress);
     }
     const options = {
       container: {
@@ -126,7 +135,7 @@ const MultiplayerQ2 = () => {
                 Q3: route.params.Q3,
                 QSet: route.params.QSet,
             }
-              navigation.navigate("Q3", progress)
+              navigation.navigate("MutliplayerQ3", progress)
             }}
             //can call a function On finish of the time
             // getTime={(time) => {

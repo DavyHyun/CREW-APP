@@ -18,6 +18,9 @@ import RoomCreation from './Screens/Multiplayer/RoomCreation';
 import WaitingRoom from './Screens/Multiplayer/WaitingRoom';
 import MultiplayerReady from './Screens/Multiplayer/MultiplayerReady';
 import MultiplayerQ1 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ1';
+import MultiplayerQ2 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ2';
+import MultiplayerQ3 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ3';
+import MultiplayerDisplayRes from './Screens/Multiplayer/MultiplayerDisplayRes';
 import { LogBox } from 'react-native';
 
 
@@ -53,6 +56,9 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="WaitingRoom" component={WaitingRoom} />
         <Stack.Screen options={{headerShown: false}} name="MultiplayerReady" component={MultiplayerReady} />
         <Stack.Screen options={{headerShown: false}} name="MultiplayerQ1" component={MultiplayerQ1} />
+        <Stack.Screen options={{headerShown: false}} name="MultiplayerQ2" component={MultiplayerQ2} />
+        <Stack.Screen options={{headerShown: false}} name="MultiplayerQ3" component={MultiplayerQ3} />
+        <Stack.Screen options={{headerShown: false}} name="MultiplayerDisplayRes" component={MultiplayerDisplayRes} />
       </Stack.Navigator>
     </NavigationContainer>
     </>

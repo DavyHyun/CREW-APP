@@ -73,6 +73,7 @@ const RoomCreation = () => {
                 moodScore: 0,
                 weatherScore: 0,
                 gameStatus: false,
+                usersFinished: 0,
             })
             set(ref(db, 'lobby/' + roomID + '/users/' + 0), {
                 personName
