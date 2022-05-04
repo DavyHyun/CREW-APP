@@ -55,7 +55,8 @@ const WaitingRoom = () => {
     const roomID = route.params;
     const [loading, setLoading] = useState(true);
     const [players, setPlayers] = useState([]);
-
+    var Filter = require('bad-words'),
+    filter = new Filter();
 
     useEffect(() => {
         try {

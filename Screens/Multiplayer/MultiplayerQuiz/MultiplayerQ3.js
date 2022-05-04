@@ -98,8 +98,10 @@ const MultiplayerQ3 = () => {
         // set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished).then(() => {
         //     navigation.navigate("MultiplayerDisplayRes", progress);
         // })
-        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId);
-        navigation.navigate("DisplayBuffer", progress);
+        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId).then(() => {
+          navigation.navigate("DisplayBuffer", progress);
+        })
+        
     }
 
     const navigateToResF = () => {
@@ -124,8 +126,10 @@ const MultiplayerQ3 = () => {
         // set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished).then(() => {
         //     navigation.navigate("MultiplayerDisplayRes", progress);
         // })
-        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId);
-        navigation.navigate("DisplayBuffer", progress);
+        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId).then(() => {
+          navigation.navigate("DisplayBuffer", progress);
+        })
+        
         
     }
     const options = {
@@ -181,7 +185,7 @@ const MultiplayerQ3 = () => {
             <Text style={{fontFamily: "Nunito_700Bold", fontSize: 15, textAlign: 'center'}}>{q}</Text>
           </View>
           <Image source={require('../../../assets/questionArt.png')} style={styles.image}></Image>
-          <Text style={{fontFamily: "Nunito_700Bold", fontSize: 15, marginTop: '10%', marginBottom: '25%'}}>Tilt your phone to answer!</Text>
+          <Text style={{fontFamily: "Nunito_700Bold", fontSize: 15, marginTop: '10%', marginBottom: '25%'}}>Choose your side!</Text>
       </View>
       
       <TouchableOpacity

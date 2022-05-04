@@ -2,11 +2,11 @@ import React from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import LottieView from "lottie-react-native";
 import { useState } from "react";
-export default function LoadingAnimation() {
+export default function WaitingRoomAnimation() {
   return (
     <View>
       <LottieView
-        source={require("../json/loadingAnimation.json")}
+        source={require("../json/waitingRoomAnimation.json")}
         style={styles.animation}
         autoPlay
       />

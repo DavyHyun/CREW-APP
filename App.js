@@ -43,8 +43,8 @@ export default function App() {
   return (
     <> 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoadingScreen">
-        <Stack.Screen options={{headerShown: false}} name="LoadingScreen" component={LoadingScreen} />
+      <Stack.Navigator initialRouteName="LoadingScreen" screenOptions={{gestureEnabled: false}}>
+        <Stack.Screen options={{headerShown: false}} name="LoadingScreen" component={LoadingScreen}/>
         <Stack.Screen options={{headerShown: false}}name="Log In or Sign Up" component={LoginOrSignUp}/>
         <Stack.Screen options={{headerShown: true}} name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />

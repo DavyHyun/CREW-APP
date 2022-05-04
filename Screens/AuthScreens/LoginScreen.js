@@ -1,9 +1,9 @@
 import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, getAuth } from '@firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import {auth} from '../../firebase';
-
+import DismissKeyBoard from '../../components/DismissKeyboard';
 
 const LoginScreen = () => {
 
@@ -26,7 +26,7 @@ const LoginScreen = () => {
     }
     const handleLogin = async () => {
         try {
-            const user = await signInWithEmailAndPassword(auth, email, password);
+            const user = await signInWithEmailAndPassword(auth, email, password); 
             console.log(user);
         } catch (error) {
             alert("Wrong email or password. Try again.")
@@ -36,6 +36,7 @@ const LoginScreen = () => {
 
 
     return (
+      <DismissKeyBoard>
         <KeyboardAvoidingView
             style={styles.container}
             behavior="padding"
@@ -77,6 +78,7 @@ const LoginScreen = () => {
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
+        </DismissKeyBoard>
     )
 }
 
