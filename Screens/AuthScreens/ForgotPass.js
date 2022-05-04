@@ -7,6 +7,7 @@ import {auth} from '../../firebase';
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 import { NavigationContainer } from '@react-navigation/native';
+import DismissKeyBoard from '../../components/DismissKeyboard';
 
 const ForgotPass = () => {
 
@@ -28,6 +29,7 @@ const ForgotPass = () => {
     }
 
   return (
+    <DismissKeyBoard>
     <KeyboardAvoidingView
     style={styles.container}
     behavior="padding"
@@ -59,6 +61,7 @@ const ForgotPass = () => {
         </TouchableOpacity>
     </View>
 </KeyboardAvoidingView>
+</DismissKeyBoard>
   )
 }
 

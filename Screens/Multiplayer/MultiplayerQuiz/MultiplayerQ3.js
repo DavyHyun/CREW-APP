@@ -98,8 +98,10 @@ const MultiplayerQ3 = () => {
         // set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished).then(() => {
         //     navigation.navigate("MultiplayerDisplayRes", progress);
         // })
-        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId);
-        navigation.navigate("DisplayBuffer", progress);
+        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId).then(() => {
+          navigation.navigate("DisplayBuffer", progress);
+        })
+        
     }
 
     const navigateToResF = () => {
@@ -124,8 +126,10 @@ const MultiplayerQ3 = () => {
         // set(ref(db, 'lobby/' + roomID + '/usersFinished'), usersFinished).then(() => {
         //     navigation.navigate("MultiplayerDisplayRes", progress);
         // })
-        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId);
-        navigation.navigate("DisplayBuffer", progress);
+        set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId).then(() => {
+          navigation.navigate("DisplayBuffer", progress);
+        })
+        
         
     }
     const options = {

@@ -6,7 +6,7 @@ import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, Vi
 import {auth} from '../../firebase';
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
-
+import DismissKeyBoard from '../../components/DismissKeyboard';
 
 const LoginScreen = () => {
 
@@ -47,6 +47,7 @@ const LoginScreen = () => {
   }
 
     return (
+      <DismissKeyBoard>
         <KeyboardAvoidingView
             style={styles.container}
             behavior="padding"
@@ -90,6 +91,7 @@ const LoginScreen = () => {
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
+        </DismissKeyBoard>
     )
 }
 

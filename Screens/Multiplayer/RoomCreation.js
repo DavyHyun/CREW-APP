@@ -6,6 +6,7 @@ import { useEffect } from 'react/cjs/react.development';
 import { getAuth } from "firebase/auth";
 import AppLoading from 'expo-app-loading';
 import { Ionicons } from '@expo/vector-icons';
+import DismissKeyBoard from '../../components/DismissKeyboard';
 import {
     useFonts,
     Nunito_200ExtraLight,
@@ -132,6 +133,7 @@ const RoomCreation = () => {
         return <AppLoading />
     } else {
         return (
+            <DismissKeyBoard>
             <View style={styles.background}>
                 <TouchableOpacity
                 onPress={goBack}
@@ -163,6 +165,7 @@ const RoomCreation = () => {
                     <Text style={styles.buttonText}>CREATE</Text>
                 </TouchableOpacity>
             </View>
+            </DismissKeyBoard>
         )
     }
 }

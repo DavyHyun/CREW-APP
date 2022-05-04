@@ -1,12 +1,22 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import {useFonts} from "expo-font"
 import {AppLoading} from "expo"
+import {auth} from '../../firebase';
+
 
 const LoginOrSignUp = () => {
 
-    let navigation = useNavigation();
+    const navigation = useNavigation();
+
+    useEffect(() => {
+      auth.onAuthStateChanged(user => {
+          if (user) {
+            navigation.replace("HomeScreen")
+          }
+        })
+  }, [])
 
 
     const navigateToLogin = () => {

@@ -23,12 +23,20 @@ const DisplayBuffer = () => {
             var totalUsers = 0;
             const totalUsersRef = ref(db, 'lobby/' + roomID + '/users');
             get(totalUsersRef).then((snapshot) => {
+                try {
                 totalUsers = Object.keys(snapshot.toJSON()).length;
+                } catch (error) {
+                    console.log('useEffect' + error);
+                }
             })
             // get and constantly update usersFinished var checking if it equals totalUsers each time
             const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
             onValue(usersFinishedRef, (snapshot) => {
+                try {
                 var usersFinished = Object.keys(snapshot.toJSON()).length;
+                } catch (error) {
+                    console.log('useEffect2' + error);
+                }
                 setUsersLeft(totalUsers - usersFinished);
                 if (usersFinished === totalUsers) {
                     console.log("DONE");
@@ -51,9 +59,14 @@ const DisplayBuffer = () => {
         }
         const db = getDatabase();
         // set speedValue
+        try {
         const speedRef = ref(db, 'lobby/' + roomID + '/speedScore');
         get(speedRef).then((snapshot) => {
+            try {
             var speedScore = Object.keys(snapshot.toJSON()).length;
+            } catch (error) {
+                console.log('speedref' + error);
+            }
             console.log("Division speed " + speedScore / totalUsers);
             if ((speedScore / totalUsers) >= 0.5) {
                 values.Q1 = true;
@@ -62,7 +75,11 @@ const DisplayBuffer = () => {
             }
             const moodRef = ref(db, 'lobby/' + roomID + '/moodScore');
             get(moodRef).then((snapshot) => {
+                try {
                 var moodScore = Object.keys(snapshot.toJSON()).length;
+                } catch (error) {
+                    console.log('mood' + error);
+                }
                 console.log("Division mood " + moodScore / totalUsers);
                 if ((moodScore / totalUsers) >= 0.5) {
                     values.Q2 = true;
@@ -71,7 +88,11 @@ const DisplayBuffer = () => {
                 }
                 const weatherRef = ref(db, 'lobby/' + roomID + '/weatherScore');
                 get(weatherRef).then((snapshot) => {
+                    try {
                     var weatherScore = Object.keys(snapshot.toJSON()).length;
+                    } catch (error) {
+                        console.log('weather' + error);
+                    }
                     console.log("Division weather " + weatherScore / totalUsers);
                     if ((weatherScore / totalUsers) >= 0.5) {
                         values.Q3 = true;
@@ -84,7 +105,9 @@ const DisplayBuffer = () => {
 
 
             })
-        })
+        })} catch (error) {
+
+        }
 
         // set moodValue
         // const moodRef = ref(db, 'lobby/' + roomID + '/moodScore');

@@ -5,6 +5,7 @@ import { xorBy } from 'lodash'
 import { useNavigation } from '@react-navigation/core'
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import DismissKeyBoard from '../../components/DismissKeyboard'
 // Options data must contain 'item' & 'id' keys
 
 // const MAJORS = [
@@ -68,7 +69,7 @@ function PersonalInfo() {
   }
 
   return (
-    
+    <DismissKeyBoard>
     <View style={styles.container}>
       <View style={{ height: 40 }} />
       <View style={{ marginLeft: '5%', width: '90%', alignItems: 'center', justifyContent: 'center', }}>
@@ -116,6 +117,7 @@ function PersonalInfo() {
       </TouchableOpacity>
       </View>
     </View>
+    </DismissKeyBoard>
   )
 
 
