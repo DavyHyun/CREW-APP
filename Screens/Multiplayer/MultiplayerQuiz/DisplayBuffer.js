@@ -78,6 +78,7 @@ const DisplayBuffer = () => {
                     } else {
                         values.Q3 = false;
                     }
+                    set(ref(db, 'lobby/' + roomID + '/gameStatus'), false);
                     navigation.navigate("MultiplayerDisplayRes", values);
                 })
 

@@ -5,7 +5,7 @@ import { getStorage, getDownloadURL, ref as sRef } from "firebase/storage";
 import rData from '../../json/thankYouGrace.json';
 import AppLoading from 'expo-app-loading';
 import { Svg } from 'expo';
-import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
+import { getDatabase, ref, set, get, child, onValue, push, remove } from "firebase/database";
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -306,6 +306,7 @@ const MultiplayerDisplayRes = () => {
 export default MultiplayerDisplayRes
 
 const styles = StyleSheet.create({
+
   background: {
     backgroundColor: '#E5E5E5',
     height: '100%',
