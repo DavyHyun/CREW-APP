@@ -50,6 +50,8 @@ const RoomCreation = () => {
     const [personName, setPersonName] = useState("");
     const [roomID, setRoomID] = useState("");
     const navigation = useNavigation();
+    var Filter = require('bad-words'),
+    filter = new Filter();
     useEffect(() => {
         try {
             const db = getDatabase();
@@ -86,6 +88,10 @@ const RoomCreation = () => {
         }
     }
     const checkRoomID = (roomID) => {
+        if (filter.isProfane(roomID)) {
+            alert("NO PROFANITY");
+            return;
+          }
         const dbRef = ref(getDatabase());
         get(child(dbRef, `lobby/${roomID}`)).then((snapshot) => {
             if (snapshot.exists()) {

@@ -56,9 +56,16 @@ function PersonalInfo() {
   const [userName, setName] = useState("")
   const navigation = useNavigation();
   const db = getDatabase();
+
+  var Filter = require('bad-words'),
+    filter = new Filter();
   
   
   const addInfo = () => {
+    if (filter.isProfane(userName)) {
+      alert("NO PROFANITY");
+      return;
+    }
       var userId = getAuth().currentUser.uid;
        set(ref(db, 'users/' + userId), {
             name: userName,
