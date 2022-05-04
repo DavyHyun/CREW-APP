@@ -1,8 +1,7 @@
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigation, useIsFocused, useRoute } from '@react-navigation/core'
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
-import { useEffect } from 'react/cjs/react.development';
 import { getAuth } from "firebase/auth";
 import AppLoading from 'expo-app-loading';
 // import { FlatList } from 'react-native-gesture-handler';

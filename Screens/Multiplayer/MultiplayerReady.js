@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useNavigation, useIsFocused, useRoute } from '@react-navigation/core'
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
-import { useEffect } from 'react/cjs/react.development';
 import { getAuth } from "firebase/auth";
 
 

@@ -16,7 +16,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import { Foundation } from '@expo/vector-icons';
 import { Rating } from 'react-native-ratings';
-import BottomSheet from 'reanimated-bottom-sheet';
 import * as WebBrowser from 'expo-web-browser';
 import { Linking } from 'react-native';
 import LoadingAnimation from '../components/LoadingAnimation'
