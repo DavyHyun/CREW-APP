@@ -5,7 +5,7 @@ import { getStorage, getDownloadURL, ref as sRef } from "firebase/storage";
 import rData from '../../../json/thankYouGrace.json';
 import AppLoading from 'expo-app-loading';
 import { Svg } from 'expo';
-import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
+import { getDatabase, ref, set, get, child, onValue, push, remove } from "firebase/database";
 import { NavigationContainer } from '@react-navigation/native';
 import WaitingRoomAnimation from '../../../components/waitingRoomAnimation';
 
@@ -22,6 +22,7 @@ const DisplayBuffer = () => {
             // get and set totalUsers var
             var totalUsers = 0;
             const totalUsersRef = ref(db, 'lobby/' + roomID + '/users');
+            console.log(totalUsersRef);
             get(totalUsersRef).then((snapshot) => {
                 try {
                 totalUsers = Object.keys(snapshot.toJSON()).length;
@@ -99,8 +100,12 @@ const DisplayBuffer = () => {
                     } else {
                         values.Q3 = false;
                     }
-                    set(ref(db, 'lobby/' + roomID + '/gameStatus'), false);
-                    navigation.navigate("MultiplayerDisplayRes", values);
+                    set(ref(db, 'lobby/' + roomID + '/gameStatus'), false).then(() => {
+                        remove(ref(db, 'lobby/' + roomID)).then(() => {
+                            navigation.navigate("MultiplayerDisplayRes", values);
+                        })
+                    });
+                    
                 })
 
 

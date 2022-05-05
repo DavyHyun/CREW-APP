@@ -173,8 +173,12 @@ const MultiplayerQ3 = () => {
                 Q2: route.params.Q2,
                 Q3: false,
                 QSet: route.params.QSet,
+                roomID: roomID,
             }
-              navigation.navigate("MultiplayerDisplayRes", progress)
+            const db = getDatabase();
+            set(ref(db, 'lobby/' + roomID + '/usersFinished/' + userId), userId).then(() => {
+              navigation.navigate("DisplayBuffer", progress);
+            })  
             }}
             //can call a function On finish of the time
             // getTime={(time) => {

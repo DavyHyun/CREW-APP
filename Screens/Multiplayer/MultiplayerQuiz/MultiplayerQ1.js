@@ -147,6 +147,7 @@ const MultiplayerQ1 = () => {
                 Q2: route.params.Q2,
                 Q3: route.params.Q3,
                 QSet: route.params.QSet,
+                roomID: route.params.roomID,
             }
               navigation.navigate("MultiplayerQ2", progress)
             }}
