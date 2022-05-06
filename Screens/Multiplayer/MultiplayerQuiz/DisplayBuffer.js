@@ -8,6 +8,7 @@ import { Svg } from 'expo';
 import { getDatabase, ref, set, get, child, onValue, push, remove } from "firebase/database";
 import { NavigationContainer } from '@react-navigation/native';
 import WaitingRoomAnimation from '../../../components/waitingRoomAnimation';
+import { getAuth } from "firebase/auth";
 
 const DisplayBuffer = () => {
     const route = useRoute();
@@ -15,8 +16,23 @@ const DisplayBuffer = () => {
     const roomID = route.params.roomID;
     const [waitingForOthers, setWaitingForOthers] = useState(true);
     const [usersLeft, setUsersLeft] = useState(0);
+    const userId = getAuth().currentUser.uid;
+    const [firstPersonId, setFirstPersonId] = useState("");
 
     useEffect(() => {
+            // try {
+            //     const db = getDatabase();
+            //     const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
+            //     get(usersFinishedRef).then((snapshot) => {
+            //         var usersFinishedArray = snapshot.toJSON();
+            //         console.log(usersFinishedArray)
+            //         var tempArray = Object.keys(usersFinishedArray);
+            //         console.log(tempArray[0])
+            //         setFirstPersonId(tempArray[0]);
+            //     })
+            // } catch (error) {
+            //     console.log(error);
+            // }
         try {
             const db = getDatabase();
             // get and set totalUsers var
@@ -25,7 +41,7 @@ const DisplayBuffer = () => {
             console.log(totalUsersRef);
             get(totalUsersRef).then((snapshot) => {
                 try {
-                totalUsers = Object.keys(snapshot.toJSON()).length;
+                    totalUsers = Object.keys(snapshot.toJSON()).length;
                 } catch (error) {
                     console.log('useEffect' + error);
                 }
@@ -34,7 +50,7 @@ const DisplayBuffer = () => {
             const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');
             onValue(usersFinishedRef, (snapshot) => {
                 try {
-                var usersFinished = Object.keys(snapshot.toJSON()).length;
+                    var usersFinished = Object.keys(snapshot.toJSON()).length;
                 } catch (error) {
                     console.log('useEffect2' + error);
                 }
@@ -61,56 +77,98 @@ const DisplayBuffer = () => {
         const db = getDatabase();
         // set speedValue
         try {
-        const speedRef = ref(db, 'lobby/' + roomID + '/speedScore');
-        get(speedRef).then((snapshot) => {
-            try {
-            var speedScore = Object.keys(snapshot.toJSON()).length;
-            } catch (error) {
-                console.log('speedref' + error);
-            }
-            console.log("Division speed " + speedScore / totalUsers);
-            if ((speedScore / totalUsers) >= 0.5) {
-                values.Q1 = true;
-            } else {
-                values.Q1 = false;
-            }
-            const moodRef = ref(db, 'lobby/' + roomID + '/moodScore');
-            get(moodRef).then((snapshot) => {
+            const speedRef = ref(db, 'lobby/' + roomID + '/speedScore');
+            get(speedRef).then((snapshot) => {
                 try {
-                var moodScore = Object.keys(snapshot.toJSON()).length;
+                    var speedScore = Object.keys(snapshot.toJSON()).length;
                 } catch (error) {
-                    console.log('mood' + error);
+                    console.log('speedref' + error);
                 }
-                console.log("Division mood " + moodScore / totalUsers);
-                if ((moodScore / totalUsers) >= 0.5) {
-                    values.Q2 = true;
+                console.log("Division speed " + speedScore / totalUsers);
+                if ((speedScore / totalUsers) >= 0.5) {
+                    values.Q1 = true;
                 } else {
-                    values.Q2 = false;
+                    values.Q1 = false;
                 }
-                const weatherRef = ref(db, 'lobby/' + roomID + '/weatherScore');
-                get(weatherRef).then((snapshot) => {
+                const moodRef = ref(db, 'lobby/' + roomID + '/moodScore');
+                get(moodRef).then((snapshot) => {
                     try {
-                    var weatherScore = Object.keys(snapshot.toJSON()).length;
+                        var moodScore = Object.keys(snapshot.toJSON()).length;
                     } catch (error) {
-                        console.log('weather' + error);
+                        console.log('mood' + error);
                     }
-                    console.log("Division weather " + weatherScore / totalUsers);
-                    if ((weatherScore / totalUsers) >= 0.5) {
-                        values.Q3 = true;
+                    console.log("Division mood " + moodScore / totalUsers);
+                    if ((moodScore / totalUsers) >= 0.5) {
+                        values.Q2 = true;
                     } else {
-                        values.Q3 = false;
+                        values.Q2 = false;
                     }
-                    set(ref(db, 'lobby/' + roomID + '/gameStatus'), false).then(() => {
-                        remove(ref(db, 'lobby/' + roomID)).then(() => {
-                            navigation.navigate("MultiplayerDisplayRes", values);
+                    const weatherRef = ref(db, 'lobby/' + roomID + '/weatherScore');
+                    get(weatherRef).then((snapshot) => {
+                        try {
+                            var weatherScore = Object.keys(snapshot.toJSON()).length;
+                        } catch (error) {
+                            console.log('weather' + error);
+                        }
+                        console.log("Division weather " + weatherScore / totalUsers);
+                        if ((weatherScore / totalUsers) >= 0.5) {
+                            values.Q3 = true;
+                        } else {
+                            values.Q3 = false;
+                        }
+
+                        const userIDsRef = ref(db, 'lobby/' + roomID + '/userIDs');
+                        get(userIDsRef).then((snapshot) => {
+                            var idRef = snapshot.toJSON();
+                            if(idRef[0].userId === userId) {
+                                console.log("removed");
+                                remove(ref(db, 'lobby/' + roomID));
+                            }
                         })
-                    });
-                    
+
+                        // set(ref(db, 'lobby/' + roomID + '/finishedCounter/' + userId), userId).then(() => {
+                        //     var totalUsers = 0;
+                        //     const totalUsersRef = ref(db, 'lobby/' + roomID + '/users');
+                        //     console.log(totalUsersRef);
+                        //     get(totalUsersRef).then((snapshot) => {
+                        //         try {
+                        //             totalUsers = Object.keys(snapshot.toJSON()).length;
+                        //         } catch (error) {
+                        //             console.log('useEffect' + error);
+                        //         }
+                        //     })
+                        //     var finishedUsers = 0;
+                        //     const finishedUsersRef = ref(db, 'lobby/' + roomID + '/finishedCounter');
+                        //     get(finishedUsersRef).then((snapshot) => {
+                        //         try {
+                        //             totalUsers = Object.keys(snapshot.toJSON()).length;
+    
+                        //         } catch (error) {
+                        //             console.log(error);
+                        //         }
+                        //     })
+                        //     if(finishedUsers === totalUsers) {
+                        //         console.log("remove ran");
+                        //         remove(ref(db, 'lobby/' + roomID));
+                        //     }
+                        //     console.log("first id " + firstPersonId);
+                        //     if(userId === "FC9NbHK6T6W3RUvG8ydUmvrcIJJ2"){
+                        //         console.log("ran once");
+                        //     }
+                        //     
+                        // })
+
+
+                        navigation.navigate("MultiplayerDisplayRes", values);
+
+
+
+                    })
+
+
                 })
-
-
             })
-        })} catch (error) {
+        } catch (error) {
 
         }
 

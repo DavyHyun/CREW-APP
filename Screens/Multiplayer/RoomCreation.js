@@ -49,12 +49,13 @@ const RoomCreation = () => {
     const [personName, setPersonName] = useState("");
     const [roomID, setRoomID] = useState("");
     const navigation = useNavigation();
+    var userId = getAuth().currentUser.uid;
     var Filter = require('bad-words'),
     filter = new Filter();
     useEffect(() => {
         try {
             const db = getDatabase();
-            var userId = getAuth().currentUser.uid;
+            
             const nRef = ref(db, 'users/' + userId);
             onValue(nRef, (snapshot) => {
                 const data = snapshot.val();
@@ -71,6 +72,7 @@ const RoomCreation = () => {
             const db = getDatabase();
             set(ref(db, 'lobby/' + roomID), {
                 users: {},
+                userIDs: {},
                 speedScore: 0,
                 moodScore: 0,
                 weatherScore: 0,
@@ -79,6 +81,9 @@ const RoomCreation = () => {
             })
             set(ref(db, 'lobby/' + roomID + '/users/' + 0), {
                 personName
+            })
+            set(ref(db, 'lobby/' + roomID + '/userIDs/' + 0), {
+                userId
             })
             navigation.navigate("WaitingRoom", roomID);
         } catch (error) {
@@ -121,6 +126,9 @@ const RoomCreation = () => {
                 const index = Object.keys(users).length;
                 set(ref(db, 'lobby/' + roomID + '/users/' + index), {
                     personName
+                })
+                set(ref(db, 'lobby/' + roomID + '/userIDs/' + index), {
+                    userId
                 })
                 navigation.navigate("WaitingRoom", roomID);
             } else {
