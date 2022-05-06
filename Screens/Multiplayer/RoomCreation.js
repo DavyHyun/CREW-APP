@@ -75,6 +75,7 @@ const RoomCreation = () => {
                 userIDs: {},
                 speedScore: 0,
                 moodScore: 0,
+                dessertScore: 0,
                 weatherScore: 0,
                 gameStatus: false,
                 usersFinished: 0,
