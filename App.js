@@ -56,8 +56,8 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}}name="Q2" component={Q2}/>
         <Stack.Screen options={{headerShown: false}}name="Q3" component={Q3}/>
         <Stack.Screen options={{headerShown: false}}name="Display" component={Display}/>
-        <Stack.Screen options={{headerShown: false}} name="ResInfo" component={ResInfo} />
-        <Stack.Screen options={{headerShown: false}} name="RoomCreation" component={RoomCreation} />
+        <Stack.Screen options={{headerShown: false, gestureEnabled: true}} name="ResInfo" component={ResInfo} />
+        <Stack.Screen options={{headerShown: false, gestureEnabled: true}} name="RoomCreation" component={RoomCreation} />
         <Stack.Screen options={{headerShown: false}} name="WaitingRoom" component={WaitingRoom} />
         <Stack.Screen options={{headerShown: false}} name="MultiplayerReady" component={MultiplayerReady} />
         <Stack.Screen options={{headerShown: false}} name="MultiplayerQ1" component={MultiplayerQ1} />

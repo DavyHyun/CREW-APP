@@ -108,14 +108,14 @@ const MultiplayerDisplayRes = () => {
   const pickRestaurants = () => {
 
     displayedRestaurants = [];
+    let today = new Date();
+    let dayOf = today.getDay();
     for (let index = 0; index < 3; index++) {
-      var resIndex = refreshTrigger * 3 + index;
-      if(resIndex >= restaurantList.length) {
+      var resIndex = dayOf * 3 + refreshTrigger * 3 + index;
+      while(resIndex >= restaurantList.length) {
         resIndex = resIndex - restaurantList.length;
       }
       displayedRestaurants.push(restaurantList[resIndex]);
-
-      restaurantList.splice(resIndex, 1);
     }
     if(displayedRestaurants[0].RESTAURANT == restaurantOne){
         setImagesLoaded(imagesLoaded + 1);

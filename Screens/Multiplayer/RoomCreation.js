@@ -91,6 +91,10 @@ const RoomCreation = () => {
             alert("NO PROFANITY");
             return;
           }
+          if(roomID === "") {
+              alert("Please enter a code to create a room");
+              return;
+          }
         const dbRef = ref(getDatabase());
         get(child(dbRef, `lobby/${roomID}`)).then((snapshot) => {
             if (snapshot.exists()) {
@@ -104,6 +108,10 @@ const RoomCreation = () => {
     }
 
     const joinRoom = (roomID) => {
+        if(roomID === "") {
+            alert("Please enter a code to join a room");
+            return;
+        }
         const dbRef = ref(getDatabase());
         get(child(dbRef, `lobby/${roomID}`)).then((snapshot) => {
             if (snapshot.exists() && !snapshot.val().gameStatus) {

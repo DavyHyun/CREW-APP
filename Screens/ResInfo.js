@@ -304,7 +304,7 @@ const ResInfo = () => {
                 style={{ marginLeft: '5%' }}
               // style={styles.backButton}
               >
-                <Ionicons name="md-chevron-back" size={40} color="black" />
+                <Ionicons name="caret-back-circle" size={45} color="black"/>
               </TouchableOpacity> : null}
               {/* <TouchableOpacity
                 onPress={goBack}

@@ -89,8 +89,9 @@ const DisplayRes = () => {
   }, [refreshTrigger]);
 
   const renderScreen = async () => {
-
-
+    let today = new Date();
+    let dayOf = today.getDay();
+    
     for (let index = 0; index < rData.length; index++) {
       if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].WEATHER === result.Q3) {
         restaurantList.push(rData[index]);
@@ -105,12 +106,14 @@ const DisplayRes = () => {
   const pickRestaurants = () => {
 
     displayedRestaurants = [];
+    let today = new Date();
+    let dayOf = today.getDay();
     for (let index = 0; index < 3; index++) {
-      var random = Math.floor(Math.random() * restaurantList.length);
-
-      displayedRestaurants.push(restaurantList[random]);
-
-      restaurantList.splice(random, 1);
+      var resIndex = dayOf * 3 + refreshTrigger * 3 + index;
+      while(resIndex >= restaurantList.length) {
+        resIndex = resIndex - restaurantList.length;
+      }
+      displayedRestaurants.push(restaurantList[resIndex]);
     }
     if (displayedRestaurants[0].RESTAURANT == restaurantOne) {
       setImagesLoaded(imagesLoaded + 1);
