@@ -84,7 +84,7 @@ const MultiplayerQ3 = () => {
         // console.log("added weather");
         // console.log(weatherScore);
         // set(ref(db, 'lobby/' + roomID + '/weatherScore'), weatherScore);
-        set(ref(db, 'lobby/' + roomID + '/weatherScore/' + userId), userId)
+        set(ref(db, 'lobby/' + roomID + '/dessertScore/' + userId), userId)
 
         // var usersFinished = 0;
         // const usersFinishedRef = ref(db, 'lobby/' + roomID + '/usersFinished');

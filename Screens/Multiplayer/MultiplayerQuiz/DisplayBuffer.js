@@ -103,15 +103,15 @@ const DisplayBuffer = () => {
                     } else {
                         values.Q2 = false;
                     }
-                    const weatherRef = ref(db, 'lobby/' + roomID + '/weatherScore');
-                    get(weatherRef).then((snapshot) => {
+                    const dessertRef = ref(db, 'lobby/' + roomID + '/dessertScore');
+                    get(dessertRef).then((snapshot) => {
                         try {
-                            var weatherScore = Object.keys(snapshot.toJSON()).length;
+                            var dessertScore = Object.keys(snapshot.toJSON()).length;
                         } catch (error) {
-                            console.log('weather' + error);
+                            console.log('dessert' + error);
                         }
-                        console.log("Division weather " + weatherScore / totalUsers);
-                        if ((weatherScore / totalUsers) >= 0.5) {
+                        console.log("Division dessert " + dessertScore / totalUsers);
+                        if ((dessertScore / totalUsers) >= 0.5) {
                             values.Q3 = true;
                         } else {
                             values.Q3 = false;

@@ -93,7 +93,7 @@ const DisplayRes = () => {
     let dayOf = today.getDay();
     
     for (let index = 0; index < rData.length; index++) {
-      if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].WEATHER === result.Q3) {
+      if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].DESSERT === result.Q3) {
         restaurantList.push(rData[index]);
       }
     }
