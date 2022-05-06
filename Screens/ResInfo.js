@@ -120,6 +120,8 @@ const ResInfo = () => {
   const [web, setWeb] = useState(null);
   const locationUrl = 'maps:0,0?q=' + resname + '@' + latitude + ',' + longitude;
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [todayStart, setTodayStart] = useState();
+  const [todayEnd, setTodayEnd] = useState();
 
 
   const db = getDatabase();
@@ -127,9 +129,72 @@ const ResInfo = () => {
   useEffect(() => {
     if (isFocused) {
       renderScreen();
-
+      // convertTime();
+      // console.log(todayStart);
     }
   }, [isFocused])
+
+  const convertTime = (dayRange) => { 
+
+    console.log(dayRange);
+    let hourArray = dayRange.split(" - ");
+    let start = 0;
+    let end = 0;
+   try {
+    if (hourArray[0].includes("AM")) {
+      if (hourArray[0].includes(":")) {
+        var minuteSplit = hourArray[0].split(":");
+        start = parseInt(minuteSplit[0].replace("AM", ""));
+      } else {
+        start = parseInt(hourArray[0].replace("AM", ""));
+      }
+    } else {
+      if (hourArray[0].includes(":")) {
+        var minuteSplit = hourArray[0].split(":");
+        start = parseInt(minuteSplit[0].replace("PM", ""));
+      } else {
+        start = parseInt(hourArray[0].replace("PM", "")) + 12;
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+  try {
+    if (hourArray[1].includes("AM")) {
+      if (hourArray[1].includes(":")) {
+        var minuteSplit = hourArray[1].split(":");
+        end = parseInt(minuteSplit[0].replace("AM", ""));
+        if (end == 12) {
+          end = 24;
+        } else {
+          end += 24;
+        }
+      } else {
+        end = parseInt(hourArray[1].replace("AM", "")) + 24;
+      }
+    } else {
+      if (hourArray[1].includes(":")) {
+        var minuteSplit = hourArray[1].split(":");
+        end = parseInt(minuteSplit[0].replace("PM", ""));
+      } else {
+        end = parseInt(hourArray[1].replace("PM", "")) + 12;
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+    let today = new Date();
+    let hours = today.getHours();
+
+    if (start <= hours && end >= hours) {
+      console.log("open");
+      return dayRange;
+    } else {
+      return "CLOSED RIGHT NOW";
+    }
+
+  }
 
   const renderScreen = () => {
     getDownloadURL(imagesRef)
@@ -142,21 +207,24 @@ const ResInfo = () => {
 
     let today = new Date();
     let dayOf = today.getDay();
-    if (dayOf = 1) {
-      setDay(monday);
-    } else if (dayOf = 2) {
-      setDay(tuesday);
-    } else if (dayOf = 3) {
-      setDay(wednesday);
-    } else if (dayOf = 4) {
-      setDay(thursday);
-    } else if (dayOf = 5) {
-      setDay(friday);
-    } else if (dayOf = 6) {
-      setDay(saturday);
-    } else if (dayOf = 7) {
-      setDay(sunday);
+    console.log(dayOf);
+    if (dayOf == 1) {
+      setDay(convertTime(monday));
+    } else if (dayOf == 2) {
+      setDay(convertTime(tuesday));
+    } else if (dayOf == 3) {
+      setDay(convertTime(wednesday));
+    } else if (dayOf == 4) {
+      setDay(convertTime(thursday));
+    } else if (dayOf == 5) {
+      console.log("triggered");
+      setDay(convertTime(friday));
+    } else if (dayOf == 6) {
+      setDay(convertTime(saturday));
+    } else if (dayOf == 7) {
+      setDay(convertTime(sunday));
     }
+
 
     try {
       var userId = getAuth().currentUser.uid;
