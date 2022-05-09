@@ -10,7 +10,7 @@ const MultiplayerReady = () => {
   let today = new Date();
   let dayOf = today.getDay();
   var weekday=new Array(7);
-  let hours = today.getHours();
+  let milliseconds = today.getMilliseconds();
   weekday[0]="sunday";
   weekday[1]="monday";
   weekday[2]="tuesday";
@@ -65,7 +65,7 @@ const MultiplayerReady = () => {
     const navigateToQ1 = () => {
       try {
         const db = getDatabase();
-        set(ref(db, 'users/' + userId + '/quizTakenMultiplayer/' + hours), {
+        set(ref(db, 'users/' + userId + '/quizTakenMultiplayer/' + milliseconds), {
           time: today
         }).then(() => {
           navigation.navigate("MultiplayerQ1", result);
