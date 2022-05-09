@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation, useIsFocused, useRoute } from '@react-navigation/core'
 import { getDatabase, ref, set, get, child, onValue, push } from "firebase/database";
@@ -109,7 +109,8 @@ const WaitingRoom = () => {
         return <AppLoading />
     }
     return (
-        <View style={styles.background}>
+        <ScrollView style={styles.background}>
+        <View style={{height: '200%'}}>
             <TouchableOpacity
                 onPress={goBack}
                 style={{ top: '5%', left: '2.5%' }}>
@@ -145,6 +146,7 @@ const WaitingRoom = () => {
             </View>
             
         </View>
+        </ScrollView>
     )
 }
 

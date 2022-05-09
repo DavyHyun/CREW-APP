@@ -10,6 +10,7 @@ const MultiplayerReady = () => {
   let today = new Date();
   let dayOf = today.getDay();
   var weekday=new Array(7);
+  let hours = today.getHours();
   weekday[0]="sunday";
   weekday[1]="monday";
   weekday[2]="tuesday";
@@ -27,6 +28,7 @@ const MultiplayerReady = () => {
   const [personName, setPersonName] = useState("");
   const route = useRoute();
   const roomID = route.params;
+  const userId = getAuth().currentUser.uid;
 
   useEffect(() => {
     if (isFocused) {
@@ -61,7 +63,16 @@ const MultiplayerReady = () => {
 
     const navigation = useNavigation();
     const navigateToQ1 = () => {
-      navigation.navigate("MultiplayerQ1", result);
+      try {
+        const db = getDatabase();
+        set(ref(db, 'users/' + userId + '/quizTakenMultiplayer/' + hours), {
+          time: today
+        }).then(() => {
+          navigation.navigate("MultiplayerQ1", result);
+        });
+      } catch (error) {
+        console.log(error)
+      }
     }
     const navigateToHome = () => {
       navigation.navigate("HomeScreen");
@@ -80,11 +91,11 @@ const MultiplayerReady = () => {
       >
         <Text style={styles.buttonText}>LET'S PLAY</Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={navigateToHome}
       >
         <Text style={{fontSize: 15}}>Back</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       </View>
     </View>
   )

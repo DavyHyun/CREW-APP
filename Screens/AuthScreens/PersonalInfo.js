@@ -71,6 +71,8 @@ function PersonalInfo() {
             name: userName,
             email: email,
             year: year,
+            quizTakenMultiplayer: 0,
+            quizTakenSingleplayer: 0,
       })
       navigation.navigate("HomeScreen");
   }
