@@ -151,7 +151,7 @@ const ResInfo = () => {
     } else {
       if (hourArray[0].includes(":")) {
         var minuteSplit = hourArray[0].split(":");
-        start = parseInt(minuteSplit[0].replace("PM", ""));
+        start = parseInt(minuteSplit[0].replace("PM", "")) + 12;
       } else {
         start = parseInt(hourArray[0].replace("PM", "")) + 12;
       }
@@ -176,7 +176,7 @@ const ResInfo = () => {
     } else {
       if (hourArray[1].includes(":")) {
         var minuteSplit = hourArray[1].split(":");
-        end = parseInt(minuteSplit[0].replace("PM", ""));
+        end = parseInt(minuteSplit[0].replace("PM", "")) + 12;
       } else {
         end = parseInt(hourArray[1].replace("PM", "")) + 12;
       }
@@ -187,6 +187,9 @@ const ResInfo = () => {
     let today = new Date();
     let hours = today.getHours();
 
+
+    console.log(start + " - " + end);
+    console.log(hours);
     if (start <= hours && end >= hours) {
       console.log("open");
       return dayRange;
