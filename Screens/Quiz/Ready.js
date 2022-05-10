@@ -21,6 +21,7 @@ const Ready = () => {
 
 
   const isFocused = useIsFocused();
+  const [todayTime, setTodayTime] = useState(new Date());
   const [questions, setQuestions] = useState("");
   const [day, setDay] = useState(weekday[dayOf]);
   const [questionSet, setQuestionSet] = useState();
@@ -63,9 +64,12 @@ const Ready = () => {
 
     try {
       const db = getDatabase();
+      console.log(todayTime);
       console.log('users/' + userId + '/quizTakenSingleplayer/' + milliseconds);
-      set(ref(db, 'users/' + userId + '/quizTakenSingleplayer/' + milliseconds), {
-        time: today
+      const seconds = milliseconds + "";
+      var user = getAuth().currentUser.uid;
+      set(ref(db, 'users/' + user + '/quizTakenSingleplayer/' + seconds), {
+        time: todayTime + "",
       }).then(() => {
         navigation.navigate("Q1", result);
       });

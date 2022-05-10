@@ -39,6 +39,7 @@ const LoginScreen = () => {
               set(ref(database, 'users/' + userId), {
                 name: "placeholder"
           })
+          
               navigation.navigate("PersonalInfo");
           } catch (error) {
               alert("Please make sure all fields are inputted correctly")
