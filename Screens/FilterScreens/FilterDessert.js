@@ -63,7 +63,7 @@ const FilterDessert = () => {
         var listChecker = "";
         setImagesLoaded(0);
         for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            if (rData[rDataIndex].CATEGORY === result.CATEGORY) {
+            if (rData[rDataIndex].CATEGORY === result.category) {
                 const strings = rData[rDataIndex].DESSERT.split(",");
                 for (let i = 0; i < strings.length; i++) {
                     if (!listChecker.includes(strings[i])) {
@@ -82,6 +82,7 @@ const FilterDessert = () => {
             }
             tempArray.push(tempJSON);
         }
+        console.log(tempArray);
         setNumOfImages(tempArray.length);
         setCategoryList(tempArray);
         setRenderData(categoryList);
@@ -91,7 +92,7 @@ const FilterDessert = () => {
         console.log(renderData);
     }, [initialTrigger]);
 
-    const optionClick = (id, name) => {
+    const optionOnClick = (id, name) => {
         for (let data of renderData) {
             try {
                 if (data.id == id) {
@@ -106,7 +107,7 @@ const FilterDessert = () => {
         var tempArray = categoryList;
         for (let index = 0; index < categoryList.length; index++) {
             if (categoryList[index].name === name) {
-                tempArray[index].state = !tempArray[index] / state;
+                tempArray[index].state = !tempArray[index].state;
             }
         }
         setCategoryList(tempArray);
@@ -158,8 +159,8 @@ const FilterDessert = () => {
         var resCount = 0;
         for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
             if (endResult.category === rData[rDataIndex].CATEGORY) {
-                for (let dessertArrayIndex = 0; dessertArrayIndex < endResult.nationality.length; dessertArrayIndex++) {
-                    if (rData[rDataIndex].DESSERT.includes(endResult.dessert[nationalityArrayIndex])) {
+                for (let dessertArrayIndex = 0; dessertArrayIndex < endResult.dessert.length; dessertArrayIndex++) {
+                    if (rData[rDataIndex].DESSERT.includes(endResult.dessert[dessertArrayIndex])) {
                         resCount++;
                         break;
                     }
@@ -288,7 +289,7 @@ const FilterDessert = () => {
         </View>
     )
 }
-export default FilterNationality;
+export default FilterDessert;
 
 
 
