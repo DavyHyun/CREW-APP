@@ -6,6 +6,7 @@ import { render } from 'react-dom';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import rData from '../../json/thankYouGrace.json';
+import LoadingAnimation from '../../components/LoadingAnimation';
 import {
     useFonts,
     Nunito_200ExtraLight,
@@ -55,35 +56,38 @@ const FilterNationality = () => {
     const [numCol, setNumCol] = useState(2);
     const [counter, setCounter] = useState(0);
     const [initialTrigger, setInitialTrigger] = useState(0);
+    const [imagesLoaded, setImagesLoaded] = useState();
+    const [numOfImages, setNumOfImages] = useState(100);
 
-    
+
     useEffect(() => {
-            var listChecker = "";
-            for (let index = 0; index < rData.length; index++) {
-                if(rData[index].CATEGORY === result.category) {
-                    const strings = rData[index].NATIONALITY.split(",");
-                    for(let i = 0; i < strings.length; i++) {
-                        if(!listChecker.includes(strings[i])){
-                            listChecker += strings[i];
-                            categoryListArray.push(strings[i]);
-                        }
+        var listChecker = "";
+        setImagesLoaded(0);
+        for (let index = 0; index < rData.length; index++) {
+            if (rData[index].CATEGORY === result.category) {
+                const strings = rData[index].NATIONALITY.split(",");
+                for (let i = 0; i < strings.length; i++) {
+                    if (!listChecker.includes(strings[i])) {
+                        listChecker += strings[i];
+                        categoryListArray.push(strings[i]);
                     }
                 }
             }
-            var tempArray = [];
-            for(let index = 0; index < categoryListArray.length; index++) {
-                const tempJSON = {
-                    name: categoryListArray[index],
-                    id: (index + 1) + '',
-                    state: false
-                }
-                tempArray.push(tempJSON);
+        }
+        var tempArray = [];
+        for (let index = 0; index < categoryListArray.length; index++) {
+            const tempJSON = {
+                name: categoryListArray[index],
+                id: (index + 1) + '',
+                state: false
             }
-        
-        
+            tempArray.push(tempJSON);
+        }
+
+        setNumOfImages(tempArray.length);
         setCategoryList(tempArray);
         setRenderData(categoryList);
-        if(!renderData) {
+        if (!renderData) {
             setInitialTrigger(1);
         }
         console.log(renderData);
@@ -91,175 +95,179 @@ const FilterNationality = () => {
 
     const optionOnClick = (id, name) => {
         for (let data of renderData) {
-            try{
-            if (data.id==id) {
-                data.selected=(data.selected==null)?true:!data.selected;
+            try {
+                if (data.id == id) {
+                    data.selected = (data.selected == null) ? true : !data.selected;
+                }
+            } catch (error) {
+                console.log(error)
             }
-            console.log("render");
-            console.log(data)
-        } catch (error) {
-            console.log(error)
-        }
         }
         setRenderData(renderData);
         setCounter(counter + 1);
         var tempArray = categoryList;
-        for(let index = 0; index < categoryList.length; index++) {
-            if(categoryList[index].name === name) {
+        for (let index = 0; index < categoryList.length; index++) {
+            if (categoryList[index].name === name) {
                 tempArray[index].state = !tempArray[index].state;
             }
         }
         setCategoryList(tempArray);
-        console.log("category");
-        console.log(categoryList);
     }
 
     const idcButton = () => {
         var tempArray = categoryList;
-        for(let index = 0; index < categoryList.length; index++) {
+        for (let index = 0; index < categoryList.length; index++) {
             tempArray[index].state = true;
         }
         setCategoryList[tempArray];
-        onNext();
+        onNext(true);
     }
 
     const onNext = (fromNext) => {
 
         let nationalityArray = [];
-        for(let index = 0; index < categoryList.length; index++) {
-            if(categoryList[index].state) {
+        for (let index = 0; index < categoryList.length; index++) {
+            if (categoryList[index].state) {
                 nationalityArray.push(categoryList[index].name);
             }
         }
-        if(nationalityArray && nationalityArray.length) {
+        if (nationalityArray && nationalityArray.length) {
 
-        } else if(fromNext) {
+        } else if (fromNext) {
             alert("Please choose your options or hit IDC!");
             return;
         }
-        const endResult = {
+        let endResult = {
             category: result.category,
             nationality: nationalityArray,
-            dessert: [],
-            ambiance: [],
-            dining: [],
-            price: []
+            dessert: result.dessert,
+            ambiance: result.ambiance,
+            dining: result.dining,
+            price: result.price,
+            resCount: result.resCount
         }
-        if(fromNext) {
-            navToNextFilter(endResult);
+        if (fromNext) {
+            navToNextFilter(endResult, false);
         } else {
-            showMyListOnClick(endResult)
+            navToNextFilter(endResult, true);
+            
         }
     }
 
-    const navToNextFilter = (endResult) => {
+    const navToNextFilter = (endResult, fromShowMyList) => {
         var resCount = 0;
-        for(let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            if(endResult.category === rData[rDataIndex].CATEGORY) {
-                for(let nationalityArrayIndex = 0; nationalityArrayIndex < endResult.nationality.length; nationalityArrayIndex++) {
-                    if(rData[rDataIndex].NATIONALITY.includes(endResult.nationality[nationalityArrayIndex])) {
+        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
+            if (endResult.category === rData[rDataIndex].CATEGORY) {
+                for (let nationalityArrayIndex = 0; nationalityArrayIndex < endResult.nationality.length; nationalityArrayIndex++) {
+                    if (rData[rDataIndex].NATIONALITY.includes(endResult.nationality[nationalityArrayIndex])) {
                         resCount++;
                         break;
                     }
                 }
             }
         }
-        console.log(resCount);
-        if(resCount <= 3) {
+        if(resCount !== 0) {
+            endResult.resCount = resCount;
+        }
+        if (fromShowMyList) {
+            navigation.navigate("FilterDisplayRes", endResult);
+        } else if (resCount <= 3) {
             navigation.navigate("FilterDisplayRes", endResult);
         } else {
-            navigation.navigate("FilterPrice", endResult);
+            navigation.navigate("FilterAmbiance", endResult);
         }
     }
 
-    const showMyListOnClick = (endResult) => {
-        navigation.navigate("FilterDisplayRes", endResult);
-    }
-
-    if(!fontsLoaded) {
+    if (!fontsLoaded) {
         return <AppLoading />
     }
     return (
         <View style={styles.mainCont}>
-        <View style={styles.topBar}>
-            <Text style={{fontSize: 19, fontFamily: 'Nunito_700Bold' }}>WHAT DO YOU WANT TO EAT?</Text>
-            <Text style={{fontSize: 11, fontFamily: 'Nunito_400Regular'}}>help us narrow down what you want!</Text>
-        </View>
-        <SafeAreaView style={styles.container}>
-            <FlatList 
-                data={renderData}
-                keyExtractor={(item) => item.id}
-                numColumns ={numCol}
-                style={{width:'80%', height: '40%', backgroundColor: '#FFD73F'}}
-                showsVerticalScrollIndicator ={false}
-                renderItem={({item})=> (
-                    <TouchableOpacity
-                        onPress={() => optionOnClick(item.id, item.name)}
-                        style={{width:'50%'}}
-                    >
-                        <Card
-                            style={
-                                item.selected==true
-                                  ? {
-                                    marginHorizontal: 10,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    marginTop: 10,
-                                    padding: 10,
-                                    // borderColor: '#C4C4C4',
-                                    borderRadius: 10,
-                                    // borderWidth: 2,
-                                    fontSize: 10,
-                                    // alignItems:'center',
-                                    // justifyContent: 'center',
-                                    flex: 1,
-                                    shadowColor: 'rgba(0,0,0, 0.6)',
-                                    shadowOffset: { height: 3.5, },
-                                    shadowOpacity: 0.5,
-                                    shadowRadius: 2,
-                                
-                                      backgroundColor: '#FF730A',
-                                    }
-                                  : {
-                                    marginHorizontal: 10,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    marginTop: 10,
-                                    padding: 10,
-                                    // borderColor: '#C4C4C4',
-                                    borderRadius: 10,
-                                    // borderWidth: 2,
-                                    fontSize: 10,
-                                    // alignItems:'center',
-                                    // justifyContent: 'center',
-                                    flex: 1,
-                                    shadowColor: 'rgba(0,0,0, 0.6)',
-                                    shadowOffset: { height: 3.5, },
-                                    shadowOpacity: 0.5,
-                                    shadowRadius: 2,
-                                    
-                                      backgroundColor: 'white',
-                                    }
-                            }
+            {imagesLoaded > (numOfImages - 1) ? null :
+                <View style={{ height: '100%', marginTop: '188%' }}>
+                    <LoadingAnimation />
+                </View>
+            }
+
+            <View style={styles.topBar}>
+                <Text style={{ fontSize: 19, fontFamily: 'Nunito_700Bold' }}>WHAT DO YOU WANT TO EAT?</Text>
+                <Text style={{ fontSize: 11, fontFamily: 'Nunito_400Regular' }}>help us narrow down what you want!</Text>
+            </View>
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    data={renderData}
+                    keyExtractor={(item) => item.id}
+                    numColumns={numCol}
+                    style={{ width: '80%', height: '40%', backgroundColor: '#FFD73F' }}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => optionOnClick(item.id, item.name)}
+                            style={{ width: '50%' }}
                         >
-                            <Image style={styles.Img} source={require("../../assets/koreaFlag.png")}/>
-                            <Text style = {styles.name}>{item.name}</Text> 
-                        </Card>
-                    </TouchableOpacity>
-                )}
-            />
-        </SafeAreaView>
-        <View style={styles.buttonView1}>
-        <TouchableOpacity
+                            <Card
+                                style={
+                                    item.selected == true
+                                        ? {
+                                            marginHorizontal: 10,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginTop: 10,
+                                            padding: 10,
+                                            // borderColor: '#C4C4C4',
+                                            borderRadius: 10,
+                                            // borderWidth: 2,
+                                            fontSize: 10,
+                                            // alignItems:'center',
+                                            // justifyContent: 'center',
+                                            flex: 1,
+                                            shadowColor: 'rgba(0,0,0, 0.6)',
+                                            shadowOffset: { height: 3.5, },
+                                            shadowOpacity: 0.5,
+                                            shadowRadius: 2,
+
+                                            backgroundColor: '#FF730A',
+                                        }
+                                        : {
+                                            marginHorizontal: 10,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginTop: 10,
+                                            padding: 10,
+                                            // borderColor: '#C4C4C4',
+                                            borderRadius: 10,
+                                            // borderWidth: 2,
+                                            fontSize: 10,
+                                            // alignItems:'center',
+                                            // justifyContent: 'center',
+                                            flex: 1,
+                                            shadowColor: 'rgba(0,0,0, 0.6)',
+                                            shadowOffset: { height: 3.5, },
+                                            shadowOpacity: 0.5,
+                                            shadowRadius: 2,
+
+                                            backgroundColor: 'white',
+                                        }
+                                }
+                            >
+                                <Image style={styles.Img} source={require("../../assets/koreaFlag.png")} onLoad={() => setImagesLoaded(imagesLoaded + 1)} />
+                                <Text style={styles.name}>{item.name}</Text>
+                            </Card>
+                        </TouchableOpacity>
+                    )}
+                />
+            </SafeAreaView>
+            <View style={styles.buttonView1}>
+                <TouchableOpacity
                     onPress={() => onNext(true)}
                     style={styles.button2}
                 >
                     <Text style={styles.buttonTextL}>NEXT</Text>
                 </TouchableOpacity>
-        </View>
+            </View>
 
-        <View style={styles.buttonView2}>
-                
+            <View style={styles.buttonView2}>
+
                 <TouchableOpacity
                     onPress={() => idcButton()}
                     style={styles.button3}
@@ -272,8 +280,8 @@ const FilterNationality = () => {
                 >
                     <Text style={styles.buttonTextL}>SHOW MY LIST</Text>
                 </TouchableOpacity>
-            
-        </View>
+
+            </View>
         </View>
     )
 }
@@ -304,7 +312,7 @@ const styles = StyleSheet.create({
 
     buttonView1: {
         justifyContent: 'center',
-        width:'30%',
+        width: '30%',
         marginTop: '10%'
 
     },
@@ -313,7 +321,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Nunito_600SemiBold',
         fontWeight: '700',
         fontSize: 15,
-      },
+    },
     button2: {
         width: '100%',
         padding: '3%',
@@ -329,7 +337,7 @@ const styles = StyleSheet.create({
         shadowOffset: { height: 3.5, },
         shadowOpacity: 0.5,
         shadowRadius: 2,
-      },
+    },
 
     buttonView2: {
         flexDirection: 'row',
@@ -376,7 +384,7 @@ const styles = StyleSheet.create({
         // shadowOffset: { height: 3.5, },
         // shadowOpacity: 0.5,
         // shadowRadius: 2,
-        backgroundColor:'white',
+        backgroundColor: 'white',
     },
     friendsIntro: {
         marginTop: 10,
@@ -394,10 +402,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     Img: {
-    
-    width: 100,
-    height: 100,
-    resizeMode: 'contain',
+
+        width: 100,
+        height: 100,
+        resizeMode: 'contain',
     },
     name: {
         marginTop: 15,

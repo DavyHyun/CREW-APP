@@ -7,9 +7,18 @@ const FilterDisplayRes = () => {
     const route = useRoute();
     console.log(route.params);
 
+    const goHome = () => {
+        navigation.navigate("HomeScreen");
+    }
+
     return (
         <View>
             <Text>FilterDisplayRes</Text>
+            <TouchableOpacity
+            onPress={goHome}
+            style={{top:500}}>
+                <Text>BACK</Text>
+            </TouchableOpacity>
         </View>
     )
 }

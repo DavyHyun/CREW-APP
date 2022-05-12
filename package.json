@@ -28,6 +28,7 @@
     "expo-font": "~10.0.4",
     "expo-image-picker": "~12.0.1",
     "expo-status-bar": "~1.2.0",
+    "expo-updates": "~0.11.7",
     "expo-web-browser": "~10.1.0",
     "firebase": "^9.6.1",
     "lottie-react-native": "5.0.1",
@@ -39,6 +40,7 @@
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-collapsible": "^1.6.0",
     "react-native-dropdown-picker": "^5.3.0",
+    "react-native-fast-image": "^8.5.11",
     "react-native-game-engine": "^1.2.0",
     "react-native-gesture-handler": "~2.1.0",
     "react-native-linear-gradient": "^2.5.6",
@@ -55,8 +57,7 @@
     "react-native-svg": "12.1.1",
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "0.17.1",
-    "react-router-dom": "^6.2.1",
-    "expo-updates": "~0.11.7"
+    "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

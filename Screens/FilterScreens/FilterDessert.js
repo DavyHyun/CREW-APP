@@ -51,7 +51,7 @@ const FilterDessert = () => {
             tempArray[index].state = true;
         }
         setCategoryList[tempArray];
-        onNext();
+        onNext(true);
     }
 
     const onNext = (fromNext) => {
