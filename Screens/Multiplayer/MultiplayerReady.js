@@ -125,3 +125,4 @@ const styles = StyleSheet.create({
     // fontFamily: OpenSans_SemiBold,
   },
 })
+

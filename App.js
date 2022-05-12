@@ -23,6 +23,12 @@ import MultiplayerQ2 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ2';
 import MultiplayerQ3 from './Screens/Multiplayer/MultiplayerQuiz/MultiplayerQ3';
 import MultiplayerDisplayRes from './Screens/Multiplayer/MultiplayerDisplayRes';
 import DisplayBuffer from './Screens/Multiplayer/MultiplayerQuiz/DisplayBuffer';
+import FilterCategory from './Screens/FilterScreens/FilterCategory';
+import FilterAmbiance from './Screens/FilterScreens/FilterAmbiance';
+import FilterDessert from './Screens/FilterScreens/FilterDessert';
+import FilterDining from './Screens/FilterScreens/FilterDining';
+import FilterNationality from './Screens/FilterScreens/FilterNationality';
+import FilterPrice from './Screens/FilterScreens/FilterPrice';
 import { LogBox } from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
 
@@ -65,6 +71,12 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="MultiplayerQ3" component={MultiplayerQ3} />
         <Stack.Screen options={{headerShown: false}} name="MultiplayerDisplayRes" component={MultiplayerDisplayRes} />
         <Stack.Screen options={{headerShown: false}} name="DisplayBuffer" component={DisplayBuffer} />
+        <Stack.Screen options={{headerShown: false}} name="FilterCategory" component={FilterCategory} />
+        <Stack.Screen options={{headerShown: false}} name="FilterAmbiance" component={FilterAmbiance} />
+        <Stack.Screen options={{headerShown: false}} name="FilterDessert" component={FilterDessert} />
+        <Stack.Screen options={{headerShown: false}} name="FilterDining" component={FilterDining} />
+        <Stack.Screen options={{headerShown: false}} name="FilterNationality" component={FilterNationality} />
+        <Stack.Screen options={{headerShown: false}} name="FilterPrice" component={FilterPrice} />
       </Stack.Navigator>
     </NavigationContainer>
     </>
