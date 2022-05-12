@@ -78,7 +78,7 @@ const FilterNationality = () => {
         for (let index = 0; index < categoryListArray.length; index++) {
             const tempJSON = {
                 name: categoryListArray[index],
-                id: (index + 1) + '',
+                id: (index + 1),
                 state: false
             }
             tempArray.push(tempJSON);
