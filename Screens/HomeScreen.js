@@ -9,6 +9,7 @@ import { getAuth } from "firebase/auth";
 import { requireNativeViewManager } from 'expo-modules-core'
 import { Ionicons } from '@expo/vector-icons'; 
 import AppLoading from 'expo-app-loading';
+import { FontAwesome } from '@expo/vector-icons'; 
 import { SimpleLineIcons } from '@expo/vector-icons';
 import {
   useFonts,
@@ -83,6 +84,10 @@ const HomeScreen = () => {
     navigation.navigate("RoomCreation");
   }
 
+  const navigateToFilter = () => {
+    navigation.navigate("FilterCategory");
+  }
+
 
   if (!fontsLoaded) {
     return <AppLoading />
@@ -103,7 +108,7 @@ const HomeScreen = () => {
           <Image source={require('../assets/CrewLogo.png')} style={styles.logo}></Image>
         </View>
       </View>
-      <View style={{flexDirection:'column', justifyContent: 'center', alignItems:'center', marginBottom: '20%'}}>
+      <View style={{flexDirection:'column', justifyContent: 'center', alignItems:'center', marginTop: '5%' }}>
         <View style={styles.buttonView}>
           <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <TouchableOpacity
@@ -125,6 +130,17 @@ const HomeScreen = () => {
           </View>
         </View>
       </View>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={navigateToFilter}
+            style={styles.button1}
+          >
+            <FontAwesome name="filter" size={65} color="#FFBE48" />
+          </TouchableOpacity>
+          <Text style={{fontFamily:'Nunito_700Bold', fontSize: 15, marginTop: '5%'}}>Filter your options!</Text>
+          </View>
+      </View>
     </View>
 
 
@@ -135,6 +151,7 @@ const HomeScreen = () => {
 }
 
 export default HomeScreen
+
 
 const styles = StyleSheet.create({
   view: {
@@ -162,11 +179,22 @@ const styles = StyleSheet.create({
     width: '90%',
     marginBottom: '5%',
     // marginLeft: '2%'
-    marginRight: '5%'
+    marginRight: '3.7%'
   },
   button: {
     // width: '80%',
-    padding: '23%',
+    padding: '20%',
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    shadowColor: 'rgba(0,0,0, 0.6)',
+    shadowOffset: { height: 3.5,  },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+  },
+  button1: {
+    // width: '80%',
+    padding: '11%',
     borderRadius: 10,
     alignItems: 'center',
     backgroundColor: 'white',
@@ -190,5 +218,3 @@ const styles = StyleSheet.create({
   }
 
 })
-
-

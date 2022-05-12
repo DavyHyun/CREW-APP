@@ -31,6 +31,7 @@ import FilterNationality from './Screens/FilterScreens/FilterNationality';
 import FilterPrice from './Screens/FilterScreens/FilterPrice';
 import { LogBox } from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
+import FilterDisplayRes from './Screens/FilterScreens/FilterDisplayRes';
 
 
 const Stack = createNativeStackNavigator();
@@ -77,6 +78,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="FilterDining" component={FilterDining} />
         <Stack.Screen options={{headerShown: false}} name="FilterNationality" component={FilterNationality} />
         <Stack.Screen options={{headerShown: false}} name="FilterPrice" component={FilterPrice} />
+        <Stack.Screen options={{headerShown: false}} name="FilterDisplayRes" component={FilterDisplayRes} />
       </Stack.Navigator>
     </NavigationContainer>
     </>

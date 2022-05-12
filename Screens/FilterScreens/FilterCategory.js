@@ -14,7 +14,7 @@ const FilterCategory = () => {
             dining: [],
             price: []
         }
-        navigation.navigate(FilterNationality, result);
+        navigation.navigate("FilterNationality", result);
     }
 
     const dessertOnClick = () => {
@@ -26,13 +26,25 @@ const FilterCategory = () => {
             dining: [],
             price: []
         }
-        navigation.navigate(FilterDessert, result);
+        navigation.navigate('FilterDessert', result);
     }
 
     return (
         <View>
             <Text>FilterCategory</Text>
+            <TouchableOpacity
+            onPress={foodOnClick}
+            style={{top:500}}>
+                <Text>FOOD</Text>
+
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={dessertOnClick}>
+                <Text>DESSERT</Text>
+
+            </TouchableOpacity>
         </View>
     )
 }
 export default FilterCategory;
+
