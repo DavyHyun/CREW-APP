@@ -1,7 +1,31 @@
-import { StyleSheet, Text, View, TouchableOpacity, Touchable, Image } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Touchable, Image, SafeAreaView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute, useIsFocused } from '@react-navigation/core';
+import { Card } from 'react-native-paper';
+import { render } from 'react-dom';
+import { Ionicons } from '@expo/vector-icons';
+import AppLoading from 'expo-app-loading';
 import rData from '../../json/thankYouGrace.json';
+import LoadingAnimation from '../../components/LoadingAnimation';
+import {
+    useFonts,
+    Nunito_200ExtraLight,
+    Nunito_300Light,
+    Nunito_400Regular,
+    Nunito_500Medium,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
+    Nunito_800ExtraBold,
+    Nunito_900Black,
+    Nunito_200ExtraLight_Italic,
+    Nunito_300Light_Italic,
+    Nunito_400Regular_Italic,
+    Nunito_500Medium_Italic,
+    Nunito_600SemiBold_Italic,
+    Nunito_700Bold_Italic,
+    Nunito_800ExtraBold_Italic,
+    Nunito_900Black_Italic,
+} from '@expo-google-fonts/nunito';
 
 const FilterPrice = () => {
     const navigation = useNavigation();
@@ -9,134 +33,507 @@ const FilterPrice = () => {
     const result = route.params;
     const [categoryList, setCategoryList] = useState([]);
     let categoryListArray = [];
+    let [fontsLoaded] = useFonts({
+        Nunito_200ExtraLight,
+        Nunito_300Light,
+        Nunito_400Regular,
+        Nunito_500Medium,
+        Nunito_600SemiBold,
+        Nunito_700Bold,
+        Nunito_800ExtraBold,
+        Nunito_900Black,
+        Nunito_200ExtraLight_Italic,
+        Nunito_300Light_Italic,
+        Nunito_400Regular_Italic,
+        Nunito_500Medium_Italic,
+        Nunito_600SemiBold_Italic,
+        Nunito_700Bold_Italic,
+        Nunito_800ExtraBold_Italic,
+        Nunito_900Black_Italic,
+    });
+    const [renderData, setRenderData] = useState();
+    const [selectItem, setSelectItem] = useState(null);
+    const [numCol, setNumCol] = useState(2);
+    const [counter, setCounter] = useState(0);
+    const [initialTrigger, setInitialTrigger] = useState(0);
+    const [imagesLoaded, setImagesLoaded] = useState();
+    const [numOfImages, setNumOfImages] = useState(100);
 
     useEffect(() => {
         var listChecker = "";
+        setImagesLoaded(0);
 
+        // fill category array
         for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
+            // check category
+            if (rData[rDataIndex].CATEGORY === result.category) {
+                // check nationality list if it exists
+                if (result.nationality && result.nationality.length) {
+                    // loop through the possible nationalities
+                    for (let nationalityIndex = 0; nationalityIndex < result.nationality.length; nationalityIndex++) {
+                        // check if nationality from result is in the restaurant's nationality list
+                        if (rData[rDataIndex].NATIONALITY.includes(result.nationality[nationalityIndex])) {
+                            // loop through the possibel ambiances
+                            for (let ambianceIndex = 0; ambianceIndex < result.ambiance.length; ambianceIndex++) {
+                                // check if ambiance from result ambiance array is in restaurant's ambaince list
+                                if (rData[rDataIndex].AMBIANCE.includes(result.ambiance[ambianceIndex])) {
+                                    // loop through possible dining speeds
+                                    for (let diningIndex = 0; diningIndex < result.dining.length; diningIndex++) {
+                                        // check if dining index from result dining array is in restaurant's dining
+                                        if (rData[rDataIndex].DINING.includes(result.dining[diningIndex])) {
+                                            // add price to price category if not already added
+                                            if (!listChecker.includes(rData[rDataIndex].PRICE)) {
+                                                listChecker += rData[rDataIndex].PRICE;
+                                                categoryListArray.push(rData[rDataIndex].PRICE);
+                                            }
+                                        }
+                                    }
 
-            if(rData[rDataIndex].CATEGORY === result.category) {
-                if(result.nationality && result.nationality.length) {
-
-                    for(let nationalityIndex = 0; nationalityIndex < result.nationality.length; nationalityIndex++) {
-
-                        if(rData[rDataIndex].NATIONALITY.includes(result.nationality[nationalityIndex])){
-                            if(!listChecker.includes(rData[rDataIndex].PRICE)) {
-                                listChecker += rData[rDataIndex].PRICE;
-                                categoryListArray.push(rData[rDataIndex].PRICE);
+                                }
                             }
                         }
                     }
                 }
-                if(result.dessert && result.dessert.length) {
 
-                    for(let dessertIndex = 0; dessertIndex < result.dessert.length; dessertIndex++) {
-
-                        if(rData[rDataIndex].DESSERT.includes(result.dessert[dessertIndex])) {
-                            if(!listChecker.includes(rData[rDataIndex].PRICE)) {
-                                listChecker += rData[rDataIndex].PRICE;
-                                categoryListArray.push(rData[rDataIndex].PRICE);
+                // check dessert list if it exists
+                if (result.dessert && result.dessert.length) {
+                    // loop through the possible desserts
+                    for (let dessertIndex = 0; dessertIndex < result.dessert.length; dessertIndex++) {
+                        // check if dessert from result is in the restaurant's dessert list
+                        if (rData[rDataIndex].DESSERT.includes(result.dessert[dessertIndex])) {
+                            // loop through the possibel ambiances
+                            for (let ambianceIndex = 0; ambianceIndex < result.ambiance.length; ambianceIndex++) {
+                                // check if ambiance from result ambiance array is in restaurant's ambaince list
+                                if (rData[rDataIndex].AMBIANCE.includes(result.ambiance[ambianceIndex])) {
+                                    // loop through possible dining speeds
+                                    for (let diningIndex = 0; diningIndex < result.dining.length; diningIndex++) {
+                                        // check if dining index from result dining array is in restaurant's dining
+                                        if (rData[rDataIndex].DINING.includes(result.dining[diningIndex])) {
+                                            // add price to price category if not already added
+                                            if (!listChecker.includes(rData[rDataIndex].PRICE)) {
+                                                listChecker += rData[rDataIndex].PRICE;
+                                                categoryListArray.push(rData[rDataIndex].PRICE);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
+
+
+        // can copy rest of useEffect
         var tempArray = [];
-        for(let index = 0; index < categoryListArray.length; index++) {
+        for (let index = 0; index < categoryListArray.length; index++) {
             const tempJSON = {
                 name: categoryListArray[index],
-                id: (index + 1) + '',
+                id: (index + 1),
                 state: false
             }
             tempArray.push(tempJSON);
         }
-        setCategoryList(tempArray);
-    }, []);
 
-    const optionOnClick = (name) => {
+        setNumOfImages(tempArray.length);
+        setCategoryList(tempArray);
+        setRenderData(categoryList);
+        if (!renderData) {
+            setInitialTrigger(1);
+        }
+        console.log(renderData);
+    }, [initialTrigger]);
+
+    // can copy
+    const optionOnClick = (id, name) => {
+        for (let data of renderData) {
+            try {
+                if (data.id == id) {
+                    data.selected = (data.selected == null) ? true : !data.selected;
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        setRenderData(renderData);
+        setCounter(counter + 1);
         var tempArray = categoryList;
-        for(let index = 0; index < categoryList.length; index++) {
-            if(categoryList[index].name === name) {
+        for (let index = 0; index < categoryList.length; index++) {
+            if (categoryList[index].name === name) {
                 tempArray[index].state = !tempArray[index].state;
             }
         }
         setCategoryList(tempArray);
     }
 
+    // can copy
     const idcButton = () => {
         var tempArray = categoryList;
-        for(let index = 0; index < categoryList.length; index++) {
+        for (let index = 0; index < categoryList.length; index++) {
             tempArray[index].state = true;
         }
         setCategoryList[tempArray];
-        onNext();
+        onNext(true);
     }
 
+    // edit this method
     const onNext = (fromNext) => {
 
+        // change array name
         let priceArray = [];
-        for(let index = 0; index < categoryList.length; index++) {
-            if(categoryList[index].state) {
+        for (let index = 0; index < categoryList.length; index++) {
+            if (categoryList[index].state) {
+                // change array here
                 priceArray.push(categoryList[index].name);
             }
         }
-        if(priceArray && priceArray.length) {
+        // change array here
+        if (priceArray && priceArray.length) {
 
-        } else if(fromNext) {
+        } else if (fromNext) {
             alert("Please choose your options or hit IDC!");
             return;
         }
-        const endResult = {
+        // update only the according array
+        let endResult = {
             category: result.category,
             nationality: result.nationality,
             dessert: result.dessert,
-            ambiance: [],
-            dining: [],
+            ambiance: result.ambiance,
+            dining: result.dining,
             price: priceArray,
+            resCount: result.resCount
         }
-        if(fromNext) {
-            navToNextFilter(endResult);
+        if (fromNext) {
+            navToNextFilter(endResult, false);
         } else {
-            showMyListOnClick(endResult)
+            navToNextFilter(endResult, true);
+
         }
     }
 
-    const showMyListOnClick = (endResult) => {
-        navigation.navigate("FilterDisplayRes", endResult);
-    }
 
-
-    /// FIXXJIOFJESOIFJOIWEJ:FOESJOIFJWEOIJFOI:WEJF:OIWEJF:OIEWJF:OIWEJO:IFEWJOI
-    const navToNextFilter = (endResult) => {
+    // edit this method
+    const navToNextFilter = (endResult, fromShowMyList) => {
         var resCount = 0;
-        for(let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            if(endResult.category === rData[rDataIndex].CATEGORY) {
-                for(let nationalityArrayIndex = 0; nationalityArrayIndex < endResult.nationality.length; nationalityArrayIndex++) {
-                    if(rData[rDataIndex].NATIONALITY.includes(endResult.nationality[nationalityArrayIndex])) {
-                        resCount++;
-                        break;
+        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
+            // check category
+            if (rData[rDataIndex].CATEGORY === endResult.category) {
+
+                // check nationality list if it exists
+                if (endResult.nationality && endResult.nationality.length) {
+                    // loop through the possible nationalities
+                    for (let nationalityIndex = 0; nationalityIndex < endResult.nationality.length; nationalityIndex++) {
+                        // check if nationality from result is in the restaurant's nationality list
+                        if (rData[rDataIndex].NATIONALITY.includes(endResult.nationality[nationalityIndex])) {
+                            // loop through the possibel ambiances
+                            for (let ambianceIndex = 0; ambianceIndex < endResult.ambiance.length; ambianceIndex++) {
+                                // check if ambiance from result ambiance array is in restaurant's ambaince list
+                                if (rData[rDataIndex].AMBIANCE.includes(endResult.ambiance[ambianceIndex])) {
+                                    // loop through possible dining speeds
+                                    for(let diningIndex = 0; diningIndex < endResult.dining.length; diningIndex++) {
+                                        // check if dining index from result dining array is in restaurant's dining
+                                        if(rData[rDataIndex].DINING.includes(endResult.dining[diningIndex])) {
+                                            // loop through possible prices
+                                            for(let priceIndex = 0; priceIndex < endResult.price.length; priceIndex++) {
+                                                // check if price from result price array is in restaurant's price
+                                                if(rData[rDataIndex].PRICE.includes(endResult.price[priceIndex])) {
+                                                    resCount++;
+                                                    nationalityIndex = endResult.nationality.length;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // check dessert list if it exists
+                if (endResult.dessert && endResult.dessert.length) {
+                    // loop through the possible desserts
+                    for (let dessertIndex = 0; dessertIndex < endResult.dessert.length; dessertIndex++) {
+                        // check if dessert from result is in the restaurant's dessert list
+                        if (rData[rDataIndex].DESSERT.includes(endResult.dessert[dessertIndex])) {
+                            // loop through the possibel ambiances
+                            for (let ambianceIndex = 0; ambianceIndex < endResult.ambiance.length; ambianceIndex++) {
+                                // check if ambiance from result ambiance array is in restaurant's ambaince list
+                                if (rData[rDataIndex].AMBIANCE.includes(endResult.ambiance[ambianceIndex])) {
+                                    // loop through possible dining speeds
+                                    for(let diningIndex = 0; diningIndex < endResult.dining.length; diningIndex++) {
+                                        // check if dining index from result dining array is in restaurant's dining
+                                        if(rData[rDataIndex].DINING.includes(endResult.dining[diningIndex])) {
+                                            // loop through possible prices
+                                            for(let priceIndex = 0; priceIndex < endResult.price.length; priceIndex++) {
+                                                // check if price from result price array is in restaurant's price
+                                                if(rData[rDataIndex].PRICE.includes(endResult.price[priceIndex])) {
+                                                    resCount++;
+                                                    dessertIndex = endResult.dessert.length;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-        console.log(resCount);
-        if(resCount <= 3) {
+        if (resCount !== 0) {
+            endResult.resCount = resCount;
+        }
+        if (fromShowMyList) {
+            navigation.navigate("FilterDisplayRes", endResult);
+        } else if (resCount <= 3) {
             navigation.navigate("FilterDisplayRes", endResult);
         } else {
-            navigation.navigate("FilterPrice", endResult);
+            navigation.navigate("FilterDisplayRes", endResult);
         }
+
     }
-    // wfio;jEIOWJFIOEWJFO:IJEWO:IFJO:IEWJFO:IWEJOFi
 
 
-   
-
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
     return (
-        <View>
-            <Text>FilterPrice</Text>
-            <TouchableOpacity></TouchableOpacity>
+        <View style={styles.mainCont}>
+            {imagesLoaded > (numOfImages - 1) ? null :
+                <View style={{ height: '100%', marginTop: '188%' }}>
+                    <LoadingAnimation />
+                </View>
+            }
+
+            <View style={styles.topBar}>
+                <Text style={{ fontSize: 19, fontFamily: 'Nunito_700Bold' }}>WHAT DO YOU WANT TO EAT?</Text>
+                <Text style={{ fontSize: 11, fontFamily: 'Nunito_400Regular' }}>help us narrow down what you want!</Text>
+            </View>
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    data={renderData}
+                    keyExtractor={(item) => item.id}
+                    numColumns={numCol}
+                    style={{ width: '80%', height: '40%', backgroundColor: '#FFD73F' }}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => optionOnClick(item.id, item.name)}
+                            style={{ width: '50%' }}
+                        >
+                            <Card
+                                style={
+                                    item.selected == true
+                                        ? {
+                                            marginHorizontal: 10,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginTop: 10,
+                                            padding: 10,
+                                            // borderColor: '#C4C4C4',
+                                            borderRadius: 10,
+                                            // borderWidth: 2,
+                                            fontSize: 10,
+                                            // alignItems:'center',
+                                            // justifyContent: 'center',
+                                            flex: 1,
+                                            shadowColor: 'rgba(0,0,0, 0.6)',
+                                            shadowOffset: { height: 3.5, },
+                                            shadowOpacity: 0.5,
+                                            shadowRadius: 2,
+
+                                            backgroundColor: '#FF730A',
+                                        }
+                                        : {
+                                            marginHorizontal: 10,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginTop: 10,
+                                            padding: 10,
+                                            // borderColor: '#C4C4C4',
+                                            borderRadius: 10,
+                                            // borderWidth: 2,
+                                            fontSize: 10,
+                                            // alignItems:'center',
+                                            // justifyContent: 'center',
+                                            flex: 1,
+                                            shadowColor: 'rgba(0,0,0, 0.6)',
+                                            shadowOffset: { height: 3.5, },
+                                            shadowOpacity: 0.5,
+                                            shadowRadius: 2,
+
+                                            backgroundColor: 'white',
+                                        }
+                                }
+                            >
+                                <Image style={styles.Img} source={require("../../assets/koreaFlag.png")} onLoad={() => setImagesLoaded(imagesLoaded + 1)} />
+                                <Text style={styles.name}>{item.name}</Text>
+                            </Card>
+                        </TouchableOpacity>
+                    )}
+                />
+            </SafeAreaView>
+            <View style={styles.buttonView1}>
+                <TouchableOpacity
+                    onPress={() => onNext(true)}
+                    style={styles.button2}
+                >
+                    <Text style={styles.buttonTextL}>NEXT</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.buttonView2}>
+
+                <TouchableOpacity
+                    onPress={() => idcButton()}
+                    style={styles.button3}
+                >
+                    <Text style={styles.buttonTextL}>I DON'T CARE</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => onNext(false)}
+                    style={styles.button3}
+                >
+                    <Text style={styles.buttonTextL}>SHOW MY LIST</Text>
+                </TouchableOpacity>
+
+            </View>
         </View>
     )
 }
 export default FilterPrice;
+
+
+
+
+
+
+const styles = StyleSheet.create({
+
+    mainCont: {
+        backgroundColor: '#FFD73F',
+        height: '100%',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+
+    topBar: {
+        flexDirection: 'column',
+        left: '12%',
+        width: '100%',
+        marginBottom: '5%'
+    },
+
+    buttonView1: {
+        justifyContent: 'center',
+        width: '30%',
+        marginTop: '10%'
+
+    },
+    buttonTextL: {
+        color: 'white',
+        fontFamily: 'Nunito_600SemiBold',
+        fontWeight: '700',
+        fontSize: 15,
+    },
+    button2: {
+        width: '100%',
+        padding: '3%',
+        borderRadius: 30,
+        padding: 10,
+        alignItems: 'center',
+        backgroundColor: '#FF730A',
+        marginBottom: '2%',
+        borderStyle: 'solid',
+        borderColor: '#FF730A',
+        borderWidth: 1,
+        shadowColor: 'rgba(0,0,0, 0.6)',
+        shadowOffset: { height: 3.5, },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+    },
+
+    buttonView2: {
+        flexDirection: 'row',
+        width: '85%',
+        justifyContent: 'space-between',
+        marginTop: '7%'
+    },
+
+    button3: {
+        width: '45%',
+        padding: '3%',
+        borderRadius: 30,
+        alignItems: 'center',
+        backgroundColor: '#FD9343',
+        marginBottom: '2%',
+        borderStyle: 'solid',
+        borderColor: '#FFBE48',
+        borderWidth: 1,
+        shadowColor: 'rgba(0,0,0, 0.6)',
+        shadowOffset: { height: 3.5, },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+    },
+
+    container: {
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
+        height: '60%'
+    },
+    eachView: {
+        marginHorizontal: 10,
+        marginTop: 10,
+        padding: 10,
+        borderColor: '#C4C4C4',
+        borderRadius: 10,
+        borderWidth: 2,
+        fontSize: 10,
+        // alignItems:'center',
+        // justifyContent: 'center',
+        flex: 1,
+        // shadowColor: 'rgba(0,0,0, 0.6)',
+        // shadowOffset: { height: 3.5, },
+        // shadowOpacity: 0.5,
+        // shadowRadius: 2,
+        backgroundColor: 'white',
+    },
+    friendsIntro: {
+        marginTop: 10,
+        padding: 5,
+    },
+    friendsText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginLeft: 20,
+    },
+    profileImg: {
+        width: '100%',
+        height: 50,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+    },
+    Img: {
+
+        width: 100,
+        height: 100,
+        resizeMode: 'contain',
+    },
+    name: {
+        marginTop: 15,
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginBottom: 7,
+        textAlign: 'center',
+        fontFamily: 'Nunito_600SemiBold'
+    }
+
+})
