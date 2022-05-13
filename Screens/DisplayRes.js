@@ -80,6 +80,7 @@ const DisplayRes = () => {
 
   useEffect(() => {
 
+    console.log("trytrytry");
     if (isFocused) {
       console.log("use effect triggered");
       setImagesLoaded(0);
@@ -204,18 +205,18 @@ const DisplayRes = () => {
   }
 
 
-  if (!fontsLoaded) {
-    return <LoadingAnimation style={styles.animation}/>
-  } else {
+  // if (!fontsLoaded) {
+  //   return <LoadingAnimation style={styles.animation}/>
+  // } else {
     return (
 
       <View style={styles.view}>
-        
+{/*         
         {imagesLoaded > 2 ? null :
           <View style={{height: '100%', marginTop: '188%'}}>
           <LoadingAnimation />
           </View>
-        }
+        } */}
         
         <View style={styles.topBar}>
           <TouchableOpacity
@@ -313,7 +314,7 @@ const DisplayRes = () => {
     )
   }
 
-}
+// }
 
 export default DisplayRes
 

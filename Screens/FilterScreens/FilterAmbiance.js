@@ -280,6 +280,7 @@ const FilterAmbiance = () => {
                 <Text style={{ fontSize: 11, fontFamily: 'Nunito_400Regular' }}>help us narrow down what you want!</Text>
             </View>
             <SafeAreaView style={styles.container}>
+                
                 <FlatList
                     data={renderData}
                     keyExtractor={(item) => item.id}
@@ -342,6 +343,7 @@ const FilterAmbiance = () => {
                         </TouchableOpacity>
                     )}
                 />
+                
             </SafeAreaView>
             <View style={styles.buttonView1}>
                 <TouchableOpacity
