@@ -1,4 +1,5 @@
-[
+{ 
+  "restaurants": [
   {
     "RESTAURANT": "Mioposto Northwest",
     "FSR": "EXCELLENT",
@@ -6132,3 +6133,4 @@
     "TEA": "The menu is endless. Hard to choose from the menu. Not wow but still worth a try. Mousse animals are creepy and real."
   }
  ]
+}
