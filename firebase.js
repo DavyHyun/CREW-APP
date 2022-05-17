@@ -5,10 +5,8 @@ import {getAuth} from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFunctions } from 'firebase/functions';
 import jsonFile from './json/thankYouGrace.json';
+import { getFirestore } from "firebase/firestore";
 // Imports
-
-
-jsonToFirestore();
 
 
 // import { getStorage } from "firebase/storage";
@@ -54,10 +52,10 @@ if (getApps().length < 1) {
     app = getApps();
 }
 const auth = getAuth(app);
+const firestore = getFirestore(app);
 const database = getDatabase(app);
 const functions = getFunctions(app);
-module.exports = firebaseConfig;
-export {auth, database, functions};
+export {auth, database, functions, firestore};
 
 // get(child(dbref, `users/${auth.currentUser.uid}`)).then((snapshot) => {
 //   if (snapshot.exists()) {

@@ -6,6 +6,7 @@ import {AppLoading} from "expo"
 import {auth} from '../../firebase';
 
 
+
 const LoginOrSignUp = () => {
 
     const navigation = useNavigation();

@@ -10,8 +10,10 @@ import { requireNativeViewManager } from 'expo-modules-core'
 import { Ionicons } from '@expo/vector-icons'; 
 import AppLoading from 'expo-app-loading';
 import { FontAwesome } from '@expo/vector-icons'; 
-import { getFunctions, httpsCallable } from "firebase/functions";
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from "firebase/functions";
 import { SimpleLineIcons } from '@expo/vector-icons';
+// import { getFirestore } from 'firebase/firestore'
+
 import {
   useFonts,
   Nunito_200ExtraLight,
@@ -33,6 +35,7 @@ import {
 } from '@expo-google-fonts/nunito';
 
 const HomeScreen = () => {
+
   let [fontsLoaded] = useFonts({
     Nunito_200ExtraLight,
     Nunito_300Light,
@@ -54,7 +57,9 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
+  // const functions = getFunctions();
   const functions = getFunctions();
+  connectFunctionsEmulator(functions, "localhost", 5001);
   useEffect(() => {
     try {
       const db = getDatabase();
@@ -80,10 +85,10 @@ const HomeScreen = () => {
   const navigateToQUIZ = () => {
     const singlePlayerMessage = httpsCallable(functions, 'singlePlayerText');
     singlePlayerMessage().then((result) => {
-      console.log(result.data);
+      console.log(result);
       navigation.navigate("Ready");
     })
-  
+
   }
 
   const navigateToRoomCreation = () => {
