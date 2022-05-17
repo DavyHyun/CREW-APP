@@ -11,7 +11,7 @@ const admin = require("firebase-admin");
 // alias firebase="`npm config get prefix`/bin/firebase"
 
 exports.singlePlayerText = functions.https.onCall((data, context) => {
-  //GETTING EVERYTHING WHERE MOOD IS TRUE
+  //GETTING EVERYTHING WHERE MOOD IS FALSE
     return new Promise(function(resolve, reject) {
       var db = admin.firestore();
       var result = [];

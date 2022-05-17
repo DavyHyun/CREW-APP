@@ -17724,3 +17724,39 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [debug] [2022-05-17T03:57:10.942Z] Got response from /__/functions.yaml {"endpoints":{"singlePlayerText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"singlePlayerText"}},"specVersion":"v1alpha1","requiredAPIs":[]}
 [debug] [2022-05-17T03:57:10.944Z] shutdown requested via /__/quitquitquit
 
+[debug] [2022-05-17T04:02:30.754Z] File /Users/davidhyun/CREW-APP/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/davidhyun/CREW-APP/functions/index.js changed, reloading triggers"}}
+[debug] [2022-05-17T04:02:31.760Z] Validating nodejs source
+[debug] [2022-05-17T04:02:32.505Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2022-05-17T04:02:32.505Z] Building nodejs source
+[debug] [2022-05-17T04:02:32.505Z] Analyzing nodejs backend spec
+[debug] [2022-05-17T04:02:32.505Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-05-17T04:02:32.611Z] Serving at port 9005
+
+[debug] [2022-05-17T04:02:32.650Z] Got response from /__/functions.yaml {"endpoints":{"singlePlayerText":{"platform":"gcfv1","labels":{},"callableTrigger":{},"entryPoint":"singlePlayerText"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-05-17T04:02:32.652Z] shutdown requested via /__/quitquitquit
+
