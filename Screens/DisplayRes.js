@@ -52,6 +52,7 @@ const DisplayRes = () => {
     Nunito_900Black_Italic,
   });
 
+
   const storage = getStorage();
   const route = useRoute();
   const navigation = useNavigation();
@@ -80,9 +81,9 @@ const DisplayRes = () => {
 
   useEffect(() => {
 
-    console.log("trytrytry");
+   
     if (isFocused) {
-      console.log("use effect triggered");
+
       setImagesLoaded(0);
       renderScreen();
 
@@ -92,12 +93,18 @@ const DisplayRes = () => {
   const renderScreen = async () => {
     let today = new Date();
     let dayOf = today.getDay();
-    
-    for (let index = 0; index < rData.length; index++) {
-      if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].DESSERT === result.Q3) {
-        restaurantList.push(rData[index]);
+    console.log("test");
+    console.log(rData.restaurants.length);
+    for (let index = 0; index < rData.restaurants.length; index++) {
+      if (rData.restaurants[index].SPEED === result.Q1 && rData.restaurants[index].MOOD === result.Q2) {
+        if((rData.restaurants[index].DESSERT === null && result.Q3 === false) || (rData.restaurants[index].DESSERT !== null && result.Q3 === true)) {
+          restaurantList.push(rData.restaurants[index]);
+        }
+        
       }
     }
+    console.log(restaurantList);
+
 
 
     pickRestaurants();
@@ -205,18 +212,18 @@ const DisplayRes = () => {
   }
 
 
-  // if (!fontsLoaded) {
-  //   return <LoadingAnimation style={styles.animation}/>
-  // } else {
+  if (!fontsLoaded) {
+    return <LoadingAnimation style={styles.animation}/>
+  } else {
     return (
 
       <View style={styles.view}>
-{/*         
+        
         {imagesLoaded > 2 ? null :
           <View style={{height: '100%', marginTop: '188%'}}>
           <LoadingAnimation />
           </View>
-        } */}
+        }
         
         <View style={styles.topBar}>
           <TouchableOpacity
@@ -314,7 +321,7 @@ const DisplayRes = () => {
     )
   }
 
-// }
+}
 
 export default DisplayRes
 
