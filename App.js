@@ -72,11 +72,11 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="MultiplayerQ3" component={MultiplayerQ3} />
         <Stack.Screen options={{headerShown: false}} name="MultiplayerDisplayRes" component={MultiplayerDisplayRes} />
         <Stack.Screen options={{headerShown: false}} name="DisplayBuffer" component={DisplayBuffer} />
-        <Stack.Screen options={{headerShown: false}} name="FilterCategory" component={FilterCategory} />
+        <Stack.Screen options={{headerShown: true}} name="FilterCategory" component={FilterCategory} />
         <Stack.Screen options={{headerShown: false}} name="FilterAmbiance" component={FilterAmbiance} />
         <Stack.Screen options={{headerShown: false}} name="FilterDessert" component={FilterDessert} />
         <Stack.Screen options={{headerShown: false}} name="FilterDining" component={FilterDining} />
-        <Stack.Screen options={{headerShown: false}} name="FilterNationality" component={FilterNationality} />
+        <Stack.Screen options={{headerShown: true}} name="FilterNationality" component={FilterNationality} />
         <Stack.Screen options={{headerShown: false}} name="FilterPrice" component={FilterPrice} />
         <Stack.Screen options={{headerShown: false}} name="FilterDisplayRes" component={FilterDisplayRes} />
       </Stack.Navigator>

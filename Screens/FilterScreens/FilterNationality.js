@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import rData from '../../json/thankYouGrace.json';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from "firebase/functions";
 import {
     useFonts,
     Nunito_200ExtraLight,
@@ -30,7 +31,7 @@ import {
 const FilterNationality = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const result = route.params;
+    const resultt = route.params;
     const [categoryList, setCategoryList] = useState([]);
     let categoryListArray = [];
     let [fontsLoaded] = useFonts({
@@ -58,23 +59,19 @@ const FilterNationality = () => {
     const [initialTrigger, setInitialTrigger] = useState(0);
     const [imagesLoaded, setImagesLoaded] = useState();
     const [numOfImages, setNumOfImages] = useState(100);
+    const functions = getFunctions();
+    connectFunctionsEmulator(functions, "localhost", 5001);
 
 
     useEffect(() => {
-        var listChecker = "";
         setImagesLoaded(0);
-        for (let index = 0; index < rData.length; index++) {
-            if (rData[index].CATEGORY === result.category) {
-                const strings = rData[index].NATIONALITY.split(",");
-                for (let i = 0; i < strings.length; i++) {
-                    if (!listChecker.includes(strings[i])) {
-                        listChecker += strings[i];
-                        categoryListArray.push(strings[i]);
-                    }
-                }
+        const loadNationalities = httpsCallable(functions, 'loadNationalities');
+        loadNationalities(resultt).then((result) => {
+            for (let i = 0; i < result.data.length; i++) {
+                categoryListArray.push(result.data[i].nationality);
             }
-        }
-        var tempArray = [];
+            console.log(categoryListArray);
+            var tempArray = [];
         for (let index = 0; index < categoryListArray.length; index++) {
             const tempJSON = {
                 name: categoryListArray[index],
@@ -90,7 +87,36 @@ const FilterNationality = () => {
         if (!renderData) {
             setInitialTrigger(1);
         }
-        console.log(renderData);
+        console.log("renderdata = " + renderData);
+        })
+        // for (let index = 0; index < rData.length; index++) {
+        //     if (rData[index].CATEGORY === result.category) {
+        //         const strings = rData[index].NATIONALITY.split(",");
+        //         for (let i = 0; i < strings.length; i++) {
+        //             if (!listChecker.includes(strings[i])) {
+        //                 listChecker += strings[i];
+        //                 categoryListArray.push(strings[i]);
+        //             }
+        //         }
+        //     }
+        // }
+        // var tempArray = [];
+        // for (let index = 0; index < categoryListArray.length; index++) {
+        //     const tempJSON = {
+        //         name: categoryListArray[index],
+        //         id: (index + 1),
+        //         state: false
+        //     }
+        //     tempArray.push(tempJSON);
+        // }
+
+        // setNumOfImages(tempArray.length);
+        // setCategoryList(tempArray);
+        // setRenderData(categoryList);
+        // if (!renderData) {
+        //     setInitialTrigger(1);
+        // }
+        // console.log("renderdata = " + renderData);
     }, [initialTrigger]);
 
     const optionOnClick = (id, name) => {
