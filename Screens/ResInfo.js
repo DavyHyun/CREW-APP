@@ -95,8 +95,6 @@ const ResInfo = () => {
   const location = route.params.location;
   const latitude = route.params.latitude;
   const longitude = route.params.longitude;
-  const type = route.params.type;
-  const typeUpper = type.toUpperCase();
   const price = route.params.price;
   const popular = route.params.popular;
   const recommendation = route.params.recommendation;

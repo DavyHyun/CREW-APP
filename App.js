@@ -32,6 +32,7 @@ import FilterPrice from './Screens/FilterScreens/FilterPrice';
 import { LogBox } from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
 import FilterDisplayRes from './Screens/FilterScreens/FilterDisplayRes';
+import 'react-native-gesture-handler';
 
 
 const Stack = createNativeStackNavigator();

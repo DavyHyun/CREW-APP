@@ -83,17 +83,17 @@ const HomeScreen = () => {
   }
 
   const navigateToQUIZ = () => {
-    const singlePlayerMessage = httpsCallable(functions, 'singlePlayerText');
-    singlePlayerMessage().then((result) => {
-      // JSON.stringify(result);
-      console.log(JSON.stringify(result))
-      for (let i =0; i < result.data.length; i++) {
-        console.log(result.data[i].resName);
-      }
-      const jsonFile = result.data;
-      console.log("RESULT = " + jsonFile);
+    // const singlePlayerMessage = httpsCallable(functions, 'singlePlayerText');
+    // singlePlayerMessage().then((result) => {
+    //   // JSON.stringify(result);
+    //   console.log(JSON.stringify(result))
+    //   for (let i =0; i < result.data.length; i++) {
+    //     console.log(result.data[i].resName);
+    //   }
+    //   const jsonFile = result.data;
+    //   console.log("RESULT = " + jsonFile);
       navigation.navigate("Ready");
-    })
+    // })
 
   }
 

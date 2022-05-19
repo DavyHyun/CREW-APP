@@ -78,7 +78,7 @@ const MultiplayerDisplayRes = () => {
     navigation.navigate("HomeScreen")
   }
   const db = getDatabase();
- 
+
 
 
 
@@ -87,21 +87,23 @@ const MultiplayerDisplayRes = () => {
       console.log("use effect triggered");
       console.log(result);
       setImagesLoaded(0);
-    
+
       renderScreen();
-    
+
     }
   }, [refreshTrigger]);
 
   const renderScreen = async () => {
     const db = getDatabase();
-      for (let index = 0; index < rData.length; index++) {
-        if (rData[index].SPEED === result.Q1 && rData[index].MOOD === result.Q2 && rData[index].DESSERT === result.Q3) {
-          restaurantList.push(rData[index]);
+    for (let index = 0; index < rData.restaurants.length; index++) {
+      if (rData.restaurants[index].SPEED === result.Q1 && rData.restaurants[index].MOOD === result.Q2) {
+        if ((rData.restaurants[index].DESSERT === null && result.Q3 === false) || (rData.restaurants[index].DESSERT !== null && result.Q3 === true)) {
+          restaurantList.push(rData.restaurants[index]);
         }
       }
+    }
 
-    
+
     pickRestaurants();
     setImages();
   };
@@ -113,19 +115,19 @@ const MultiplayerDisplayRes = () => {
     let dayOf = today.getDay();
     for (let index = 0; index < 3; index++) {
       var resIndex = dayOf * 3 + refreshTrigger * 3 + index;
-      while(resIndex >= restaurantList.length) {
+      while (resIndex >= restaurantList.length) {
         resIndex = resIndex - restaurantList.length;
       }
       displayedRestaurants.push(restaurantList[resIndex]);
     }
-    if(displayedRestaurants[0].RESTAURANT == restaurantOne){
-        setImagesLoaded(imagesLoaded + 1);
+    if (displayedRestaurants[0].RESTAURANT == restaurantOne) {
+      setImagesLoaded(imagesLoaded + 1);
     }
-    if(displayedRestaurants[1].RESTAURANT == restaurantTwo){
-        setImagesLoaded(imagesLoaded + 1);
+    if (displayedRestaurants[1].RESTAURANT == restaurantTwo) {
+      setImagesLoaded(imagesLoaded + 1);
     }
-    if(displayedRestaurants[2].RESTAURANT == restaurantThree){
-        setImagesLoaded(imagesLoaded + 1);
+    if (displayedRestaurants[2].RESTAURANT == restaurantThree) {
+      setImagesLoaded(imagesLoaded + 1);
     }
     setRestaurantOne(displayedRestaurants[0].RESTAURANT);
     setRestaurantTwo(displayedRestaurants[1].RESTAURANT);
@@ -163,8 +165,8 @@ const MultiplayerDisplayRes = () => {
 
 
 
-  
-  
+
+
   const refreshScreen = () => {
     setRefreshTrigger(refreshTrigger + 1);
     setImagesLoaded(0);
@@ -211,115 +213,115 @@ const MultiplayerDisplayRes = () => {
   } else {
     return (
       <View style={styles.view}>
-        
-      {imagesLoaded > 2 ? null :
-        <View style={{height: '100%', marginTop: '188%'}}>
-        <LoadingAnimation />
-        </View>
-      }
-      
-      <View style={styles.topBar}>
-        <TouchableOpacity
-          onPress={back}
-        >
-          <Ionicons name="md-chevron-back" size={30} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.pageLabel}>RESTAURANTS</Text>
-      </View>
 
-      <View style={styles.resDisplay}>
-        <View style={styles.eachView1}>
+        {imagesLoaded > 2 ? null :
+          <View style={{ height: '100%', marginTop: '188%' }}>
+            <LoadingAnimation />
+          </View>
+        }
+
+        <View style={styles.topBar}>
           <TouchableOpacity
-            onPress={() => navigateToRestaurant(0)}
-            style={styles.leftButton}
+            onPress={back}
           >
-            <View style={styles.buttonImage}>
-              <Image
-                source={require('../../assets/restaurantFrame.png')}
-                style={styles.pictureFrame}
-              />
-              <Image
-                source={{ uri: imageUrl1 }}
-                style={styles.leftImage}
-                onLoad={() => setImagesLoaded(imagesLoaded + 1)}
-              />
-            </View>
+            <Ionicons name="md-chevron-back" size={30} color="black" />
           </TouchableOpacity>
-         <View style={styles.textView}>
-            <Text style={styles.restaurantLabel1}>{restaurantOne}</Text>
-          </View>
-          
+          <Text style={styles.pageLabel}>RESTAURANTS</Text>
         </View>
 
-        <View style={styles.eachView2}>
-        <View style={styles.textView2}>
-            <Text style={styles.restaurantLabel2}>{restaurantTwo}</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => navigateToRestaurant(1)}
-            style={styles.rightButton}
-          >
-            <View style={styles.buttonImage}>
-              <Image
-                source={require('../../assets/restaurantFrame.png')}
-                style={styles.pictureFrame}
-              />
-              <Image
-                source={{ uri: imageUrl2 }}
-                style={styles.leftImage}
-                onLoad={() => setImagesLoaded(imagesLoaded + 1)}
-              />
+        <View style={styles.resDisplay}>
+          <View style={styles.eachView1}>
+            <TouchableOpacity
+              onPress={() => navigateToRestaurant(0)}
+              style={styles.leftButton}
+            >
+              <View style={styles.buttonImage}>
+                <Image
+                  source={require('../../assets/restaurantFrame.png')}
+                  style={styles.pictureFrame}
+                />
+                <Image
+                  source={{ uri: imageUrl1 }}
+                  style={styles.leftImage}
+                  onLoad={() => setImagesLoaded(imagesLoaded + 1)}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.textView}>
+              <Text style={styles.restaurantLabel1}>{restaurantOne}</Text>
             </View>
 
-
-          </TouchableOpacity>
-        
-        </View>
-
-        <View style={styles.eachView3}>
-          <TouchableOpacity
-            onPress={() => navigateToRestaurant(2)}
-            style={styles.leftButton}
-          >
-            <View style={styles.buttonImage}>
-              <Image
-                source={require('../../assets/restaurantFrame.png')}
-                style={styles.pictureFrame}
-              />
-              <Image
-                source={{ uri: imageUrl3 }}
-                style={styles.leftImage}
-                onLoad={() => setImagesLoaded(imagesLoaded + 1)}
-              />
-            </View>
-
-
-          </TouchableOpacity>
-          <View style={styles.textView}>
-            <Text style={styles.restaurantLabel1}>{restaurantThree}</Text>
           </View>
-        </View>
 
+          <View style={styles.eachView2}>
+            <View style={styles.textView2}>
+              <Text style={styles.restaurantLabel2}>{restaurantTwo}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => navigateToRestaurant(1)}
+              style={styles.rightButton}
+            >
+              <View style={styles.buttonImage}>
+                <Image
+                  source={require('../../assets/restaurantFrame.png')}
+                  style={styles.pictureFrame}
+                />
+                <Image
+                  source={{ uri: imageUrl2 }}
+                  style={styles.leftImage}
+                  onLoad={() => setImagesLoaded(imagesLoaded + 1)}
+                />
+              </View>
+
+
+            </TouchableOpacity>
+
+          </View>
+
+          <View style={styles.eachView3}>
+            <TouchableOpacity
+              onPress={() => navigateToRestaurant(2)}
+              style={styles.leftButton}
+            >
+              <View style={styles.buttonImage}>
+                <Image
+                  source={require('../../assets/restaurantFrame.png')}
+                  style={styles.pictureFrame}
+                />
+                <Image
+                  source={{ uri: imageUrl3 }}
+                  style={styles.leftImage}
+                  onLoad={() => setImagesLoaded(imagesLoaded + 1)}
+                />
+              </View>
+
+
+            </TouchableOpacity>
+            <View style={styles.textView}>
+              <Text style={styles.restaurantLabel1}>{restaurantThree}</Text>
+            </View>
+          </View>
+
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => refreshScreen()}
+            style={styles.button}
+          >
+            <Text style={styles.buttonTextL}>SHOW NEW LIST</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => refreshScreen()}
-          style={styles.button}
-        >
-          <Text style={styles.buttonTextL}>SHOW NEW LIST</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
 
 
       // <View style={styles.background}>
       //   {imagesLoaded > 2 ? null :
       //     <LoadingAnimation />
       //   }
-        
+
       //   <View style={styles.topSpacer}>
       //     {imagesLoaded > 2 ? <Text style={styles.pageLabel}>RESTAURANTS</Text> : null}
-          
+
       //   </View>
 
       //   <TouchableOpacity
@@ -381,7 +383,7 @@ const MultiplayerDisplayRes = () => {
 
       //   </TouchableOpacity>
 
-        
+
 
       //   <TouchableOpacity
       //     onPress={() => refreshScreen()}
@@ -429,7 +431,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '40%',
 
-  },  
+  },
   textView2: {
     justifyContent: 'center',
     marginLeft: '5%',
