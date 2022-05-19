@@ -609,8 +609,6 @@ exports.filterDisplayRes = functions.https.onCall((data, context) => {
 
               }
             }
-          } else {
-            result.push(doc.data());
           }
 
           // check dessert list if it exists
@@ -661,8 +659,6 @@ exports.filterDisplayRes = functions.https.onCall((data, context) => {
 
               }
             }
-          } else {
-            result.push(doc.data());
           }
         }
       })
