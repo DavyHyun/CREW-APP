@@ -157,7 +157,7 @@ exports.navFromDesserts = functions.https.onCall((data, context) => {
       resolve(result);
     })
   })
-})
+});
 
 exports.loadAmbiances = functions.https.onCall((data, context) => {
   return new Promise(function (resolve, reject) {
@@ -219,6 +219,457 @@ exports.loadAmbiances = functions.https.onCall((data, context) => {
       resolve(result);
     })
   })
+});
+
+exports.navFromAmbiances = functions.https.onCall((data, context) => {
+  return new Promise(function (resolve, reject) {
+    var db = admin.firestore();
+    var result = 0;
+    const resRef = db.collection('restaurants');
+    resRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(doc => {
+        if (doc.data().CATEGORY + "" === data.category) {
+
+          // check nationality list if it exists
+          if (data.nationality && data.nationality.length) {
+            // loop through the possible nationalities
+            for (let nationalityIndex = 0; nationalityIndex < data.nationality.length; nationalityIndex++) {
+              // check if nationality from result is in the restaurant's nationality list
+              if (doc.data().NATIONALITY.includes(data.nationality[nationalityIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // if it is, increment res count then move on to next restaurant
+                    result++;
+                    nationalityIndex = data.nationality.length;
+                  }
+                }
+              }
+            }
+          }
+
+          // check dessert list if it exists
+          if (data.dessert && data.dessert.length) {
+            // loop through the possible desserts
+            for (let dessertIndex = 0; dessertIndex < data.dessert.length; dessertIndex++) {
+              // check if dessert from result is in the restaurant's dessert list
+              if (doc.data().DESSERT.includes(data.dessert[dessertIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // if it is, increment res count then move on to next restaurant
+                    result++;
+                    dessertIndex = data.dessert.length;
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      resolve(result);
+    })
+  })
+});
+
+exports.loadDining = functions.https.onCall((data, context) => {
+  return new Promise(function (resolve, reject) {
+    var db = admin.firestore();
+    var result = [];
+    var checker;
+    var listChecker = "";
+    const resRef = db.collection('restaurants');
+    resRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(doc => {
+        if (doc.data().CATEGORY + "" === data.category) {
+
+          // check nationality list if it exists
+          if (data.nationality && data.nationality.length) {
+            // loop through the possible nationalities
+            for (let nationalityIndex = 0; nationalityIndex < data.nationality.length; nationalityIndex++) {
+              // check if nationality from result is in the restaurant's nationality list
+              if (doc.data().NATIONALITY.includes(data.nationality[nationalityIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // if it is, add dining to dining list if it is not already on list
+                    if (!listChecker.includes(doc.data().DINING)) {
+                      listChecker += doc.data().DINING;
+                      result.push({
+                        dining: doc.data().DINING
+                      })
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          // check dessert list if it exists
+          if (data.dessert && data.dessert.length) {
+            // loop through the possible desserts
+            for (let dessertIndex = 0; dessertIndex < data.dessert.length; dessertIndex++) {
+              // check if dessert from result is in the restaurant's dessert list
+              if (doc.data().DESSERT.includes(data.dessert[dessertIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // if it is, add dining to dining list if it is not already on list
+                    if (!listChecker.includes(doc.data().DINING)) {
+                      listChecker += doc.data().DINING;
+                      result.push({
+                        dining: doc.data().DINING
+                      })
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      resolve(result);
+    })
+  })
+});
+
+exports.navFromDining = functions.https.onCall((data, context) => {
+  return new Promise(function (resolve, reject) {
+    var db = admin.firestore();
+    var result = 0;
+    const resRef = db.collection('restaurants');
+    resRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(doc => {
+        if (doc.data().CATEGORY + "" === data.category) {
+
+          // check nationality list if it exists
+          if (data.nationality && data.nationality.length) {
+            // loop through the possible nationalities
+            for (let nationalityIndex = 0; nationalityIndex < data.nationality.length; nationalityIndex++) {
+              // check if nationality from result is in the restaurant's nationality list
+              if (doc.data().NATIONALITY.includes(data.nationality[nationalityIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // loop through possible dining speeds
+                    for (let diningIndex = 0; diningIndex < data.dining.length; diningIndex++) {
+                      // check if dining index from result dining array is in restaurant's dining
+                      if (doc.data().DINING.includes(data.dining[diningIndex])) {
+                        result++;
+                        nationalityIndex = data.nationality.length;
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+
+          // check dessert list if it exists
+          if (data.dessert && data.dessert.length) {
+            // loop through the possible desserts
+            for (let dessertIndex = 0; dessertIndex < data.dessert.length; dessertIndex++) {
+              // check if dessert from result is in the restaurant's dessert list
+              if (doc.data().DESSERT.includes(data.dessert[dessertIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // loop through possible dining speeds
+                    for (let diningIndex = 0; diningIndex < data.dining.length; diningIndex++) {
+                      // check if dining index from result dining array is in restaurant's dining
+                      if (doc.data().DINING.includes(data.dining[diningIndex])) {
+                        result++;
+                        dessertIndex = data.dessert.length;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      resolve(result);
+    })
+  })
+});
+
+exports.loadPrices = functions.https.onCall((data, context) => {
+  return new Promise(function (resolve, reject) {
+    var db = admin.firestore();
+    var result = [];
+    var checker;
+    var listChecker = "";
+    const resRef = db.collection('restaurants');
+    resRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(doc => {
+        if (doc.data().CATEGORY + "" === data.category) {
+          // check nationality list if it exists
+          if (data.nationality && data.nationality.length) {
+            // loop through the possible nationalities
+            for (let nationalityIndex = 0; nationalityIndex < data.nationality.length; nationalityIndex++) {
+              // check if nationality from result is in the restaurant's nationality list
+              if (doc.data().NATIONALITY.includes(data.nationality[nationalityIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // loop through possible dining speeds
+                    for (let diningIndex = 0; diningIndex < data.dining.length; diningIndex++) {
+                      // check if dining index from result dining array is in restaurant's dining
+                      if (doc.data().DINING.includes(data.dining[diningIndex])) {
+                        // add price to price category if not already added
+                        if (!listChecker.includes(doc.data().PRICE)) {
+                          listChecker += doc.data().PRICE;
+                          result.push({
+                            price: doc.data().PRICE
+                          })
+                        }
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+
+          // check dessert list if it exists
+          if (data.dessert && data.dessert.length) {
+            // loop through the possible desserts
+            for (let dessertIndex = 0; dessertIndex < data.dessert.length; dessertIndex++) {
+              // check if dessert from result is in the restaurant's dessert list
+              if (doc.data().DESSERT.includes(data.dessert[dessertIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // loop through possible dining speeds
+                    for (let diningIndex = 0; diningIndex < data.dining.length; diningIndex++) {
+                      // check if dining index from result dining array is in restaurant's dining
+                      if (doc.data().DINING.includes(data.dining[diningIndex])) {
+                        // add price to price category if not already added
+                        if (!listChecker.includes(doc.data().PRICE)) {
+                          listChecker += doc.data().PRICE;
+                          result.push({
+                            price: doc.data().PRICE
+                          })
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      resolve(result);
+    })
+  })
+});
+
+exports.navFromPrices = functions.https.onCall((data, context) => {
+  return new Promise(function (resolve, reject) {
+    var db = admin.firestore();
+    var result = 0;
+    const resRef = db.collection('restaurants');
+    resRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(doc => {
+        if (doc.data().CATEGORY + "" === data.category) {
+
+          // check nationality list if it exists
+          if (data.nationality && data.nationality.length) {
+            // loop through the possible nationalities
+            for (let nationalityIndex = 0; nationalityIndex < data.nationality.length; nationalityIndex++) {
+              // check if nationality from result is in the restaurant's nationality list
+              if (doc.data().NATIONALITY.includes(data.nationality[nationalityIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // loop through possible dining speeds
+                    for (let diningIndex = 0; diningIndex < data.dining.length; diningIndex++) {
+                      // check if dining index from result dining array is in restaurant's dining
+                      if (doc.data().DINING.includes(data.dining[diningIndex])) {
+                        // loop through possible prices
+                        for (let priceIndex = 0; priceIndex < data.price.length; priceIndex++) {
+                          // check if price from result price array is in restaurant's price
+                          if (doc.data().PRICE.includes(data.price[priceIndex])) {
+                            result++;
+                            nationalityIndex = data.nationality.length;
+                          }
+                        }
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+
+          // check dessert list if it exists
+          if (data.dessert && data.dessert.length) {
+            // loop through the possible desserts
+            for (let dessertIndex = 0; dessertIndex < data.dessert.length; dessertIndex++) {
+              // check if dessert from result is in the restaurant's dessert list
+              if (doc.data().DESSERT.includes(data.dessert[dessertIndex])) {
+                // loop through the possibel ambiances
+                for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                  // check if ambiance from result ambiance array is in restaurant's ambaince list
+                  if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                    // loop through possible dining speeds
+                    for (let diningIndex = 0; diningIndex < data.dining.length; diningIndex++) {
+                      // check if dining index from result dining array is in restaurant's dining
+                      if (doc.data().DINING.includes(data.dining[diningIndex])) {
+                        // loop through possible prices
+                        for (let priceIndex = 0; priceIndex < data.price.length; priceIndex++) {
+                          // check if price from result price array is in restaurant's price
+                          if (doc.data().PRICE.includes(data.price[priceIndex])) {
+                            result++;
+                            dessertIndex = data.dessert.length;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      resolve(result);
+    })
+  })
+});
+
+exports.filterDisplayRes = functions.https.onCall((data, context) => {
+  return new Promise(function (resolve, reject) {
+    var db = admin.firestore();
+    var result = [];
+    const resRef = db.collection('restaurants');
+    resRef.get().then((querySnapshot) => {
+      querySnapshot.forEach(doc => {
+        if (doc.data().CATEGORY + "" === data.category) {
+
+          // check nationality list if it exists
+          if (data.nationality && data.nationality.length) {
+            // loop through the possible nationalities
+            for (let nationalityIndex = 0; nationalityIndex < data.nationality.length; nationalityIndex++) {
+              // check if nationality from result is in the restaurant's nationality list
+              if (doc.data().NATIONALITY.includes(data.nationality[nationalityIndex])) {
+                //check if ambiance list exists
+                if (data.ambiance && data.ambiance.length) {
+                  // loop through the possibel ambiances
+                  for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                    // check if ambiance from result ambiance array is in restaurant's ambaince list
+                    if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                      // check if dining list exists
+                      if (data.dining && data.dining.length) {
+                        // loop through possible dining speeds
+                        for (let diningIndex = 0; diningIndex < data.dining.length; diningIndex++) {
+                          // check if dining index from result dining array is in restaurant's dining
+                          if (doc.data().DINING.includes(data.dining[diningIndex])) {
+                            // check if prices list exists
+                            if (data.price && data.price.length) {
+                              // loop through possible prices
+                              for (let priceIndex = 0; priceIndex < data.price.length; priceIndex++) {
+                                // check if price from result price array is in restaurant's price
+                                if (doc.data().PRICE.includes(data.price[priceIndex])) {
+                                  result.push(doc.data());
+                                  nationalityIndex = data.nationality.length;
+                                }
+                              }
+                            } else {
+                              result.push(doc.data());
+                              nationalityIndex = data.nationalityIndex;
+                            }
+
+                          }
+                        }
+                      } else {
+                        result.push(doc.data());
+                        nationalityIndex = data.nationality.length;
+                      }
+                    }
+                  }
+                } else {
+                  result.push(doc.data());
+                  nationalityIndex = data.nationality.length;
+                }
+
+              }
+            }
+          } else {
+            result.push(doc.data());
+          }
+
+          // check dessert list if it exists
+          if (data.dessert && data.dessert.length) {
+            // loop through the possible desserts
+            for (let dessertIndex = 0; dessertIndex < data.dessert.length; dessertIndex++) {
+              // check if dessert from result is in the restaurant's dessert list
+              if (doc.data().DESSERT.includes(data.dessert[dessertIndex])) {
+                //check if ambiance list exists
+                if (data.ambiance && data.ambiance.length) {
+                  // loop through the possibel ambiances
+                  for (let ambianceIndex = 0; ambianceIndex < data.ambiance.length; ambianceIndex++) {
+                    // check if ambiance from result ambiance array is in restaurant's ambaince list
+                    if (doc.data().AMBIANCE.includes(data.ambiance[ambianceIndex])) {
+                      // check if dining list exists
+                      if (data.dining && data.dining.length) {
+                        // loop through possible dining speeds
+                        for (let diningIndex = 0; diningIndex < data.dining.length; diningIndex++) {
+                          // check if dining index from result dining array is in restaurant's dining
+                          if (doc.data().DINING.includes(data.dining[diningIndex])) {
+                            // check if prices list exists
+                            if (data.price && data.price.length) {
+                              // loop through possible prices
+                              for (let priceIndex = 0; priceIndex < data.price.length; priceIndex++) {
+                                // check if price from result price array is in restaurant's price
+                                if (doc.data().PRICE.includes(data.price[priceIndex])) {
+                                  result.push(doc.data());
+                                  dessertIndex = data.dessert.length;
+                                }
+                              }
+                            } else {
+                              result.push(doc.data());
+                              dessertIndex = data.dessert.length;
+                            }
+
+                          }
+                        }
+                      } else {
+                        result.push(doc.data());
+                        dessertIndex = data.dessert.length;
+                      }
+                    }
+                  }
+                } else {
+                  result.push(doc.data());
+                  dessertIndex = data.dessert.length;
+                }
+
+              }
+            }
+          } else {
+            result.push(doc.data());
+          }
+        }
+      })
+      resolve(result);
+    })
+  })
 })
+
 admin.initializeApp();
 

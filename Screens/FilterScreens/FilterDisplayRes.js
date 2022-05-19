@@ -28,6 +28,8 @@ import {
 import { async } from '@firebase/util';
 import { render } from 'react-dom';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from "firebase/functions";
+
 
 
 
@@ -73,9 +75,12 @@ const FilterDisplayRes = () => {
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const result = route.params;
     const [imagesLoaded, setImagesLoaded] = useState(3);
+    const functions = getFunctions();
+    connectFunctionsEmulator(functions, "localhost", 5001);
     const back = () => {
         navigation.navigate("HomeScreen")
     }
+
 
 
 
@@ -94,76 +99,13 @@ const FilterDisplayRes = () => {
         let today = new Date();
         let dayOf = today.getDay();
 
-        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            // check category
-            if (rData[rDataIndex].CATEGORY === result.category) {
+        const filterDisplayRes = httpsCallable(functions, 'filterDisplayRes');
+        filterDisplayRes(result).then((result) => {
+            restaurantList = result;
+            pickRestaurants();
+            setImages();
+        })
 
-                // check nationality list if it exists
-                if (result.nationality && result.nationality.length) {
-                    // loop through the possible nationalities
-                    for (let nationalityIndex = 0; nationalityIndex < result.nationality.length; nationalityIndex++) {
-                        // check if nationality from result is in the restaurant's nationality list
-                        if (rData[rDataIndex].NATIONALITY.includes(result.nationality[nationalityIndex])) {
-                            // loop through the possibel ambiances
-                            for (let ambianceIndex = 0; ambianceIndex < result.ambiance.length; ambianceIndex++) {
-                                // check if ambiance from result ambiance array is in restaurant's ambaince list
-                                if (rData[rDataIndex].AMBIANCE.includes(result.ambiance[ambianceIndex])) {
-                                    // loop through possible dining speeds
-                                    for(let diningIndex = 0; diningIndex < result.dining.length; diningIndex++) {
-                                        // check if dining index from result dining array is in restaurant's dining
-                                        if(rData[rDataIndex].DINING.includes(result.dining[diningIndex])) {
-                                            // loop through possible prices
-                                            for(let priceIndex = 0; priceIndex < result.price.length; priceIndex++) {
-                                                // check if price from result price array is in restaurant's price
-                                                if(rData[rDataIndex].PRICE.includes(result.price[priceIndex])) {
-                                                    restaurantList.push(rData[rDataIndex]);
-                                                    nationalityIndex = result.nationality.length;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // check dessert list if it exists
-                if (result.dessert && result.dessert.length) {
-                    // loop through the possible desserts
-                    for (let dessertIndex = 0; dessertIndex < result.dessert.length; dessertIndex++) {
-                        // check if dessert from result is in the restaurant's dessert list
-                        if (rData[rDataIndex].DESSERT.includes(result.dessert[dessertIndex])) {
-                            // loop through the possibel ambiances
-                            for (let ambianceIndex = 0; ambianceIndex < result.ambiance.length; ambianceIndex++) {
-                                // check if ambiance from result ambiance array is in restaurant's ambaince list
-                                if (rData[rDataIndex].AMBIANCE.includes(result.ambiance[ambianceIndex])) {
-                                    // loop through possible dining speeds
-                                    for(let diningIndex = 0; diningIndex < result.dining.length; diningIndex++) {
-                                        // check if dining index from result dining array is in restaurant's dining
-                                        if(rData[rDataIndex].DINING.includes(result.dining[diningIndex])) {
-                                            // loop through possible prices
-                                            for(let priceIndex = 0; priceIndex < result.price.length; priceIndex++) {
-                                                // check if price from result price array is in restaurant's price
-                                                if(rData[rDataIndex].PRICE.includes(result.price[priceIndex])) {
-                                                    restaurantList.push(rData[rDataIndex]);
-                                                    dessertIndex = result.dessert.length;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-        pickRestaurants();
-        setImages();
     };
 
     const pickRestaurants = () => {

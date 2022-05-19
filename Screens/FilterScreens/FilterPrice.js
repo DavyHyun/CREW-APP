@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import rData from '../../json/thankYouGrace.json';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from "firebase/functions";
 import {
     useFonts,
     Nunito_200ExtraLight,
@@ -58,92 +59,35 @@ const FilterPrice = () => {
     const [initialTrigger, setInitialTrigger] = useState(0);
     const [imagesLoaded, setImagesLoaded] = useState();
     const [numOfImages, setNumOfImages] = useState(100);
+    const functions = getFunctions();
+    connectFunctionsEmulator(functions, "localhost", 5001);
 
     useEffect(() => {
-        var listChecker = "";
         setImagesLoaded(0);
 
-        // fill category array
-        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            // check category
-            if (rData[rDataIndex].CATEGORY === result.category) {
-                // check nationality list if it exists
-                if (result.nationality && result.nationality.length) {
-                    // loop through the possible nationalities
-                    for (let nationalityIndex = 0; nationalityIndex < result.nationality.length; nationalityIndex++) {
-                        // check if nationality from result is in the restaurant's nationality list
-                        if (rData[rDataIndex].NATIONALITY.includes(result.nationality[nationalityIndex])) {
-                            // loop through the possibel ambiances
-                            for (let ambianceIndex = 0; ambianceIndex < result.ambiance.length; ambianceIndex++) {
-                                // check if ambiance from result ambiance array is in restaurant's ambaince list
-                                if (rData[rDataIndex].AMBIANCE.includes(result.ambiance[ambianceIndex])) {
-                                    // loop through possible dining speeds
-                                    for (let diningIndex = 0; diningIndex < result.dining.length; diningIndex++) {
-                                        // check if dining index from result dining array is in restaurant's dining
-                                        if (rData[rDataIndex].DINING.includes(result.dining[diningIndex])) {
-                                            // add price to price category if not already added
-                                            if (!listChecker.includes(rData[rDataIndex].PRICE)) {
-                                                listChecker += rData[rDataIndex].PRICE;
-                                                categoryListArray.push(rData[rDataIndex].PRICE);
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // check dessert list if it exists
-                if (result.dessert && result.dessert.length) {
-                    // loop through the possible desserts
-                    for (let dessertIndex = 0; dessertIndex < result.dessert.length; dessertIndex++) {
-                        // check if dessert from result is in the restaurant's dessert list
-                        if (rData[rDataIndex].DESSERT.includes(result.dessert[dessertIndex])) {
-                            // loop through the possibel ambiances
-                            for (let ambianceIndex = 0; ambianceIndex < result.ambiance.length; ambianceIndex++) {
-                                // check if ambiance from result ambiance array is in restaurant's ambaince list
-                                if (rData[rDataIndex].AMBIANCE.includes(result.ambiance[ambianceIndex])) {
-                                    // loop through possible dining speeds
-                                    for (let diningIndex = 0; diningIndex < result.dining.length; diningIndex++) {
-                                        // check if dining index from result dining array is in restaurant's dining
-                                        if (rData[rDataIndex].DINING.includes(result.dining[diningIndex])) {
-                                            // add price to price category if not already added
-                                            if (!listChecker.includes(rData[rDataIndex].PRICE)) {
-                                                listChecker += rData[rDataIndex].PRICE;
-                                                categoryListArray.push(rData[rDataIndex].PRICE);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        const loadPrices = httpsCallable(functions, 'loadPrices');
+        loadPrices(result).then((result) => {
+            for(let i = 0; i < result.data.length; i++) {
+                categoryListArray.push(result.data[i].price);
             }
-        }
-
-
-
-        // can copy rest of useEffect
-        var tempArray = [];
-        for (let index = 0; index < categoryListArray.length; index++) {
-            const tempJSON = {
-                name: categoryListArray[index],
-                id: (index + 1),
-                state: false
+            var tempArray = [];
+            for (let index = 0; index < categoryListArray.length; index++) {
+                const tempJSON = {
+                    name: categoryListArray[index],
+                    id: (index + 1),
+                    state: false
+                }
+                tempArray.push(tempJSON);
             }
-            tempArray.push(tempJSON);
-        }
 
-        setNumOfImages(tempArray.length);
-        setCategoryList(tempArray);
-        setRenderData(categoryList);
-        if (!renderData) {
-            setInitialTrigger(1);
-        }
-        console.log(renderData);
+            setNumOfImages(tempArray.length);
+            setCategoryList(tempArray);
+            setRenderData(categoryList);
+            if (!renderData) {
+                setInitialTrigger(1);
+            }
+            console.log(renderData);
+        })
     }, [initialTrigger]);
 
     // can copy
@@ -218,82 +162,21 @@ const FilterPrice = () => {
     // edit this method
     const navToNextFilter = (endResult, fromShowMyList) => {
         var resCount = 0;
-        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            // check category
-            if (rData[rDataIndex].CATEGORY === endResult.category) {
 
-                // check nationality list if it exists
-                if (endResult.nationality && endResult.nationality.length) {
-                    // loop through the possible nationalities
-                    for (let nationalityIndex = 0; nationalityIndex < endResult.nationality.length; nationalityIndex++) {
-                        // check if nationality from result is in the restaurant's nationality list
-                        if (rData[rDataIndex].NATIONALITY.includes(endResult.nationality[nationalityIndex])) {
-                            // loop through the possibel ambiances
-                            for (let ambianceIndex = 0; ambianceIndex < endResult.ambiance.length; ambianceIndex++) {
-                                // check if ambiance from result ambiance array is in restaurant's ambaince list
-                                if (rData[rDataIndex].AMBIANCE.includes(endResult.ambiance[ambianceIndex])) {
-                                    // loop through possible dining speeds
-                                    for(let diningIndex = 0; diningIndex < endResult.dining.length; diningIndex++) {
-                                        // check if dining index from result dining array is in restaurant's dining
-                                        if(rData[rDataIndex].DINING.includes(endResult.dining[diningIndex])) {
-                                            // loop through possible prices
-                                            for(let priceIndex = 0; priceIndex < endResult.price.length; priceIndex++) {
-                                                // check if price from result price array is in restaurant's price
-                                                if(rData[rDataIndex].PRICE.includes(endResult.price[priceIndex])) {
-                                                    resCount++;
-                                                    nationalityIndex = endResult.nationality.length;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // check dessert list if it exists
-                if (endResult.dessert && endResult.dessert.length) {
-                    // loop through the possible desserts
-                    for (let dessertIndex = 0; dessertIndex < endResult.dessert.length; dessertIndex++) {
-                        // check if dessert from result is in the restaurant's dessert list
-                        if (rData[rDataIndex].DESSERT.includes(endResult.dessert[dessertIndex])) {
-                            // loop through the possibel ambiances
-                            for (let ambianceIndex = 0; ambianceIndex < endResult.ambiance.length; ambianceIndex++) {
-                                // check if ambiance from result ambiance array is in restaurant's ambaince list
-                                if (rData[rDataIndex].AMBIANCE.includes(endResult.ambiance[ambianceIndex])) {
-                                    // loop through possible dining speeds
-                                    for(let diningIndex = 0; diningIndex < endResult.dining.length; diningIndex++) {
-                                        // check if dining index from result dining array is in restaurant's dining
-                                        if(rData[rDataIndex].DINING.includes(endResult.dining[diningIndex])) {
-                                            // loop through possible prices
-                                            for(let priceIndex = 0; priceIndex < endResult.price.length; priceIndex++) {
-                                                // check if price from result price array is in restaurant's price
-                                                if(rData[rDataIndex].PRICE.includes(endResult.price[priceIndex])) {
-                                                    resCount++;
-                                                    dessertIndex = endResult.dessert.length;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        const navFromPrices = httpsCallable(functions, 'navFromPrices');
+         navFromPrices(endResult).then((result) => {
+            resCount = result;
+            if (resCount !== 0) {
+                endResult.resCount = resCount;
             }
-        }
-        if (resCount !== 0) {
-            endResult.resCount = resCount;
-        }
-        if (fromShowMyList) {
-            navigation.navigate("FilterDisplayRes", endResult);
-        } else if (resCount <= 3) {
-            navigation.navigate("FilterDisplayRes", endResult);
-        } else {
-            navigation.navigate("FilterDisplayRes", endResult);
-        }
+            if (fromShowMyList) {
+                navigation.navigate("FilterDisplayRes", endResult);
+            } else if (resCount <= 3) {
+                navigation.navigate("FilterDisplayRes", endResult);
+            } else {
+                navigation.navigate("FilterDisplayRes", endResult);
+            }
+        })
 
     }
 

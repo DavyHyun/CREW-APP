@@ -88,9 +88,6 @@ const FilterAmbiance = () => {
             console.log(renderData);
         })
 
-        // can copy rest of useEffect
-
-
     }, [initialTrigger]);
 
     // can copy
@@ -164,64 +161,21 @@ const FilterAmbiance = () => {
     // edit this method
     const navToNextFilter = (endResult, fromShowMyList) => {
         var resCount = 0;
-        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            // check category
-            if (rData[rDataIndex].CATEGORY === endResult.category) {
 
-                // check nationality list if it exists
-                if (endResult.nationality && endResult.nationality.length) {
-                    // loop through the possible nationalities
-                    for (let nationalityIndex = 0; nationalityIndex < endResult.nationality.length; nationalityIndex++) {
-                        // check if nationality from result is in the restaurant's nationality list
-                        if (rData[rDataIndex].NATIONALITY.includes(endResult.nationality[nationalityIndex])) {
-                            console.log(endResult.nationality[nationalityIndex])
-                            console.log(endResult.ambiance.length);
-                            // loop through the possibel ambiances
-                            for (let ambianceIndex = 0; ambianceIndex < endResult.ambiance.length; ambianceIndex++) {
-                                console.log(ambianceIndex);
-                                console.log(rData[rDataIndex].AMBIANCE);
-                                console.log(endResult.ambiance[ambianceIndex]);
-                                // check if ambiance from result ambiance array is in restaurant's ambaince list
-                                if (rData[rDataIndex].AMBIANCE.includes(endResult.ambiance[ambianceIndex])) {
-                                    // if it is, increment res count then move on to next restaurant
-                                    resCount++;
-                                    nationalityIndex = endResult.nationality.length;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // check dessert list if it exists
-                if (endResult.dessert && endResult.dessert.length) {
-                    // loop through the possible desserts
-                    for (let dessertIndex = 0; dessertIndex < endResult.dessert.length; dessertIndex++) {
-                        // check if dessert from result is in the restaurant's dessert list
-                        if (rData[rDataIndex].DESSERT.includes(endResult.dessert[dessertIndex])) {
-                            // loop through the possibel ambiances
-                            for (let ambianceIndex = 0; ambianceIndex < endResult.ambiance.length; ambianceIndex++) {
-                                // check if ambiance from result ambiance array is in restaurant's ambaince list
-                                if (rData[rDataIndex].AMBIANCE.includes(endResult.ambiance[ambianceIndex])) {
-                                    // if it is, increment res count then move on to next restaurant
-                                    resCount++;
-                                    dessertIndex = endResult.dessert.length;
-                                }
-                            }
-                        }
-                    }
-                }
+        const navFromAmbiances = httpsCallable(functions, 'navFromAmbiances');
+        navFromAmbiances(endResult).then((result) => {
+            resCount = result;
+            if (resCount !== 0) {
+                endResult.resCount = resCount;
             }
-        }
-        if (resCount !== 0) {
-            endResult.resCount = resCount;
-        }
-        if (fromShowMyList) {
-            navigation.navigate("FilterDisplayRes", endResult);
-        } else if (resCount <= 3) {
-            navigation.navigate("FilterDisplayRes", endResult);
-        } else {
-            navigation.navigate("FilterDining", endResult);
-        }
+            if (fromShowMyList) {
+                navigation.navigate("FilterDisplayRes", endResult);
+            } else if (resCount <= 3) {
+                navigation.navigate("FilterDisplayRes", endResult);
+            } else {
+                navigation.navigate("FilterDining", endResult);
+            }
+        })
 
     }
 
