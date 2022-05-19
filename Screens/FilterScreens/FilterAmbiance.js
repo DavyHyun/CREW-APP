@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import rData from '../../json/thankYouGrace.json';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from "firebase/functions";
 import {
     useFonts,
     Nunito_200ExtraLight,
@@ -58,76 +59,37 @@ const FilterAmbiance = () => {
     const [initialTrigger, setInitialTrigger] = useState(0);
     const [imagesLoaded, setImagesLoaded] = useState();
     const [numOfImages, setNumOfImages] = useState(100);
+    const functions = getFunctions();
+    connectFunctionsEmulator(functions, "localhost", 5001);
 
     useEffect(() => {
-        var listChecker = "";
         setImagesLoaded(0);
-
-        // fill category list array
-        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            // check category
-            if (rData[rDataIndex].CATEGORY === result.category) {
-
-                // check nationality list if it exists
-                if (result.nationality && result.nationality.length) {
-                    // loop through the possible nationalities
-                    for (let nationalityIndex = 0; nationalityIndex < result.nationality.length; nationalityIndex++) {
-                        // check if nationality from result is in the restaurant's nationality list
-                        if (rData[rDataIndex].NATIONALITY.includes(result.nationality[nationalityIndex])) {
-                            // get array of the ambiances of this restaurant
-                            const ambianceArray = rData[rDataIndex].AMBIANCE.split(",");
-                            // go through ambiance array
-                            for (let ambianceIndex = 0; ambianceIndex < ambianceArray.length; ambianceIndex++) {
-                                // add ambiance to ambiance category list if it is not already in the list
-                                if (!listChecker.includes(ambianceArray[ambianceIndex])) {
-                                    listChecker += ambianceArray[ambianceIndex];
-                                    categoryListArray.push(ambianceArray[ambianceIndex]);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // check dessert list if it exists
-                if (result.dessert && result.dessert.length) {
-                    // loop through the possible desserts
-                    for (let dessertIndex = 0; dessertIndex < result.dessert.length; dessertIndex++) {
-                        // check if dessert from result is in the restaurant's dessert list
-                        if (rData[rDataIndex].DESSERT.includes(result.dessert[dessertIndex])) {
-                            // get array of the ambiances of this restaurant
-                            const ambianceArray = rData[rDataIndex].AMBIANCE.split(",");
-                            // go through ambiance array
-                            for (let ambianceIndex = 0; ambianceIndex < ambianceArray.length; ambianceIndex++) {
-                                // add ambiance to ambiance category list if it is not already in the list
-                                if (!listChecker.includes(ambianceArray[ambianceIndex])) {
-                                    listChecker += ambianceArray[ambianceIndex];
-                                    categoryListArray.push(ambianceArray[ambianceIndex]);
-                                }
-                            }
-                        }
-                    }
-                }
+        const loadAmbiances = httpsCallable(functions, 'loadAmbiances');
+        loadAmbiances(result).then((result) => {
+            for(let i = 0; i < result.data.length; i++) {
+                categoryListArray.push(result.data[i].ambiance);
             }
-        }
+            var tempArray = [];
+            for (let index = 0; index < categoryListArray.length; index++) {
+                const tempJSON = {
+                    name: categoryListArray[index],
+                    id: (index + 1),
+                    state: false
+                }
+                tempArray.push(tempJSON);
+            }
+
+            setNumOfImages(tempArray.length);
+            setCategoryList(tempArray);
+            setRenderData(categoryList);
+            if (!renderData) {
+                setInitialTrigger(1);
+            }
+            console.log(renderData);
+        })
 
         // can copy rest of useEffect
-        var tempArray = [];
-        for (let index = 0; index < categoryListArray.length; index++) {
-            const tempJSON = {
-                name: categoryListArray[index],
-                id: (index + 1),
-                state: false
-            }
-            tempArray.push(tempJSON);
-        }
 
-        setNumOfImages(tempArray.length);
-        setCategoryList(tempArray);
-        setRenderData(categoryList);
-        if (!renderData) {
-            setInitialTrigger(1);
-        }
-        console.log(renderData);
 
     }, [initialTrigger]);
 
@@ -280,7 +242,7 @@ const FilterAmbiance = () => {
                 <Text style={{ fontSize: 11, fontFamily: 'Nunito_400Regular' }}>help us narrow down what you want!</Text>
             </View>
             <SafeAreaView style={styles.container}>
-                
+
                 <FlatList
                     data={renderData}
                     keyExtractor={(item) => item.id}
@@ -343,7 +305,7 @@ const FilterAmbiance = () => {
                         </TouchableOpacity>
                     )}
                 />
-                
+
             </SafeAreaView>
             <View style={styles.buttonView1}>
                 <TouchableOpacity

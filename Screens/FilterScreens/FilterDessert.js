@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import rData from '../../json/thankYouGrace.json';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from "firebase/functions";
 import {
     useFonts,
     Nunito_200ExtraLight,
@@ -58,38 +59,65 @@ const FilterDessert = () => {
     const [initialTrigger, setInitialTrigger] = useState(0);
     const [imagesLoaded, setImagesLoaded] = useState();
     const [numOfImages, setNumOfImages] = useState(100);
+    const functions = getFunctions();
+    connectFunctionsEmulator(functions, "localhost", 5001);
 
     useEffect(() => {
-        var listChecker = "";
         setImagesLoaded(0);
-        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            if (rData[rDataIndex].CATEGORY === result.category) {
-                const strings = rData[rDataIndex].DESSERT.split(",");
-                for (let i = 0; i < strings.length; i++) {
-                    if (!listChecker.includes(strings[i])) {
-                        listChecker += strings[i];
-                        categoryListArray.push(strings[i]);
-                    }
+        const loadDesserts = httpsCallable(functions, 'loadDesserts');
+        loadDesserts(result).then((result) => {
+            for (let i = 0; i < result.data.length; i++) {
+                categoryListArray.push(result.data[i].dessert);
+            }
+            console.log(categoryListArray);
+            var tempArray = [];
+            for (let index = 0; index < categoryListArray.length; index++) {
+                const tempJSON = {
+                    name: categoryListArray[index],
+                    id: (index + 1),
+                    state: false
                 }
+                tempArray.push(tempJSON);
             }
-        }
-        var tempArray = [];
-        for (let index = 0; index < categoryListArray.length; index++) {
-            const tempJSON = {
-                name: categoryListArray[index],
-                id: (index + 1),
-                state: false
+
+            setNumOfImages(tempArray.length);
+            setCategoryList(tempArray);
+            setRenderData(categoryList);
+            if (!renderData) {
+                setInitialTrigger(1);
             }
-            tempArray.push(tempJSON);
-        }
-        console.log(tempArray);
-        setNumOfImages(tempArray.length);
-        setCategoryList(tempArray);
-        setRenderData(categoryList);
-        if (!renderData) {
-            setInitialTrigger(1);
-        }
-        console.log(renderData);
+            console.log("renderdata = " + renderData);
+        })
+
+
+        // for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
+        //     if (rData[rDataIndex].CATEGORY === result.category) {
+        //         const strings = rData[rDataIndex].DESSERT.split(",");
+        //         for (let i = 0; i < strings.length; i++) {
+        //             if (!listChecker.includes(strings[i])) {
+        //                 listChecker += strings[i];
+        //                 categoryListArray.push(strings[i]);
+        //             }
+        //         }
+        //     }
+        // }
+        // var tempArray = [];
+        // for (let index = 0; index < categoryListArray.length; index++) {
+        //     const tempJSON = {
+        //         name: categoryListArray[index],
+        //         id: (index + 1),
+        //         state: false
+        //     }
+        //     tempArray.push(tempJSON);
+        // }
+        // console.log(tempArray);
+        // setNumOfImages(tempArray.length);
+        // setCategoryList(tempArray);
+        // setRenderData(categoryList);
+        // if (!renderData) {
+        //     setInitialTrigger(1);
+        // }
+        // console.log(renderData);
     }, [initialTrigger]);
 
     const optionOnClick = (id, name) => {
@@ -157,26 +185,43 @@ const FilterDessert = () => {
 
     const navToNextFilter = (endResult, fromShowMyList) => {
         var resCount = 0;
-        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            if (endResult.category === rData[rDataIndex].CATEGORY) {
-                for (let dessertArrayIndex = 0; dessertArrayIndex < endResult.dessert.length; dessertArrayIndex++) {
-                    if (rData[rDataIndex].DESSERT.includes(endResult.dessert[dessertArrayIndex])) {
-                        resCount++;
-                        break;
-                    }
-                }
+
+        const navFromDesserts = httpsCallable(functions, 'navFromDesserts');
+        navFromDesserts(endResult).then((result) => {
+            resCount = result;
+            if (resCount !== 0) {
+                endResult.resCount = resCount;
             }
-        }
-        if (resCount !== 0) {
-            endResult.resCount = resCount;
-        }
-        if (fromShowMyList) {
-            navigation.navigate("FilterDisplayRes", endResult);
-        } else if (resCount <= 3) {
-            navigation.navigate("FilterDisplayRes", endResult);
-        } else {
-            navigation.navigate("FilterAmbiance", endResult);
-        }
+            if (fromShowMyList) {
+                navigation.navigate("FilterDisplayRes", endResult);
+            } else if (resCount <= 3) {
+                navigation.navigate("FilterDisplayRes", endResult);
+            } else {
+                navigation.navigate("FilterAmbiance", endResult);
+            }
+        })
+
+
+        // for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
+        //     if (endResult.category === rData[rDataIndex].CATEGORY) {
+        //         for (let dessertArrayIndex = 0; dessertArrayIndex < endResult.dessert.length; dessertArrayIndex++) {
+        //             if (rData[rDataIndex].DESSERT.includes(endResult.dessert[dessertArrayIndex])) {
+        //                 resCount++;
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
+        // if (resCount !== 0) {
+        //     endResult.resCount = resCount;
+        // }
+        // if (fromShowMyList) {
+        //     navigation.navigate("FilterDisplayRes", endResult);
+        // } else if (resCount <= 3) {
+        //     navigation.navigate("FilterDisplayRes", endResult);
+        // } else {
+        //     navigation.navigate("FilterAmbiance", endResult);
+        // }
     }
 
 

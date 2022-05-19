@@ -72,22 +72,22 @@ const FilterNationality = () => {
             }
             console.log(categoryListArray);
             var tempArray = [];
-        for (let index = 0; index < categoryListArray.length; index++) {
-            const tempJSON = {
-                name: categoryListArray[index],
-                id: (index + 1),
-                state: false
+            for (let index = 0; index < categoryListArray.length; index++) {
+                const tempJSON = {
+                    name: categoryListArray[index],
+                    id: (index + 1),
+                    state: false
+                }
+                tempArray.push(tempJSON);
             }
-            tempArray.push(tempJSON);
-        }
 
-        setNumOfImages(tempArray.length);
-        setCategoryList(tempArray);
-        setRenderData(categoryList);
-        if (!renderData) {
-            setInitialTrigger(1);
-        }
-        console.log("renderdata = " + renderData);
+            setNumOfImages(tempArray.length);
+            setCategoryList(tempArray);
+            setRenderData(categoryList);
+            if (!renderData) {
+                setInitialTrigger(1);
+            }
+            console.log("renderdata = " + renderData);
         })
         // for (let index = 0; index < rData.length; index++) {
         //     if (rData[index].CATEGORY === result.category) {
@@ -164,44 +164,51 @@ const FilterNationality = () => {
             return;
         }
         let endResult = {
-            category: result.category,
+            category: resultt.category,
             nationality: nationalityArray,
-            dessert: result.dessert,
-            ambiance: result.ambiance,
-            dining: result.dining,
-            price: result.price,
-            resCount: result.resCount
+            dessert: resultt.dessert,
+            ambiance: resultt.ambiance,
+            dining: resultt.dining,
+            price: resultt.price,
+            resCount: resultt.resCount
         }
         if (fromNext) {
             navToNextFilter(endResult, false);
         } else {
             navToNextFilter(endResult, true);
-            
+
         }
     }
 
     const navToNextFilter = (endResult, fromShowMyList) => {
         var resCount = 0;
-        for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
-            if (endResult.category === rData[rDataIndex].CATEGORY) {
-                for (let nationalityArrayIndex = 0; nationalityArrayIndex < endResult.nationality.length; nationalityArrayIndex++) {
-                    if (rData[rDataIndex].NATIONALITY.includes(endResult.nationality[nationalityArrayIndex])) {
-                        resCount++;
-                        break;
-                    }
-                }
+
+        const navFromNationalities = httpsCallable(functions, 'navFromNationalities');
+        navFromNationalities(endResult).then((result) => {
+            resCount = result;
+            if (resCount !== 0) {
+                endResult.resCount = resCount;
             }
-        }
-        if(resCount !== 0) {
-            endResult.resCount = resCount;
-        }
-        if (fromShowMyList) {
-            navigation.navigate("FilterDisplayRes", endResult);
-        } else if (resCount <= 3) {
-            navigation.navigate("FilterDisplayRes", endResult);
-        } else {
-            navigation.navigate("FilterAmbiance", endResult);
-        }
+            if (fromShowMyList) {
+                navigation.navigate("FilterDisplayRes", endResult);
+            } else if (resCount <= 3) {
+                navigation.navigate("FilterDisplayRes", endResult);
+            } else {
+                navigation.navigate("FilterAmbiance", endResult);
+            }
+        })
+
+        // for (let rDataIndex = 0; rDataIndex < rData.length; rDataIndex++) {
+        //     if (endResult.category === rData[rDataIndex].CATEGORY) {
+        //         for (let nationalityArrayIndex = 0; nationalityArrayIndex < endResult.nationality.length; nationalityArrayIndex++) {
+        //             if (rData[rDataIndex].NATIONALITY.includes(endResult.nationality[nationalityArrayIndex])) {
+        //                 resCount++;
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
+        
     }
 
     if (!fontsLoaded) {
@@ -220,7 +227,7 @@ const FilterNationality = () => {
                 <Text style={{ fontSize: 11, fontFamily: 'Nunito_400Regular' }}>help us narrow down what you want!</Text>
             </View>
             <SafeAreaView style={styles.container}>
-                
+
                 <FlatList
                     data={renderData}
                     keyExtractor={(item) => item.id}
@@ -283,7 +290,7 @@ const FilterNationality = () => {
                         </TouchableOpacity>
                     )}
                 />
-                        
+
             </SafeAreaView>
             <View style={styles.buttonView1}>
                 <TouchableOpacity
