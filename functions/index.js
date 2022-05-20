@@ -406,7 +406,7 @@ exports.loadPrices = functions.https.onCall((data, context) => {
     var db = admin.firestore();
     var result = [];
     var checker;
-    var listChecker = "";
+    var listChecker = [];
     const resRef = db.collection('restaurants');
     resRef.get().then((querySnapshot) => {
       querySnapshot.forEach(doc => {
@@ -426,8 +426,8 @@ exports.loadPrices = functions.https.onCall((data, context) => {
                       // check if dining index from result dining array is in restaurant's dining
                       if (doc.data().DINING.includes(data.dining[diningIndex])) {
                         // add price to price category if not already added
-                        if (!listChecker.includes(doc.data().PRICE)) {
-                          listChecker += doc.data().PRICE;
+                        if (!listChecker.includes(doc.data().PRICE.length)) {
+                          listChecker.push(doc.data().PRICE.length);
                           result.push({
                             price: doc.data().PRICE
                           })

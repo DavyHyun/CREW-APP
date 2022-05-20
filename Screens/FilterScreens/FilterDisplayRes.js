@@ -98,11 +98,13 @@ const FilterDisplayRes = () => {
     const renderScreen = async () => {
         let today = new Date();
         let dayOf = today.getDay();
+        console.log(route.params);
 
         const filterDisplayRes = httpsCallable(functions, 'filterDisplayRes');
         filterDisplayRes(result).then((result) => {
             restaurantList = result.data;
             restaurantList = getUniqueListBy(restaurantList, "RESTAURANT");
+            setNumber(restaurantList.length);
             // console.log(result);
             pickRestaurants();
             setImages();

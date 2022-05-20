@@ -5,6 +5,7 @@ import { Card } from 'react-native-paper';
 import { render } from 'react-dom';
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
+import { getStorage, getDownloadURL, ref as sRef } from "firebase/storage";
 import rData from '../../json/thankYouGrace.json';
 import LoadingAnimation from '../../components/LoadingAnimation';
 import { getFunctions, httpsCallable, connectFunctionsEmulator } from "firebase/functions";
@@ -27,9 +28,10 @@ import {
     Nunito_800ExtraBold_Italic,
     Nunito_900Black_Italic,
 } from '@expo-google-fonts/nunito';
-
+// require(`../../assets/filterIcons/${item.name}.png`)
 const FilterNationality = () => {
     const navigation = useNavigation();
+    const storage = getStorage();
     const route = useRoute();
     const resultt = route.params;
     const [categoryList, setCategoryList] = useState([]);
@@ -73,12 +75,18 @@ const FilterNationality = () => {
             console.log(categoryListArray);
             var tempArray = [];
             for (let index = 0; index < categoryListArray.length; index++) {
-                const tempJSON = {
-                    name: categoryListArray[index],
-                    id: (index + 1),
-                    state: false
-                }
-                tempArray.push(tempJSON);
+                var imageRef = sRef(storage, 'filterIcons/' + categoryListArray[index] + '.png');
+                getDownloadURL(imageRef).then((url) => {
+                    const tempJSON = {
+                        name: categoryListArray[index],
+                        id: (index + 1),
+                        imageURL: url,
+                        state: false
+                    }
+                    tempArray.push(tempJSON);
+                }).catch((error) => {
+                    console.log(error);
+                })
             }
 
             setNumOfImages(tempArray.length);
@@ -184,7 +192,7 @@ const FilterNationality = () => {
             }
 
             <View style={styles.topBar}>
-                <Text style={{ fontSize: 19, fontFamily: 'Nunito_700Bold' }}>WHAT DO YOU WANT TO EAT?</Text>
+                <Text style={{ fontSize: 19, fontFamily: 'Nunito_700Bold' }}>WHAT CUISINE?</Text>
                 <Text style={{ fontSize: 11, fontFamily: 'Nunito_400Regular' }}>help us narrow down what you want!</Text>
             </View>
             <SafeAreaView style={styles.container}>
@@ -245,7 +253,7 @@ const FilterNationality = () => {
                                         }
                                 }
                             >
-                                <Image style={styles.Img} source={require("../../assets/koreaFlag.png")} onLoad={() => setImagesLoaded(imagesLoaded + 1)} />
+                                <Image style={styles.Img} source={{uri: item.imageURL}} onLoad={() => setImagesLoaded(imagesLoaded + 1)} />
                                 <Text style={styles.name}>{item.name}</Text>
                             </Card>
                         </TouchableOpacity>

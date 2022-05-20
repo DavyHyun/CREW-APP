@@ -54,7 +54,7 @@ const FilterPrice = () => {
     });
     const [renderData, setRenderData] = useState();
     const [selectItem, setSelectItem] = useState(null);
-    const [numCol, setNumCol] = useState(2);
+    const [numCol, setNumCol] = useState(1);
     const [counter, setCounter] = useState(0);
     const [initialTrigger, setInitialTrigger] = useState(0);
     const [imagesLoaded, setImagesLoaded] = useState();
@@ -124,7 +124,7 @@ const FilterPrice = () => {
 
     // edit this method
     const onNext = (fromNext) => {
-
+        console.log("On next = " + JSON.stringify(renderData))
         // change array name
         let priceArray = [];
         for (let index = 0; index < categoryList.length; index++) {
@@ -186,18 +186,18 @@ const FilterPrice = () => {
     }
     return (
         <View style={styles.mainCont}>
-            {imagesLoaded > (numOfImages - 1) ? null :
+            {/* {imagesLoaded > (numOfImages - 1) ? null :
                 <View style={{ height: '100%', marginTop: '188%' }}>
                     <LoadingAnimation />
                 </View>
-            }
+            } */}
 
             <View style={styles.topBar}>
-                <Text style={{ fontSize: 19, fontFamily: 'Nunito_700Bold' }}>WHAT DO YOU WANT TO EAT?</Text>
+                <Text style={{ fontSize: 19, fontFamily: 'Nunito_700Bold' }}>WHAT PRICE RANGE?</Text>
                 <Text style={{ fontSize: 11, fontFamily: 'Nunito_400Regular' }}>help us narrow down what you want!</Text>
             </View>
             <SafeAreaView style={styles.container}>
-            
+  
                 <FlatList
                     data={renderData}
                     keyExtractor={(item) => item.id}
@@ -207,7 +207,7 @@ const FilterPrice = () => {
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => optionOnClick(item.id, item.name)}
-                            style={{ width: '50%' }}
+                            style={{ width: '100%' }}
                         >
                             <Card
                                 style={
@@ -217,7 +217,7 @@ const FilterPrice = () => {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             marginTop: 10,
-                                            padding: 10,
+                                            padding: 50,
                                             // borderColor: '#C4C4C4',
                                             borderRadius: 10,
                                             // borderWidth: 2,
@@ -237,7 +237,7 @@ const FilterPrice = () => {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             marginTop: 10,
-                                            padding: 10,
+                                            padding: 50,
                                             // borderColor: '#C4C4C4',
                                             borderRadius: 10,
                                             // borderWidth: 2,
@@ -254,7 +254,6 @@ const FilterPrice = () => {
                                         }
                                 }
                             >
-                                <Image style={styles.Img} source={require("../../assets/koreaFlag.png")} onLoad={() => setImagesLoaded(imagesLoaded + 1)} />
                                 <Text style={styles.name}>{item.name}</Text>
                             </Card>
                         </TouchableOpacity>

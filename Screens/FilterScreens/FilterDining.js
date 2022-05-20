@@ -184,14 +184,14 @@ const FilterDining = () => {
     }
     return (
         <View style={styles.mainCont}>
-            {imagesLoaded > (numOfImages - 1) ? null :
+            {/* {imagesLoaded > (numOfImages - 1) ? null :
                 <View style={{ height: '100%', marginTop: '188%' }}>
                     <LoadingAnimation />
                 </View>
-            }
+            } */}
 
             <View style={styles.topBar}>
-                <Text style={{ fontSize: 19, fontFamily: 'Nunito_700Bold' }}>WHAT DO YOU WANT TO EAT?</Text>
+                <Text style={{ fontSize: 19, fontFamily: 'Nunito_700Bold' }}>TO GO OR DINE IN?</Text>
                 <Text style={{ fontSize: 11, fontFamily: 'Nunito_400Regular' }}>help us narrow down what you want!</Text>
             </View>
             <SafeAreaView style={styles.container}>
@@ -215,7 +215,7 @@ const FilterDining = () => {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             marginTop: 10,
-                                            padding: 10,
+                                            padding: 50,
                                             // borderColor: '#C4C4C4',
                                             borderRadius: 10,
                                             // borderWidth: 2,
@@ -235,7 +235,7 @@ const FilterDining = () => {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             marginTop: 10,
-                                            padding: 10,
+                                            padding: 50,
                                             // borderColor: '#C4C4C4',
                                             borderRadius: 10,
                                             // borderWidth: 2,
@@ -252,8 +252,10 @@ const FilterDining = () => {
                                         }
                                 }
                             >
-                                <Image style={styles.Img} source={require("../../assets/koreaFlag.png")} onLoad={() => setImagesLoaded(imagesLoaded + 1)} />
-                                <Text style={styles.name}>{item.name}</Text>
+                                {
+                                    item.name === "Choice" ? <Text style={styles.name}>Up to Me</Text> : <Text style={styles.name}>{item.name}</Text>
+                                }
+  
                             </Card>
                         </TouchableOpacity>
                     )}
