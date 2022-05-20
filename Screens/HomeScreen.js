@@ -59,7 +59,7 @@ const HomeScreen = () => {
   const [name, setName] = useState("");
   // const functions = getFunctions();
   const functions = getFunctions();
-  connectFunctionsEmulator(functions, "localhost", 5001);
+  // connectFunctionsEmulator(functions, "localhost", 5001);
   useEffect(() => {
     try {
       const db = getDatabase();
@@ -84,16 +84,16 @@ const HomeScreen = () => {
 
   const navigateToQUIZ = () => {
     const singlePlayerMessage = httpsCallable(functions, 'singlePlayerText');
-    singlePlayerMessage().then((result) => {
-      // JSON.stringify(result);
-      console.log(JSON.stringify(result))
-      for (let i =0; i < result.data.length; i++) {
-        console.log(result.data[i].resName)
-      }
-      const jsonFile = result.data;
-      console.log("RESULT = " + jsonFile);
+    // singlePlayerMessage().then((result) => {
+    //   // JSON.stringify(result);
+    //   console.log(JSON.stringify(result))
+    //   for (let i =0; i < result.data.length; i++) {
+    //     console.log(result.data[i].resName)
+    //   }
+    //   const jsonFile = result.data;
+    //   console.log("RESULT = " + jsonFile);
       navigation.navigate("Ready");
-    })
+    // })
 
   }
 

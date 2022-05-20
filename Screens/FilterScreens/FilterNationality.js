@@ -62,7 +62,7 @@ const FilterNationality = () => {
     const [imagesLoaded, setImagesLoaded] = useState();
     const [numOfImages, setNumOfImages] = useState(100);
     const functions = getFunctions();
-    connectFunctionsEmulator(functions, "localhost", 5001);
+
 
 
     useEffect(() => {

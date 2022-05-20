@@ -76,7 +76,7 @@ const FilterDisplayRes = () => {
     const result = route.params;
     const [imagesLoaded, setImagesLoaded] = useState(3);
     const functions = getFunctions();
-    connectFunctionsEmulator(functions, "localhost", 5001);
+    // connectFunctionsEmulator(functions, "localhost", 5001);
     const back = () => {
         navigation.navigate("HomeScreen")
     }

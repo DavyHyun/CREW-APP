@@ -62,7 +62,7 @@ const FilterAmbiance = () => {
     const [numOfImages, setNumOfImages] = useState(100);
     const functions = getFunctions();
     const storage = getStorage();
-    connectFunctionsEmulator(functions, "localhost", 5001);
+    // connectFunctionsEmulator(functions, "localhost", 5001);
 
     useEffect(() => {
         setImagesLoaded(0);
