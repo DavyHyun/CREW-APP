@@ -75,7 +75,13 @@ const FilterNationality = () => {
             console.log(categoryListArray);
             var tempArray = [];
             for (let index = 0; index < categoryListArray.length; index++) {
-                var imageRef = sRef(storage, 'filterIcons/' + categoryListArray[index] + '.png');
+                var imageRef;
+                if(categoryListArray[index] === " Greek/Mediterranean") {
+                    imageRef = sRef(storage, 'filterIcons/Greek:Mediterranean.png');
+                } else {
+                    imageRef = sRef(storage, 'filterIcons/' + categoryListArray[index] + '.png');
+                }
+                
                 getDownloadURL(imageRef).then((url) => {
                     const tempJSON = {
                         name: categoryListArray[index],
