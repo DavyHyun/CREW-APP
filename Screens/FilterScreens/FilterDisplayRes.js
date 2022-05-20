@@ -85,7 +85,7 @@ const FilterDisplayRes = () => {
 
 
     useEffect(() => {
-        console.log(route.params);
+        // console.log(route.params);
 
         if (isFocused) {
             console.log("use effect triggered");
@@ -101,12 +101,19 @@ const FilterDisplayRes = () => {
 
         const filterDisplayRes = httpsCallable(functions, 'filterDisplayRes');
         filterDisplayRes(result).then((result) => {
-            restaurantList = result;
+            restaurantList = result.data;
+            restaurantList = getUniqueListBy(restaurantList, "RESTAURANT");
+            // console.log(result);
             pickRestaurants();
             setImages();
         })
 
+
+
     };
+    function getUniqueListBy(arr, key) {
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+    }
 
     const pickRestaurants = () => {
 

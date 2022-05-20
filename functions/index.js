@@ -662,6 +662,7 @@ exports.filterDisplayRes = functions.https.onCall((data, context) => {
           }
         }
       })
+      console.log(JSON.stringify(result) + "test");
       resolve(result);
     })
   })
